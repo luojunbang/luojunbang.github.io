@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Git | luojunang</title>
+    <meta name="generator" content="VuePress 1.5.0">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="description" content="">
+    <link rel="preload" href="/assets/css/0.styles.733786ca.css" as="style"><link rel="preload" href="/assets/js/app.1c8af653.js" as="script"><link rel="preload" href="/assets/js/2.681d2bdd.js" as="script"><link rel="preload" href="/assets/js/9.a45852cd.js" as="script"><link rel="prefetch" href="/assets/js/10.eda2aa5f.js"><link rel="prefetch" href="/assets/js/11.bac3db9a.js"><link rel="prefetch" href="/assets/js/12.05190a77.js"><link rel="prefetch" href="/assets/js/13.20f1a007.js"><link rel="prefetch" href="/assets/js/14.e4309439.js"><link rel="prefetch" href="/assets/js/15.ef02cb34.js"><link rel="prefetch" href="/assets/js/16.b249e419.js"><link rel="prefetch" href="/assets/js/3.c646a3aa.js"><link rel="prefetch" href="/assets/js/4.8a535f6f.js"><link rel="prefetch" href="/assets/js/5.ae508689.js"><link rel="prefetch" href="/assets/js/6.793c0ae2.js"><link rel="prefetch" href="/assets/js/7.ba2054f5.js"><link rel="prefetch" href="/assets/js/8.fbe9a195.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.733786ca.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">luojunang</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  Home
+</a></div><div class="nav-item"><a href="/web/" class="nav-link">
+  Web
+</a></div><div class="nav-item"><a href="/util/URL.html" class="nav-link">
+  cmd+C
+</a></div><div class="nav-item"><a href="/tool/" class="nav-link router-link-active">
+  ToOls
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Links" class="dropdown-title"><span class="title">Links</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/git/github.com/luojunbang.html" class="nav-link">
+  Github
+</a></li></ul></div></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  Home
+</a></div><div class="nav-item"><a href="/web/" class="nav-link">
+  Web
+</a></div><div class="nav-item"><a href="/util/URL.html" class="nav-link">
+  cmd+C
+</a></div><div class="nav-item"><a href="/tool/" class="nav-link router-link-active">
+  ToOls
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Links" class="dropdown-title"><span class="title">Links</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/tool/git/github.com/luojunbang.html" class="nav-link">
+  Github
+</a></li></ul></div></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/tool/git/" aria-current="page" class="active sidebar-link">Git</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/tool/git/#基本" class="sidebar-link">基本</a></li><li class="sidebar-sub-header"><a href="/tool/git/#分支切换" class="sidebar-link">分支切换</a></li><li class="sidebar-sub-header"><a href="/tool/git/#回滚" class="sidebar-link">回滚</a></li><li class="sidebar-sub-header"><a href="/tool/git/#删除文件并推送到远程仓库" class="sidebar-link">删除文件并推送到远程仓库</a></li></ul></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>美化工具</span> <span class="arrow right"></span></p> <!----></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="git"><a href="#git" class="header-anchor">#</a> Git</h1> <h2 id="基本"><a href="#基本" class="header-anchor">#</a> 基本</h2> <ul><li><code>git status</code>以查看在你上次提交之后是否有修改。</li></ul> <h2 id="分支切换"><a href="#分支切换" class="header-anchor">#</a> 分支切换</h2> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token comment"># 切换分支</span>
+<span class="token function">git</span> checkout TARGET_BRANCE
+<span class="token comment"># 新建分支并切换分支</span>
+<span class="token function">git</span> checkout -b TARGET_BRANCE
+<span class="token comment"># 合并分支提交到仓库</span>
+<span class="token function">git</span> merge TARGET_BRANCE
+<span class="token function">git</span> push origin CURRENT_BRANCE
+</code></pre></div><h2 id="回滚"><a href="#回滚" class="header-anchor">#</a> 回滚</h2> <ul><li>未操作<code>git add</code>之前 <code>git checkout</code> 命令</li></ul> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token comment"># 单一文件</span>
+<span class="token function">git</span> checkout -- FILE_PATH
+<span class="token comment"># 撤销所有</span>
+<span class="token function">git</span> checkout -- <span class="token builtin class-name">.</span>
+
+</code></pre></div><ul><li>操作<code>git add</code>之后用 <code>git reset</code> 命令</li></ul> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token comment"># 单一文件</span>
+<span class="token function">git</span> reset HEAD FILE_PATH
+<span class="token comment"># 撤销所有</span>
+<span class="token function">git</span> reset HEAD
+
+</code></pre></div><ul><li>操作<code>git commit</code>之后 用 <code>git revert</code> 命令</li></ul> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token comment"># 查看提交记录</span>
+<span class="token function">git</span> log
+<span class="token comment"># commit 1733527b914c7dec93a4fsdw393999f18ea38225(这个是commitID) (origin/dev)</span>
+<span class="token comment"># Author: ------------</span>
+<span class="token comment"># Date:   ------------</span>
+<span class="token function">git</span>  revert 1733527b914c7dec93a4fsdw393999f18ea38225
+</code></pre></div><p>注意的是 revert 奇数次生效，偶数次又回到之前的修改状态。比如一个文件内容是 a，那么修改为 ab，revert 后文件变成了 a，如果在 revert 后文件又还原成 ab 了。</p> <ul><li><code>git reset --hard commit_id</code></li> <li><code>--hard</code> # 强制将缓存区和工作目录都同步到你指定的提交</li></ul> <h2 id="删除文件并推送到远程仓库"><a href="#删除文件并推送到远程仓库" class="header-anchor">#</a> 删除文件并推送到远程仓库</h2> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token function">git</span> <span class="token function">rm</span> -r --cached YOUR_FILE <span class="token comment">##--cached不会把本地的YOUR_FILE删除</span>
+<span class="token function">git</span> commit -m <span class="token string">'YOUR_COMMIT_MESSAGE'</span>
+<span class="token function">git</span> push -u origin master
+</code></pre></div></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">Last Updated:</span> <span class="time">5/25/2020, 10:33:48 PM</span></div></footer> <div class="page-nav"><p class="inner"><!----> <span class="next"><a href="/tool/beauty/oh-my-zsh/">
+        MacOS美化终端 Terminal —— oh-my-zsh
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.1c8af653.js" defer></script><script src="/assets/js/2.681d2bdd.js" defer></script><script src="/assets/js/9.a45852cd.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>URL 类 Handler | luojunang</title>
+    <meta name="generator" content="VuePress 1.5.0">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="description" content="">
+    <link rel="preload" href="/assets/css/0.styles.733786ca.css" as="style"><link rel="preload" href="/assets/js/app.1c8af653.js" as="script"><link rel="preload" href="/assets/js/2.681d2bdd.js" as="script"><link rel="preload" href="/assets/js/12.05190a77.js" as="script"><link rel="prefetch" href="/assets/js/10.eda2aa5f.js"><link rel="prefetch" href="/assets/js/11.bac3db9a.js"><link rel="prefetch" href="/assets/js/13.20f1a007.js"><link rel="prefetch" href="/assets/js/14.e4309439.js"><link rel="prefetch" href="/assets/js/15.ef02cb34.js"><link rel="prefetch" href="/assets/js/16.b249e419.js"><link rel="prefetch" href="/assets/js/3.c646a3aa.js"><link rel="prefetch" href="/assets/js/4.8a535f6f.js"><link rel="prefetch" href="/assets/js/5.ae508689.js"><link rel="prefetch" href="/assets/js/6.793c0ae2.js"><link rel="prefetch" href="/assets/js/7.ba2054f5.js"><link rel="prefetch" href="/assets/js/8.fbe9a195.js"><link rel="prefetch" href="/assets/js/9.a45852cd.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.733786ca.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">luojunang</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  Home
+</a></div><div class="nav-item"><a href="/web/" class="nav-link">
+  Web
+</a></div><div class="nav-item"><a href="/util/URL.html" class="nav-link">
+  cmd+C
+</a></div><div class="nav-item"><a href="/tool/" class="nav-link">
+  ToOls
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Links" class="dropdown-title"><span class="title">Links</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/util/github.com/luojunbang.html" class="nav-link">
+  Github
+</a></li></ul></div></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  Home
+</a></div><div class="nav-item"><a href="/web/" class="nav-link">
+  Web
+</a></div><div class="nav-item"><a href="/util/URL.html" class="nav-link">
+  cmd+C
+</a></div><div class="nav-item"><a href="/tool/" class="nav-link">
+  ToOls
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Links" class="dropdown-title"><span class="title">Links</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/util/github.com/luojunbang.html" class="nav-link">
+  Github
+</a></li></ul></div></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/util/Url.html" aria-current="page" class="active sidebar-link">URL 类 Handler</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/util/Url.html#获取-url-的参数" class="sidebar-link">获取 url 的参数</a></li><li class="sidebar-sub-header"><a href="/util/Url.html#根据参数组成-url" class="sidebar-link">根据参数组成 url</a></li></ul></li><li><a href="/util/Date.html" class="sidebar-link">DATE类 Handler</a></li><li><a href="/util/Money.html" class="sidebar-link">Money 类Handler</a></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="url-类-handler"><a href="#url-类-handler" class="header-anchor">#</a> URL 类 Handler</h1> <h2 id="获取-url-的参数"><a href="#获取-url-的参数" class="header-anchor">#</a> 获取 url 的参数</h2> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">/**
+ * @param {string} url [luojunbang.github.io?key=val]
+ * @return {string} obj [{key:val}]
+ */</span>
+<span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">getParamsBy</span><span class="token punctuation">(</span>url <span class="token operator">=</span> <span class="token string">&quot;&quot;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">let</span> obj <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> search <span class="token operator">=</span> url<span class="token punctuation">.</span><span class="token function">substring</span><span class="token punctuation">(</span>url<span class="token punctuation">.</span><span class="token function">lastIndexOf</span><span class="token punctuation">(</span><span class="token string">&quot;?&quot;</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> reg <span class="token operator">=</span> <span class="token regex">/([^?&amp;=]+)=([^?&amp;=]*)/g</span><span class="token punctuation">;</span> <span class="token comment">//不匹配&amp;和=</span>
+  search<span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span>reg<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">rs<span class="token punctuation">,</span> $<span class="token number">1</span><span class="token punctuation">,</span> $<span class="token number">2</span></span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> key <span class="token operator">=</span> <span class="token function">decodeURIComponent</span><span class="token punctuation">(</span>$<span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> val <span class="token operator">=</span> <span class="token function">decodeURIComponent</span><span class="token punctuation">(</span>$<span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    val <span class="token operator">=</span> <span class="token function">String</span><span class="token punctuation">(</span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    obj<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> val<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> rs<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> obj<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h2 id="根据参数组成-url"><a href="#根据参数组成-url" class="header-anchor">#</a> 根据参数组成 url</h2> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">/**
+ * @param {obj}  [key:val]
+ * @param {url}  [luojunbang.github.io]
+ * @return {string} obj [luojunbang.github.io?key=val]
+ */</span>
+<span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">parseUrl</span><span class="token punctuation">(</span><span class="token parameter">params<span class="token punctuation">,</span> url</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">let</span> res <span class="token operator">=</span> url <span class="token operator">&amp;&amp;</span> url<span class="token punctuation">.</span><span class="token function">indexOf</span><span class="token punctuation">(</span><span class="token string">&quot;?&quot;</span><span class="token punctuation">)</span> <span class="token operator">&gt;</span> <span class="token operator">-</span><span class="token number">1</span> <span class="token operator">?</span> url <span class="token operator">:</span> url <span class="token operator">+</span> <span class="token string">&quot;?&quot;</span><span class="token punctuation">;</span>
+  res <span class="token operator">=</span> res <span class="token operator">===</span> <span class="token string">&quot;?&quot;</span> <span class="token operator">?</span> <span class="token string">&quot;&quot;</span> <span class="token operator">:</span> res<span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token punctuation">(</span>
+    res <span class="token operator">+</span>
+    Object<span class="token punctuation">.</span><span class="token function">keys</span><span class="token punctuation">(</span>params<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">reduce</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">res<span class="token punctuation">,</span> key</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      <span class="token keyword">return</span> res <span class="token operator">+=</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token function">encodeURIComponent</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">=</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token function">encodeURIComponent</span><span class="token punctuation">(</span>params<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">&amp;</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token string">&quot;&quot;</span><span class="token punctuation">)</span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">Last Updated:</span> <span class="time">5/20/2020, 10:07:25 PM</span></div></footer> <div class="page-nav"><p class="inner"><!----> <span class="next"><a href="/util/Date.html">
+        DATE类 Handler
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.1c8af653.js" defer></script><script src="/assets/js/2.681d2bdd.js" defer></script><script src="/assets/js/12.05190a77.js" defer></script>
+  </body>
+</html>

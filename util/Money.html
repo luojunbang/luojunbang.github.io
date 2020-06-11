@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Money 类Handler | luojunang</title>
+    <meta name="generator" content="VuePress 1.5.0">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="description" content="">
+    <link rel="preload" href="/assets/css/0.styles.733786ca.css" as="style"><link rel="preload" href="/assets/js/app.1c8af653.js" as="script"><link rel="preload" href="/assets/js/2.681d2bdd.js" as="script"><link rel="preload" href="/assets/js/11.bac3db9a.js" as="script"><link rel="prefetch" href="/assets/js/10.eda2aa5f.js"><link rel="prefetch" href="/assets/js/12.05190a77.js"><link rel="prefetch" href="/assets/js/13.20f1a007.js"><link rel="prefetch" href="/assets/js/14.e4309439.js"><link rel="prefetch" href="/assets/js/15.ef02cb34.js"><link rel="prefetch" href="/assets/js/16.b249e419.js"><link rel="prefetch" href="/assets/js/3.c646a3aa.js"><link rel="prefetch" href="/assets/js/4.8a535f6f.js"><link rel="prefetch" href="/assets/js/5.ae508689.js"><link rel="prefetch" href="/assets/js/6.793c0ae2.js"><link rel="prefetch" href="/assets/js/7.ba2054f5.js"><link rel="prefetch" href="/assets/js/8.fbe9a195.js"><link rel="prefetch" href="/assets/js/9.a45852cd.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.733786ca.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">luojunang</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  Home
+</a></div><div class="nav-item"><a href="/web/" class="nav-link">
+  Web
+</a></div><div class="nav-item"><a href="/util/URL.html" class="nav-link">
+  cmd+C
+</a></div><div class="nav-item"><a href="/tool/" class="nav-link">
+  ToOls
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Links" class="dropdown-title"><span class="title">Links</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/util/github.com/luojunbang.html" class="nav-link">
+  Github
+</a></li></ul></div></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  Home
+</a></div><div class="nav-item"><a href="/web/" class="nav-link">
+  Web
+</a></div><div class="nav-item"><a href="/util/URL.html" class="nav-link">
+  cmd+C
+</a></div><div class="nav-item"><a href="/tool/" class="nav-link">
+  ToOls
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Links" class="dropdown-title"><span class="title">Links</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/util/github.com/luojunbang.html" class="nav-link">
+  Github
+</a></li></ul></div></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/util/Url.html" class="sidebar-link">URL 类 Handler</a></li><li><a href="/util/Date.html" class="sidebar-link">DATE类 Handler</a></li><li><a href="/util/Money.html" aria-current="page" class="active sidebar-link">Money 类Handler</a></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="money-类handler"><a href="#money-类handler" class="header-anchor">#</a> Money 类Handler</h1> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">const</span> <span class="token function-variable function">_isPrice</span> <span class="token operator">=</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token parameter">num</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> regPos <span class="token operator">=</span> <span class="token regex">/^(0|[1-9]\d*)(\.\d+)?$/</span>
+    <span class="token comment">// let regNeg = /^(-(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*)))$/; //负浮点数</span>
+    <span class="token comment">// || regNeg.test(num)</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>regPos<span class="token punctuation">.</span><span class="token function">test</span><span class="token punctuation">(</span>num<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token boolean">true</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token boolean">false</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">export</span> <span class="token keyword">const</span> isPrice <span class="token operator">=</span> _isPrice
+
+<span class="token comment">/**
+ * @desc 生成规范金额字符串
+ * @param s | String | Number
+ * @param bool | Boolean 是否携带¥
+ * @returns String
+ */</span>
+<span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">fmtMoney</span><span class="token punctuation">(</span><span class="token parameter">s<span class="token punctuation">,</span> bool <span class="token operator">=</span> <span class="token boolean">true</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token regex">/[^0-9.]/</span><span class="token punctuation">.</span><span class="token function">test</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token punctuation">(</span>bool <span class="token operator">?</span> <span class="token string">'¥ '</span> <span class="token operator">:</span> <span class="token string">''</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">'0.00'</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>s <span class="token operator">==</span> <span class="token keyword">null</span> <span class="token operator">||</span> s <span class="token operator">==</span> <span class="token string">'null'</span> <span class="token operator">||</span> s <span class="token operator">==</span> <span class="token string">''</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token string">'0.00'</span>
+    s <span class="token operator">=</span> <span class="token punctuation">(</span>s <span class="token operator">/</span> <span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toFixed</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>
+    s <span class="token operator">=</span> s<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token regex">/^(\d*)$/</span><span class="token punctuation">,</span> <span class="token string">'$1.'</span><span class="token punctuation">)</span>
+    s <span class="token operator">=</span> <span class="token punctuation">(</span>s <span class="token operator">+</span> <span class="token string">'00'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token regex">/(\d*\.\d\d)\d*/</span><span class="token punctuation">,</span> <span class="token string">'$1'</span><span class="token punctuation">)</span>
+    s <span class="token operator">=</span> s<span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token string">'.'</span><span class="token punctuation">,</span> <span class="token string">','</span><span class="token punctuation">)</span>
+    <span class="token keyword">let</span> re <span class="token operator">=</span> <span class="token regex">/(\d)(\d{3},)/</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>re<span class="token punctuation">.</span><span class="token function">test</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">)</span> s <span class="token operator">=</span> s<span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span>re<span class="token punctuation">,</span> <span class="token string">'$1,$2'</span><span class="token punctuation">)</span>
+    s <span class="token operator">=</span> s<span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token regex">/,(\d\d)$/</span><span class="token punctuation">,</span> <span class="token string">'.$1'</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>bool <span class="token operator">?</span> <span class="token string">'¥ '</span> <span class="token operator">:</span> <span class="token string">''</span><span class="token punctuation">)</span> <span class="token operator">+</span> s
+<span class="token punctuation">}</span>
+
+<span class="token comment">/**
+ * @desc 生成大写金额字符串
+ * @param n | String | Number
+ * @param isYuan | Boolean 是否为元为单位 false则表示分
+ * @returns 写大金额字符串
+ */</span>
+
+<span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">fmtMoneyCN</span><span class="token punctuation">(</span><span class="token parameter">n<span class="token punctuation">,</span> isYuan <span class="token operator">=</span> <span class="token boolean">true</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">_isPrice</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token string">'数据非法'</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>isYuan<span class="token punctuation">)</span> n <span class="token operator">=</span> n <span class="token operator">*</span> <span class="token number">100</span>
+    n <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toFixed</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+    <span class="token keyword">const</span> <span class="token constant">UNIT</span> <span class="token operator">=</span> <span class="token string">'仟佰拾亿仟佰拾萬仟佰拾元角分'</span><span class="token punctuation">,</span>
+        <span class="token constant">CN_NUM</span> <span class="token operator">=</span> <span class="token string">'零壹贰叁肆伍陆柒捌玖'</span>
+    <span class="token keyword">let</span> unit <span class="token operator">=</span> <span class="token constant">UNIT</span><span class="token punctuation">.</span><span class="token function">substr</span><span class="token punctuation">(</span><span class="token constant">UNIT</span><span class="token punctuation">.</span>length <span class="token operator">-</span> n<span class="token punctuation">.</span>length<span class="token punctuation">)</span><span class="token punctuation">,</span>
+        str <span class="token operator">=</span> Array<span class="token punctuation">.</span><span class="token function">from</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">reduce</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">res<span class="token punctuation">,</span> num<span class="token punctuation">,</span> idx</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>res <span class="token operator">+=</span> <span class="token constant">CN_NUM</span><span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>num<span class="token punctuation">)</span> <span class="token operator">+</span> unit<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>idx<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">''</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> str
+        <span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token regex">/零(仟|佰|拾|角)/g</span><span class="token punctuation">,</span> <span class="token string">'零'</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token regex">/(零)+/g</span><span class="token punctuation">,</span> <span class="token string">'零'</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token regex">/零(萬|亿|元)/g</span><span class="token punctuation">,</span> <span class="token string">'$1'</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token regex">/(亿)萬|壹(拾)/g</span><span class="token punctuation">,</span> <span class="token string">'$1$2'</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token regex">/^元零?|零分/g</span><span class="token punctuation">,</span> <span class="token string">''</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token regex">/元$/g</span><span class="token punctuation">,</span> <span class="token string">'元整'</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/util/Date.html" class="prev">
+        DATE类 Handler
+      </a></span> <!----></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.1c8af653.js" defer></script><script src="/assets/js/2.681d2bdd.js" defer></script><script src="/assets/js/11.bac3db9a.js" defer></script>
+  </body>
+</html>
