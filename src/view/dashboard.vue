@@ -1,83 +1,73 @@
 <template>
   <div class="container">
-    <div
-      class="search"
-      :style="{ opacity: isShowSearch ? '1' : '0' }"
-      @mouseover="onSearchOver"
-      @mouseleave="onSearchLeave"
-    >
+    <div class="search" :style="{ opacity: isShowSearch ? '1' : '0' }" @mouseover="onSearchOver" @mouseleave="onSearchLeave">
       <span>Search:</span>
       <loInput v-model="searchText" />
     </div>
     <div class="block">
       <div class="noon">{{ cpNoon }}</div>
       <div class="clock">
-        <span>{{ time | fmtTime("·") }}</span>
-        <span>.{{ Math.floor((time % 1000) / 100) }}</span>
+        <span>{{ time | fmtTime('·') }}</span>
+        <span>{{ Math.floor((time % 1000) / 100) }}</span>
       </div>
-      <div class="date">{{ time | generatorDate("y-m-d 星期a") }}</div>
+      <div class="date">{{ time | generatorDate('y-m-d 星期a') }}</div>
     </div>
   </div>
 </template>
 
 <script>
-import loInput from "@/components/loInput";
-import { generatorDate, fmtTime } from "lo-utils";
+import loInput from '@/components/loInput'
+import { generatorDate, fmtTime } from 'lo-utils'
 export default {
+  components: { loInput },
+  filters: {
+    fmtTime: fmtTime,
+    generatorDate: generatorDate
+  },
   data() {
     return {
       timer: null,
       isShowSearch: false,
-      searchText: "",
+      searchText: '',
       time: new Date(),
-      name: "Input Your Name...",
-    };
+      name: 'Input Your Name...'
+    }
   },
-  components: { loInput },
   computed: {
     cpNoon() {
-      return this.time.getHours() >= 12 ? "PM" : "AM";
+      return this.time.getHours() >= 12 ? 'PM' : 'AM'
     },
     cpRange() {
-      const hour = this.time.getHours();
+      const hour = this.time.getHours()
       const config = {
-        Morning: (val) => val > 6 && val < 12,
-        Afternoon: (val) => val > 12 && val < 19,
-        Night: (val) => val > 19 && val < 6,
-      };
-      return Object.keys(config).reduce(
-        (rs, key) => (config[key](hour) ? key : rs),
-        ""
-      );
-    },
-  },
-  filters: {
-    fmtTime: fmtTime,
-    generatorDate: generatorDate,
+        Morning: val => val > 6 && val < 12,
+        Afternoon: val => val > 12 && val < 19,
+        Night: val => val > 19 && val < 6
+      }
+      return Object.keys(config).reduce((rs, key) => (config[key](hour) ? key : rs), '')
+    }
   },
   mounted() {
     setInterval(() => {
-      this.time = new Date();
-    }, 10);
-    window.addEventListener("keyup", (e) => {
-      if (e.keyCode === 13)
-        window.location.href =
-          "https://www.baidu.com/s?wd=" + encodeURIComponent(this.searchText);
-    });
+      this.time = new Date()
+    }, 10)
+    window.addEventListener('keyup', e => {
+      if (e.keyCode === 13) window.location.href = 'https://www.baidu.com/s?wd=' + encodeURIComponent(this.searchText)
+    })
   },
   methods: {
     onSearchLeave() {
       this.timer = setTimeout(() => {
-        this.isShowSearch = false;
-        this.timer = null;
-      }, 3 * 1000);
+        this.isShowSearch = false
+        this.timer = null
+      }, 3 * 1000)
     },
     onSearchOver() {
-      if (this.timer) clearTimeout(this.timer);
-      this.isShowSearch = true;
-    },
-  },
-};
+      if (this.timer) clearTimeout(this.timer)
+      this.isShowSearch = true
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
