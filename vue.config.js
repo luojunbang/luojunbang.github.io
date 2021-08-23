@@ -3,7 +3,7 @@ const FileManagerPlugin = require('filemanager-webpack-plugin')
 const name = 'luojunbang'
 
 module.exports = {
-  publicPath: 'dist',
+  publicPath: process.env.NODE_ENV !== 'production' ? '' : 'dist',
   outputDir: './dist',
   indexPath: '../index.html',
   lintOnSave: process.env.NODE_ENV !== 'production',

@@ -13,102 +13,99 @@
 <script>
 const numberAnimation = function*(from = 0, to = 200, times = 10) {
   let _f = parseFloat(from),
-    _t = parseFloat(to);
-  if (isNaN(_t)) return '-';
-  if (isNaN(_f)) _f = 0;
-  const decimalCount =
-    to.toString().indexOf('.') > -1
-      ? to.toString().substr(to.toString().indexOf('.') + 1).length
-      : 0;
-  const step = +((_t - _f) / times).toFixed(decimalCount + 1);
-  if (step === 0) return _t;
+    _t = parseFloat(to)
+  if (isNaN(_t)) return '-'
+  if (isNaN(_f)) _f = 0
+  const decimalCount = to.toString().indexOf('.') > -1 ? to.toString().substr(to.toString().indexOf('.') + 1).length : 0
+  const step = +((_t - _f) / times).toFixed(decimalCount + 1)
+  if (step === 0) return _t
   if (_f <= _t) {
     while (_f <= _t) {
-      yield +_f.toFixed(decimalCount);
-      _f += step;
+      yield +_f.toFixed(decimalCount)
+      _f += step
     }
   } else {
     while (_f >= _t) {
-      yield +_f.toFixed(decimalCount);
-      _f += step;
+      yield +_f.toFixed(decimalCount)
+      _f += step
     }
   }
-  return _t;
-};
+  return _t
+}
 export default {
   props: {
     num: {
       type: Number,
-      default:6,
+      default: 6
     },
     range: {
       type: String,
-      default: '0123456789',
-    },
+      default: '0123456789'
+    }
   },
-  data () {
+  data() {
     return {
       list: [],
       codeInput: '',
-      isInputFocus: false,
-    };
+      isInputFocus: false
+    }
   },
   computed: {
-    cpIsCurrInput () {
+    cpIsCurrInput() {
       if (this.isInputFocus) {
-        return this.codeInput.length;
+        return this.codeInput.length
       } else {
-        return -1;
+        return -1
       }
-    },
+    }
   },
-  created (){
-    this._numberAni = [];
+  created() {
+    this._numberAni = []
   },
-  mounted () {
-    let idx = 0;
-    while(idx<this.num){
-      idx++;
-      this.list.push('');
+  mounted() {
+    let idx = 0
+    while (idx < this.num) {
+      idx++
+      this.list.push('')
     }
   },
   methods: {
-    handleInput (e) {
-      const val = e.target.value.substring(0, this.num);
-      this.codeInput = val;
-      if(this.codeInput.length> this.num) return;
+    handleInput(e) {
+      const val = e.target.value.substring(0, this.num)
+      this.codeInput = val
+      if (this.codeInput.length > this.num) return
       //控制输入
-      
-      const _currInputIndex = val.length - 1;
-      const _t = val.charAt(_currInputIndex);
+
+      const _currInputIndex = val.length - 1
+      const _t = val.charAt(_currInputIndex)
       this.list.forEach((item, index) => {
         if (index > _currInputIndex) {
-          this.$set(this.list,index,'');
+          this.$set(this.list, index, '')
         }
-      });
-      if(_currInputIndex==-1) return;
-      this._numberAni[_currInputIndex] = numberAnimation(this.list[_currInputIndex],_t);
-      setTimeout(()=>{
-        this.setView(_currInputIndex);
-      },30);
+      })
+      if (_currInputIndex == -1) return
+      this._numberAni[_currInputIndex] = numberAnimation(this.list[_currInputIndex], _t)
+      setTimeout(() => {
+        this.setView(_currInputIndex)
+      }, 30)
     },
-    setView (idx){
-      let _temp = this._numberAni[idx].next();
-      this.$set(this.list,idx,_temp.value!==undefined?_temp.value:this.list[idx]);
+    setView(idx) {
+      let _temp = this._numberAni[idx].next()
+      this.$set(this.list, idx, _temp.value !== undefined ? _temp.value : this.list[idx])
       // this.list[idx] = _temp.value!==undefined?_temp.value:this.list[idx];
-      if (!_temp.done&& _temp.value!==undefined) {
-        setTimeout(()=>{
-          this.setView(idx);
-        },30);
-      }else{
-        this._numberAni[idx]=null;
+      if (!_temp.done && _temp.value !== undefined) {
+        setTimeout(() => {
+          this.setView(idx)
+        }, 30)
+      } else {
+        this._numberAni[idx] = null
       }
     },
-    handleInputFocued () {
-      this.$refs.refInput.focus();
-    },
-  },
-};
+    handleInputFocued() {
+      this.$refs.refInput.focus()
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -125,7 +122,7 @@ export default {
   }
 }
 .cursor::after {
-  content: "";
+  content: '';
   width: 1px;
   height: 60%;
   position: absolute;

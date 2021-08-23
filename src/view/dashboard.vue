@@ -48,6 +48,15 @@ export default {
     }
   },
   mounted() {
+    function checkIsFirstEntry(cb) {
+      if (!window.localStorage.getItem('IS_FIRST_IN')) {
+        window.localStorage.setItem('IS_FIRST_IN', 1)
+        cb && cb()
+      }
+    }
+    checkIsFirstEntry(_ => {
+      console.log('IS_FIRST_IN')
+    })
     setInterval(() => {
       this.time = new Date()
     }, 10)
