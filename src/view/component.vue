@@ -55,11 +55,9 @@ export default {
     assignList(list) {
       list.forEach(item => {
         const minIdx = this._calcHeight()
-        console.log(this.containerHeight[minIdx], this.containerHeight)
         this.containerList[minIdx].push(item)
         this.containerHeight[minIdx] += +item.height < 100 ? 100 : +item.height
       })
-      console.log(this.containerHeight)
     },
     _calcHeight() {
       const { containerHeight } = this

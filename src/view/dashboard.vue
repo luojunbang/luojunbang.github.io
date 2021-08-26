@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="search" :style="{ opacity: isShowSearch ? '1' : '0' }" @mouseover="onSearchOver" @mouseleave="onSearchLeave">
-      <span>Search:</span>
+      <span>SEARCH:</span>
       <loInput v-model="searchText" />
     </div>
     <div class="block">
@@ -48,18 +48,9 @@ export default {
     }
   },
   mounted() {
-    function checkIsFirstEntry(cb) {
-      if (!window.localStorage.getItem('IS_FIRST_IN')) {
-        window.localStorage.setItem('IS_FIRST_IN', 1)
-        cb && cb()
-      }
-    }
-    checkIsFirstEntry(_ => {
-      console.log('IS_FIRST_IN')
-    })
-    setInterval(() => {
-      this.time = new Date()
-    }, 10)
+    // setInterval(() => {
+    //   this.time = new Date()
+    // }, 10)
     window.addEventListener('keyup', e => {
       if (e.keyCode === 13) window.location.href = 'https://www.baidu.com/s?wd=' + encodeURIComponent(this.searchText)
     })
@@ -81,8 +72,8 @@ export default {
 
 <style lang="scss" scoped>
 .container {
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   overflow: hidden;
   background-color: #000;
   color: #ccc;
@@ -98,17 +89,17 @@ export default {
     display: flex;
     flex-flow: row nowrap;
     span {
-      margin-right: 20px;
+      margin-right: 10px;
     }
     input {
       outline: none;
       background-color: transparent;
-      color: white;
+      color: #efefef;
       border-radius: 3px;
       height: 40px;
-      padding: 0 20px;
+      padding: 0 10px;
       width: 50vw;
-      border: none;
+      font-size: 20px;
       border: 1px solid #efefef;
       &:hover,
       &:focus {
