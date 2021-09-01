@@ -1,14 +1,7 @@
-import axios from 'axios'
-
-interface Todos {
-  id: string
-  label: string
-  type: string
-  status: string
-}
+import axios, { AxiosPromise } from 'axios'
 
 export default {
-  getList(userId: string): any {
+  getList(userId: string): AxiosPromise {
     return axios.get('/dsmp/login/getVersionInfo.do')
   }
 }
