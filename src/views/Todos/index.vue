@@ -1,7 +1,13 @@
 <template>
   <div>
     <h3>用户ID:{{ userId }}</h3>
-    <div class="mg-tb"><input type="text" v-model="addText" /><button @click="addItem">Add Task</button></div>
+    <div class="mg-tb border pd-sm">
+      类型：<select name="type" v-model="todoAdd.type" class="mg-r">
+        <option v-for="item in typeList" :value="item" :key="item">{{ item }}</option>
+      </select>
+      任务：<input type="text" v-model="todoAdd.label" class="mg-r" />
+      <button @click="addItem">Add Task</button>
+    </div>
     搜索：
     <input v-model="listFilter.queryText" />
     类型：
@@ -12,10 +18,10 @@
     <select name="status" @change="updateFilter('status', $event.target.value)">
       <option v-for="item in statusList" :value="item" :key="item">{{ item }}</option>
     </select>
-    <ul class="w-70 mg0auto mg-t">
+    <ul class="w-50 mg0auto mg-t">
       <li v-for="(item, index) in list" :key="item.id" class="pd-tb-xs text-left flex-row-nowrap">
-        <span class="text-light color-primary">{{ index + 1 }}.</span>
-        <span class="text-bold color-title">{{ item.label }}</span>
+        <b class="text-light text-bold color-primary">{{ index + 1 }}.</b>
+        <span class="color-title">{{ item.label }}</span>
         <span class="color-text">{{ item.status }}</span>
         <span class="text-light" :style="{ color: item.type }">{{ item.type }}</span>
         <button class="mg-l" @click="deleteItem(item)">DELETE</button>
@@ -26,7 +32,7 @@
 
 <script lang="ts">
 import { defineComponent, toRefs } from 'vue'
-import useList from './composables/useList'
+import { useList, useModify } from './composables/useList'
 import useFilter from './composables/useFilter'
 import { TYPE, STATUS } from './composables/todo'
 
@@ -37,11 +43,16 @@ export default defineComponent({
       required: true
     }
   },
+  data: () => ({
+    typeList: TYPE,
+    statusList: STATUS
+  }),
   setup(props) {
     const { userId } = toRefs(props)
-    const { list, getList, addItem, addText, deleteItem } = useList(userId)
+    const { list, getList } = useList(userId)
+    const { todoAdd, addItem, deleteItem } = useModify(list)
     const { listFilter, updateFilter, listMatchFilter } = useFilter(list)
-    return { list: listMatchFilter, getList, listFilter, updateFilter, addItem, addText, deleteItem, typeList: TYPE, statusList: STATUS }
+    return { list: listMatchFilter, getList, listFilter, updateFilter, addItem, todoAdd, deleteItem }
   }
 })
 </script>
@@ -49,7 +60,8 @@ export default defineComponent({
 <style lang="scss" scoped>
 li {
   span {
-    @extend .mg-r;
+    @extend .mg-lr-sm;
+    min-width: 120px;
   }
 }
 </style>

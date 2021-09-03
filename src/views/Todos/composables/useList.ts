@@ -1,37 +1,39 @@
 import api from '@/api'
 
-import { onMounted, Ref, ref, watch } from 'vue'
+import { onMounted, reactive, Ref, ref, watch } from 'vue'
 import { Todo, STATUS, TYPE } from './todo'
 
-export default function useList(userId: Ref<string>): {
-  addText: Ref<string>
-  list: Ref<Todo[]>
+const cached_list = () =>
+  new Array(5).fill(0).map(_ => ({
+    id: Math.random().toString(16).slice(2),
+    type: Math.random() > 0.5 ? TYPE.GREEN : TYPE.RED,
+    status: Math.random() > 0.5 ? STATUS.SUCCESS : STATUS.FAIL,
+    label: Math.random().toString(16).slice(2)
+  }))
+
+export function useModify(list: Ref<Todo[]>): {
+  todoAdd: { label: string; type: TYPE }
   deleteItem: (item: Todo) => void
   addItem: () => void
-  getList: () => void
 } {
-  const addText = ref<string>('')
-  const list = ref<Todo[]>([])
-  const getList = async () => {
-    list.value = await api.getList(userId.value).then(() =>
-      new Array(5).fill(0).map(_ => ({
-        id: Math.random().toString(16).slice(2),
-        type: Math.random() > 0.5 ? TYPE.GREEN : TYPE.RED,
-        status: Math.random() > 0.5 ? STATUS.SUCCESS : STATUS.FAIL,
-        label: Math.random().toString(16).slice(2)
-      }))
-    )
-  }
+  const todoAdd = reactive<{ label: string; type: TYPE }>({
+    type: TYPE.DEFAULT,
+    label: ''
+  })
   const addItem = () => {
-    console.log('add')
-    const item: Todo = {
-      id: Math.random().toString(16).slice(2),
-      label: addText.value,
-      type: TYPE.GREEN,
-      status: STATUS.SUCCESS
+    const { label, type } = todoAdd
+    if (label === '' || type === '') {
+      alert('label is Empty')
+      return
     }
-    console.log(item)
-    list.value.push(item)
+    list.value.push({
+      id: Math.random().toString(16).slice(2),
+      label: label,
+      type: todoAdd.type,
+      status: STATUS.FAIL
+    })
+    todoAdd.label = ''
+    todoAdd.type = TYPE.DEFAULT
   }
   const deleteItem = (item: Todo) => {
     const { id } = item
@@ -40,14 +42,29 @@ export default function useList(userId: Ref<string>): {
       1
     )
   }
+  return { todoAdd, addItem, deleteItem }
+}
+
+export function useList(userId: Ref<string>): {
+  addText: Ref<string>
+  addType: Ref<TYPE>
+  list: Ref<Todo[]>
+  getList: () => void
+} {
+  const addText = ref<string>('')
+  const addType = ref<TYPE>(TYPE.GREEN)
+  const list = ref<Todo[]>([])
+  const getList = async () => {
+    list.value = await api.getList(userId.value).then(_ => cached_list())
+  }
+
   onMounted(() => getList())
   watch(userId, getList)
 
   return {
     addText,
+    addType,
     list,
-    addItem,
-    deleteItem,
     getList
   }
 }
