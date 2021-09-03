@@ -48,9 +48,9 @@ export default {
     }
   },
   mounted() {
-    // setInterval(() => {
-    //   this.time = new Date()
-    // }, 10)
+    setInterval(() => {
+      this.time = new Date()
+    }, 10)
     window.addEventListener('keyup', e => {
       if (e.keyCode === 13) window.location.href = 'https://www.baidu.com/s?wd=' + encodeURIComponent(this.searchText)
     })

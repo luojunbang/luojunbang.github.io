@@ -24,17 +24,17 @@ module.exports = {
     }
   },
   chainWebpack(cfg) {
-    // cfg.plugin('FileManagerPlugin').use('filemanager-webpack-plugin', [
-    //   {
-    //     events: {
-    //       onStart: {
-    //         delete: ['./index.html']
-    //       },
-    //       onEnd: {
-    //         move: [{ source: './dist/index.html', destination: './index.html' }]
-    //       }
-    //     }
-    //   }
-    // ])
+    cfg.plugin('FileManagerPlugin').use('filemanager-webpack-plugin', [
+      {
+        events: {
+          onStart: {
+            delete: ['./index.html']
+          },
+          onEnd: {
+            move: [{ source: './dist/index.html', destination: './index.html' }]
+          }
+        }
+      }
+    ])
   }
 }
