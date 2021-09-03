@@ -9,7 +9,6 @@ module.exports = {
       sass: {
         additionalData: `
         @import "@/common/style/variables.scss";
-        @import "lo-utils/style/index.scss";
         `
       }
     }
