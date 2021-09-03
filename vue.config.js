@@ -1,25 +1,27 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { resolve } = require('path')
-const FileManagerPlugin = require('filemanager-webpack-plugin')
-const name = 'luojunbang'
+
+console.log(resolve())
 
 module.exports = {
-  publicPath: process.env.NODE_ENV !== 'production' ? '' : 'dist',
-  outputDir: './dist',
-  indexPath: '../index.html',
-  lintOnSave: process.env.NODE_ENV !== 'production',
-  devServer: {
-    overlay: {
-      warnings: true,
-      errors: true
+  css: {
+    loaderOptions: {
+      sass: {
+        additionalData: `
+        @import "@/common/style/variables.scss";
+        `
+      }
     }
   },
-  productionSourceMap: false,
-  configureWebpack: {
-    name: name,
-    resolve: {
-      alias: {
-        '@': resolve('src'),
-        '@a': resolve('src/assets')
+  devServer: {
+    proxy: {
+      '': {
+        target: 'https://192.168.1.160:8443',
+        ws: true,
+        changeOrigin: true,
+        pathRewrite: {
+          '': ''
+        }
       }
     }
   },
