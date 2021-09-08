@@ -1,3 +1,6 @@
+const isDev = process.env.NODE_ENV === 'development'
+
+
 module.exports = {
   root: true,
   env: {
@@ -14,8 +17,8 @@ module.exports = {
     ecmaVersion: 2020,
   },
   rules: {
-    "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
-    "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
+    "no-console": !isDev ? "warn" : "off",
+    "no-debugger": !isDev ? "warn" : "off",
     "@typescript-eslint/no-unused-vars": ["off"],
     "prettier/prettier": [
       "error",

@@ -5,4 +5,8 @@ import store from './store'
 
 import 'lo-utils/style/index.scss'
 
-createApp(App).use(store).use(router).mount('#app')
+import ContentBox from '@/components/ContentBox.vue'
+
+const app = createApp(App)
+app.use(store).use(router).mount('#app')
+app.component('content-box', ContentBox)

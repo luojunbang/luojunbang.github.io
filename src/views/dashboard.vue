@@ -7,10 +7,10 @@
     <div class="block">
       <div class="noon">{{ cpNoon }}</div>
       <div class="clock">
-        <span>{{ time | fmtTime('·') }}</span>
+        <span>{{ fmtTime(time, '·') }}</span>
         <span>{{ Math.floor((time % 1000) / 100) }}</span>
       </div>
-      <div class="date">{{ time | generatorDate('y-m-d 星期a') }}</div>
+      <div class="date">{{ generatorDate(time, 'y-m-d 星期a') }}</div>
     </div>
   </div>
 </template>

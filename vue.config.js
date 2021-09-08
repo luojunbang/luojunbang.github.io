@@ -1,6 +1,8 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { resolve } = require('path')
 
+const isDev = process.env.NODE_ENV === 'development'
+
 console.log(resolve())
 
 module.exports = {
@@ -26,6 +28,7 @@ module.exports = {
     }
   },
   chainWebpack(cfg) {
+    // env.prod
     cfg.plugin('FileManagerPlugin').use('filemanager-webpack-plugin', [
       {
         events: {
