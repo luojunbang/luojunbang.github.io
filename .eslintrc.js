@@ -17,8 +17,8 @@ module.exports = {
     ecmaVersion: 2020,
   },
   rules: {
-    "no-console": !isDev ? "warn" : "off",
-    "no-debugger": !isDev ? "warn" : "off",
+    "no-console": !isDev ? "off" : "off",
+    "no-debugger": !isDev ? "off" : "off",
     "@typescript-eslint/no-unused-vars": ["off"],
     "prettier/prettier": [
       "error",

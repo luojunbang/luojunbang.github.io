@@ -17,12 +17,12 @@ module.exports = {
   },
   devServer: {
     proxy: {
-      '': {
-        target: 'https://192.168.1.160:8443',
+      '/v2.5': {
+        target: 'https://api.caiyunapp.com',
         ws: true,
         changeOrigin: true,
         pathRewrite: {
-          '': ''
+          '^/v2.5': '/v2.5'
         }
       }
     }

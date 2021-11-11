@@ -1,31 +1,45 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> | <router-link to="/about">About</router-link> |
-    <router-link to="/css">CSS</router-link>
+  <div class="view-container">
+    <router-view />
   </div>
-  <router-view />
 </template>
 
 <style lang="scss"></style>
 <style>
+html,
+body {
+  height: 100%;
+}
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  height: 100%;
 }
 
-#nav {
-  padding: 30px;
+.view-container {
+  height: 100%;
 }
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+/* @media only screen and (max-width: 375px) {
+  .view-container {
+    width: 360px;
+  }
 }
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+@media only screen and (min-width: 375px) {
+  .view-container {
+    width: 400px;
+  }
 }
+@media only screen and (min-width: 820px) {
+  .view-container {
+    width: 820px;
+  }
+}
+@media only screen and (min-width: 1240px) {
+  .view-container {
+    width: 1240px;
+  }
+}
+@media only screen and (min-width: 1680px) {
+  .view-container {
+    width: 1680px;
+  }
+} */
 </style>

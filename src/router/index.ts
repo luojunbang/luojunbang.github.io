@@ -1,11 +1,23 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
-import Home from '../views/Home.vue'
+import dashboard from '@/views/Dashboard/dashboard.vue'
+
+import main from '@/layout/main.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    redirect: '/dashboard'
+  },
+  {
+    path: '/dashboard',
+    component: main,
+    children: [
+      {
+        path: '',
+        name: 'dashboard',
+        component: dashboard
+      }
+    ]
   },
   {
     path: '/about',

@@ -1,5 +1,5 @@
 <template>
-  <div class="clearfix pd-lr-sm" style="margin-right: -0px">
+  <div class="clearfix" style="margin-right: -20px">
     <content-box title="倒影">
       <div class="reflections h-100 pd-t-lg">
         <div>HARRYPOTTER</div>

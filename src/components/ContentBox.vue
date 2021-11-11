@@ -1,5 +1,5 @@
 <template>
-  <div :key="item" class="w-33 fl pd-sm">
+  <div :key="item" class="fl content-container">
     <div class="content-box">
       <slot />
       <div class="content-title">{{ title }}</div>
@@ -11,7 +11,12 @@
 import { defineComponent, toRefs } from 'vue'
 
 export default defineComponent({
+  data: () => ({ minwidth: '3601px' }),
   props: {
+    width: {
+      type: String,
+      default: '400px'
+    },
     height: {
       type: String,
       default: '200px'
@@ -25,6 +30,16 @@ export default defineComponent({
 </script>
 
 <style>
+@media only screen and (max-width: 375px) {
+  .content-container {
+    width: v-bind(minwidth) !important;
+  }
+}
+.content-container {
+  float: left;
+  margin: 0 20px 20px 0;
+  width: v-bind(width);
+}
 .content-box {
   position: relative;
   overflow: hidden;

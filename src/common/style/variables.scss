@@ -1,22 +1,22 @@
 /* Color */
 $primary-color: #ffafc2 !default;
-$highlight-color:#66ccff!default;
-$success-color:#37D5EE!default;
-$warn-color:#ff8b3d!default;
-$danger-color:#FF3D62!default;
+$highlight-color: #66ccff !default;
+$success-color: #37d5ee !default;
+$warn-color: #ff8b3d !default;
+$danger-color: #ff3d62 !default;
 
-$text-color-primary: rgba(0,0,0,.85) !default;
-$text-color-base: rgba(0,0,0,.65) !default;
-$text-color-secondary: rgba(0,0,0,.45) !default;
-$text-color-placeholder: rgba(0,0,0,.25) !default;
+$text-color-primary: rgba(0, 0, 0, 0.85) !default;
+$text-color-base: rgba(0, 0, 0, 0.65) !default;
+$text-color-secondary: rgba(0, 0, 0, 0.45) !default;
+$text-color-placeholder: rgba(0, 0, 0, 0.25) !default;
 
-$background-color-base: rgba(0,0,0,.04) !default;
+$background-color-base: rgba(0, 0, 0, 0.04) !default;
 
-$background-color-mask: rgba(0,0,0,.04) !default;
+$background-color-mask: rgba(0, 0, 0, 0.04) !default;
 
 /* Border */
 $border-width: 1px !default;
-$border-color: rgba(0,0,0,.15) !default;
+$border-color: rgba(0, 0, 0, 0.15) !default;
 
 $border-radius-sm: 2px !default;
 $border-radius: 4px !default;
@@ -25,12 +25,14 @@ $border-radius-lg: 8px !default;
 $round: 50rem !default;
 
 /* Font */
-$font-family-sans-serif: 'Microsoft YaHei',-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
-  "Noto Color Emoji" !default;
-$font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !default;
+$font-family-sans-serif: Avenir, -apple-system, BlinkMacSystemFont, "Segoe UI",
+  Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+  "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
+$font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
+  "Liberation Mono", "Courier New", monospace !default;
 $font-family-base: $font-family-sans-serif !default;
 
-$font-size-base: 16px !default; //html font-size 
+$font-size-base: 16px !default; //html font-size
 $font-size-lg: 18px !default;
 $font-size-sm: 14px !default;
 
@@ -58,4 +60,4 @@ $margin-xs: 5px !default;
 // Forms
 
 // Scroll-bar
-$scroll-bar-width:12px!default;
+$scroll-bar-width: 12px !default;
