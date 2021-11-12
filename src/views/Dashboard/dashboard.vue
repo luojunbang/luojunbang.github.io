@@ -35,7 +35,7 @@
           <div class="search-logo"></div>
           <div class="search-input flex-row-nowrap">
             <i class="iconfont icon-sousuo mg-r-sm"></i>
-            <input class="search-input__content flex1" v-model="inputText" @focus="isFocus = true" @blur="isFocus = false" />
+            <input class="search-input__content flex1" v-model="inputText" @change="onChange" @keyup.enter="onKeyup" @input="isActive = false" />
           </div>
 
           <div class="search-button text-center">
@@ -90,13 +90,15 @@ export default defineComponent({
 
     type searchType = 'baidu' | 'google' | 'mdn'
 
-    const { inputText, handleSearchClick, isFocus } = ((): {
+    const { isActive, inputText, handleSearchClick, onChange, onKeyup } = ((): {
       inputText: Ref<string>
-      isFocus: Ref<boolean>
+      isActive: Ref<boolean>
       handleSearchClick: (type: searchType) => void
+      onChange: (type: searchType) => void
+      onKeyup: (type: searchType) => void
     } => {
       const inputText = ref<string>('')
-      const isFocus = ref<boolean>(false)
+      const isActive = ref<boolean>(false)
       const handleSearchClick = (type: searchType = 'baidu') => {
         if (!inputText.value) return
         const config = {
@@ -105,27 +107,24 @@ export default defineComponent({
           mdn: 'https://developer.mozilla.org/zh-CN/search?q='
         }
         const url = config[type] + encodeURIComponent(inputText.value)
-        window.location.href = url
+        window.open(url)
       }
-      const event = (e: { keyCode: number }) => {
-        if (e.keyCode === 13 && inputText.value && isFocus.value) {
-          handleSearchClick()
-        }
+      const onChange = () => {
+        isActive.value = true
       }
-      onMounted(() => {
-        window.addEventListener('keyup', event)
-      })
-      onUnmounted(() => {
-        window.removeEventListener('keyup', event)
-      })
-      return { inputText, handleSearchClick, isFocus }
+      const onKeyup = () => {
+        isActive.value && handleSearchClick()
+      }
+      return { inputText, handleSearchClick, isActive, onChange, onKeyup }
     })()
 
     const { isWeatherReady, todayInfo, dailySkyconList, dailyTemperatureList, dailyPrecipitationList } = useWeatherInfo(position)
     return {
+      isActive,
       inputText,
       handleSearchClick,
-      isFocus,
+      onChange,
+      onKeyup,
       isWeatherReady,
       todayInfo,
       dailySkyconList,
