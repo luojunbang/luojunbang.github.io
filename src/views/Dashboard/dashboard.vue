@@ -35,7 +35,7 @@
           <div class="search-logo"></div>
           <div class="search-input flex-row-nowrap">
             <i class="iconfont icon-sousuo mg-r-sm"></i>
-            <input class="search-input__content flex1" v-model="inputText" @change="onChange" @keyup.enter="onKeyup" @input="isActive = false" />
+            <input autofocus class="search-input__content flex1" v-model="inputText" @change="onChange" @keyup.enter="onKeyup" @input="isActive = false" />
           </div>
 
           <div class="search-button text-center">
