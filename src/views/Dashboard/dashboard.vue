@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container h-100">
     <div class="left h-100 fl relative">
       <div class="left-top relative">
         <div class="left-datetime left-m">
@@ -107,7 +107,7 @@ export default defineComponent({
           mdn: 'https://developer.mozilla.org/zh-CN/search?q='
         }
         const url = config[type] + encodeURIComponent(inputText.value)
-        window.open(url)
+        window.location.href = url
       }
       const onChange = () => {
         isActive.value = true
@@ -147,7 +147,6 @@ $PRIMARY: #f0713a;
 $BG: #1b1f25;
 $TEXT: #e7d7c2;
 .container {
-  height: 100vh;
   min-width: 1000px;
   overflow: hidden;
   position: relative;
