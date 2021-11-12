@@ -6,6 +6,8 @@ const isDev = process.env.NODE_ENV === 'development'
 console.log(resolve())
 
 module.exports = {
+  publicPath: './dist',
+  assetsDir: 'static',
   css: {
     loaderOptions: {
       sass: {
@@ -29,17 +31,18 @@ module.exports = {
   },
   chainWebpack(cfg) {
     // env.prod
-    cfg.plugin('FileManagerPlugin').use('filemanager-webpack-plugin', [
-      {
-        events: {
-          onStart: {
-            delete: ['./index.html']
-          },
-          onEnd: {
-            move: [{ source: './dist/index.html', destination: './index.html' }]
+    !isDev &&
+      cfg.plugin('FileManagerPlugin').use('filemanager-webpack-plugin', [
+        {
+          events: {
+            onStart: {
+              delete: ['./index.html']
+            },
+            onEnd: {
+              move: [{ source: './dist/index.html', destination: './index.html' }]
+            }
           }
         }
-      }
-    ])
+      ])
   }
 }

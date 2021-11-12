@@ -219,7 +219,7 @@ $TEXT: #e7d7c2;
     .search {
       padding-bottom: 100px;
       &-logo {
-        background-color: #1b1f25;
+        // background-color: #1b1f25;
         height: 150px;
         width: 40%;
         margin: 0 auto 50px;
