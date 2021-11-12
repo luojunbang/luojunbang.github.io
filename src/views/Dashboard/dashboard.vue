@@ -1,15 +1,15 @@
 <template>
-  <div class="container h-100">
-    <div class="left h-100 fl relative">
+  <div class="container relative">
+    <div class="left h-100 fl">
       <div class="left-top relative">
         <div class="left-datetime left-m">
-          <div class="time relative">
-            <div class="left-m time__content">
+          <div class="time">
+            <div class="relative time__content">
               {{ time }}
               <span class="right-b time__ms">{{ ms }}</span>
             </div>
           </div>
-          <div class="date mg-l">{{ date }}</div>
+          <div class="date">{{ date }}</div>
         </div>
       </div>
 
@@ -31,8 +31,8 @@
     </div>
     <div class="right h-100 fl">
       <div class="right-top relative">
-        <div class="search ab-center w-100">
-          <div class="search-logo"></div>
+        <div class="search middle-b mg-b-lg w-100">
+          <!-- <div class="search-logo"></div> -->
           <div class="search-input flex-row-nowrap">
             <i class="iconfont icon-sousuo mg-r-sm"></i>
             <input autofocus class="search-input__content flex1" v-model="inputText" @change="onChange" @keyup.enter="onKeyup" @input="isActive = false" />
@@ -146,8 +146,10 @@ export default defineComponent({
 $PRIMARY: #f0713a;
 $BG: #1b1f25;
 $TEXT: #e7d7c2;
+
 .container {
-  min-width: 1000px;
+  width: 100vw;
+  height: 100vh;
   overflow: hidden;
   position: relative;
   * {
@@ -159,11 +161,9 @@ $TEXT: #e7d7c2;
   width: 38.2%;
   &-datetime {
     padding-left: 3vw;
-    width: 100%;
     height: 9vw;
     .time {
       user-select: none;
-      height: 7.5vw;
       // transform: translateX(-1vw);
       &__ms {
         transform: translate(2vw, -0.7vw);
@@ -177,6 +177,7 @@ $TEXT: #e7d7c2;
     }
     .date {
       font-size: 1vw;
+      margin-left: 1.5vw;
     }
   }
   &-top {
@@ -189,14 +190,14 @@ $TEXT: #e7d7c2;
   &-weather {
     position: absolute;
     left: 0;
-    bottom: 200px;
+    bottom: 30%;
     background-color: #292c34;
     height: 20%;
     width: 30%;
     min-width: 100px;
     min-height: 100px;
     .weather-container {
-      margin-left: 50px;
+      margin-left: 4vw;
     }
     .precipitation {
       &-container {
@@ -213,9 +214,8 @@ $TEXT: #e7d7c2;
   width: 61.8%;
   background-color: #292c34;
   &-top {
-    height: 61.8%;
+    height: 38.2%;
     .search {
-      padding-bottom: 100px;
       &-logo {
         // background-color: #1b1f25;
         height: 150px;
@@ -245,7 +245,7 @@ $TEXT: #e7d7c2;
           border: 1px solid $PRIMARY;
           color: $PRIMARY;
           background-color: transparent;
-          padding: 5px 20px;
+          padding: 5px 10px;
           cursor: pointer;
           &:hover {
             background-color: $PRIMARY;
@@ -256,6 +256,44 @@ $TEXT: #e7d7c2;
         button + button {
           margin-left: 20px;
         }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .left {
+    width: 100%;
+    .time {
+      &__ms {
+        transform: translate(6.5vw, -0.7vw);
+        line-height: 1;
+        font-size: 9vw;
+      }
+      &__content {
+        line-height: 1;
+        font-size: 17vw;
+      }
+    }
+    .date {
+      font-size: 1vw;
+      margin-left: 2.5vw;
+    }
+    .weather-container {
+      margin-left: 5vw;
+    }
+  }
+  .right {
+    width: 100%;
+    position: absolute;
+    top: 45%;
+    background-color: transparent;
+    button:nth-child(3) {
+      display: none;
+    }
+    &-top {
+      .search {
+        top: 0;
       }
     }
   }

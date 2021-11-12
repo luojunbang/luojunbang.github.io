@@ -6,17 +6,6 @@
 
 <style lang="scss"></style>
 <style>
-html,
-body {
-  height: 100%;
-}
-#app {
-  height: 100%;
-}
-
-.view-container {
-  height: 100%;
-}
 /* @media only screen and (max-width: 375px) {
   .view-container {
     width: 360px;
