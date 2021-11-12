@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 2930285 */
-  src: url('//at.alicdn.com/t/font_2930285_33qcqx9tazf.woff2?t=1636622814079') format('woff2'),
-       url('//at.alicdn.com/t/font_2930285_33qcqx9tazf.woff?t=1636622814079') format('woff'),
-       url('//at.alicdn.com/t/font_2930285_33qcqx9tazf.ttf?t=1636622814079') format('truetype');
+  src: url('//at.alicdn.com/t/font_2930285_3vv0z0wii0m.woff2?t=1636684300803') format('woff2'),
+       url('//at.alicdn.com/t/font_2930285_3vv0z0wii0m.woff?t=1636684300803') format('woff'),
+       url('//at.alicdn.com/t/font_2930285_3vv0z0wii0m.ttf?t=1636684300803') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,10 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-sousuo:before {
+  content: "\e651";
 }
 
 .icon-wenduji:before {

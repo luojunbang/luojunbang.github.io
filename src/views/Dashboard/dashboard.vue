@@ -1,5 +1,5 @@
 <template>
-  <div class="container h-100">
+  <div class="container">
     <div class="left h-100 fl relative">
       <div class="left-top relative">
         <div class="left-datetime left-m">
@@ -14,8 +14,8 @@
       </div>
 
       <div class="left-bottom">
-        <div class="left-weather" v-show="isWeatherReady">
-          <div class="weather-container left-m">
+        <div class="left-weather">
+          <div class="weather-container left-m" v-show="isWeatherReady">
             <div class="realtime mg-b-sm nowrap">
               <span class="mg-r"><i class="iconfont mg-r-xs" :class="'icon-' + todayInfo.skycon.icon"></i>{{ todayInfo.skycon.label }}</span>
               <span class="mg-r"><i class="iconfont mg-r-xs icon-wenduji"></i>{{ todayInfo.temperature }} <i class="iconfont icon-sheshidu01"></i></span>
@@ -29,7 +29,23 @@
         </div>
       </div>
     </div>
-    <div class="right h-100 fl"></div>
+    <div class="right h-100 fl">
+      <div class="right-top relative">
+        <div class="search ab-center w-100">
+          <div class="search-logo"></div>
+          <div class="search-input flex-row-nowrap">
+            <i class="iconfont icon-sousuo mg-r-sm"></i>
+            <input class="search-input__content flex1" v-model="inputText" @focus="isFocus = true" @blur="isFocus = false" />
+          </div>
+
+          <div class="search-button text-center">
+            <button @click="handleSearchClick('google')">Google</button>
+            <button @click="handleSearchClick('baidu')">Baidu</button>
+            <button @click="handleSearchClick('mdn')">MDN Web Docs</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -52,7 +68,7 @@ export default defineComponent({
       let timer = ref<number | null>(null)
       function updateDateTime() {
         const currTime = Date.now()
-        date.value = generatorDate(currTime, 'y-m-d  周a')
+        date.value = generatorDate(currTime, 'y-m-d  星期a')
         time.value = generatorDate(currTime, 'h·i·s')
         ms.value = currTime.toString().slice(-3, -2)
       }
@@ -72,17 +88,49 @@ export default defineComponent({
     }
     const { date, time, ms } = useDashboard()
 
-    // function useSearch() {}
-    // const { inputText } = useSearch()
+    type searchType = 'baidu' | 'google' | 'mdn'
+
+    const { inputText, handleSearchClick, isFocus } = ((): {
+      inputText: Ref<string>
+      isFocus: Ref<boolean>
+      handleSearchClick: (type: searchType) => void
+    } => {
+      const inputText = ref<string>('')
+      const isFocus = ref<boolean>(false)
+      const handleSearchClick = (type: searchType = 'baidu') => {
+        if (!inputText.value) return
+        const config = {
+          baidu: 'https://www.baidu.com/s?wd=',
+          google: 'https://www.google.com.hk/search?q=',
+          mdn: 'https://developer.mozilla.org/zh-CN/search?q='
+        }
+        const url = config[type] + encodeURIComponent(inputText.value)
+        window.location.href = url
+      }
+      const event = (e: { keyCode: number }) => {
+        if (e.keyCode === 13 && inputText.value && isFocus.value) {
+          handleSearchClick()
+        }
+      }
+      onMounted(() => {
+        window.addEventListener('keyup', event)
+      })
+      onUnmounted(() => {
+        window.removeEventListener('keyup', event)
+      })
+      return { inputText, handleSearchClick, isFocus }
+    })()
 
     const { isWeatherReady, todayInfo, dailySkyconList, dailyTemperatureList, dailyPrecipitationList } = useWeatherInfo(position)
     return {
+      inputText,
+      handleSearchClick,
+      isFocus,
       isWeatherReady,
       todayInfo,
       dailySkyconList,
       dailyTemperatureList,
       dailyPrecipitationList,
-      // inputText,
       date,
       time,
       ms
@@ -96,14 +144,15 @@ export default defineComponent({
 .nowrap {
   white-space: nowrap;
 }
+$PRIMARY: #f0713a;
 $BG: #1b1f25;
 $TEXT: #e7d7c2;
 .container {
+  height: 100vh;
   min-width: 1000px;
   overflow: hidden;
   position: relative;
   * {
-    text-align: left;
     color: $TEXT;
   }
 }
@@ -158,13 +207,59 @@ $TEXT: #e7d7c2;
       }
       width: 4px;
       margin-right: 1px;
-      background-color: #f0713a;
+      background-color: $PRIMARY;
     }
   }
 }
 .right {
   width: 61.8%;
-  padding: 50px;
   background-color: #292c34;
+  &-top {
+    height: 61.8%;
+    .search {
+      padding-bottom: 100px;
+      &-logo {
+        background-color: #1b1f25;
+        height: 150px;
+        width: 40%;
+        margin: 0 auto 50px;
+      }
+      &-input {
+        width: 75%;
+        height: 45px;
+        border: 1px solid $PRIMARY;
+        padding: 10px 20px;
+        border-radius: 24px;
+        margin: 0 auto 20px;
+        &:hover {
+          box-shadow: 2px 2px 10px 3px rgba($color: $PRIMARY, $alpha: 0.2);
+        }
+        input {
+          border: none;
+          outline: none;
+          background-color: transparent;
+        }
+      }
+      &-button {
+        button {
+          height: 36px;
+          outline: none;
+          border: 1px solid $PRIMARY;
+          color: $PRIMARY;
+          background-color: transparent;
+          padding: 5px 20px;
+          cursor: pointer;
+          &:hover {
+            background-color: $PRIMARY;
+            color: $TEXT;
+            box-shadow: 2px 2px 10px 3px rgba($color: $PRIMARY, $alpha: 0.2);
+          }
+        }
+        button + button {
+          margin-left: 20px;
+        }
+      }
+    }
+  }
 }
 </style>
