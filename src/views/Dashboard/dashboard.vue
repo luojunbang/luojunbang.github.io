@@ -16,10 +16,10 @@
         <div class="left-weather">
           <div class="weather-container left-m" v-show="isWeatherReady">
             <div class="realtime nowrap clearfix">
-              <div class="fl mg-r mg-b-xs">
-                <span class="mg-r"><i class="color-primary text-lg text-bold iconfont mg-r-xs" :class="'icon-' + todayInfo.skycon.icon"></i>{{ todayInfo.skycon.label }}</span>
-                <span class="mg-r"><i class="color-primary text-lg text-bold iconfont mg-r-xs icon-wenduji"></i>{{ todayInfo.temperature }} <i class="iconfont icon-sheshidu01"></i></span>
-                <span><i class="color-primary text-lg text-bold iconfont mg-r-xs icon-shidu"></i>{{ todayInfo.humidity * 100 }}%</span>
+              <div class="fl mg-r mg-b-sm">
+                <span class="mg-r"><i class="color-primary text-lg iconfont mg-r-xs" :class="'icon-' + todayInfo.skycon.icon"></i>{{ todayInfo.skycon.label }}</span>
+                <span class="mg-r"><i class="color-primary text-lg iconfont mg-r-xs icon-wenduji"></i>{{ todayInfo.temperature }} <i class="iconfont icon-sheshidu01"></i></span>
+                <span><i class="color-primary text-lg iconfont mg-r-xs icon-shidu"></i>{{ todayInfo.humidity * 100 }}%</span>
               </div>
               <div v-if="todayInfo.precipitation_1h.some(i => !!i)" class="fl flex-row-nowrap align-end precipitation-container">
                 <div class="precipitation" v-for="(item, index) in todayInfo.precipitation_1h" :key="index" :style="{ height: 100 * item + '%' }"></div>
@@ -30,8 +30,8 @@
                 <div class="daily-item__content flex-row-nowrap">
                   <i class="text-lg iconfont color-primary" :class="'icon-' + dailySkyconList[index].icon"></i>
                   <div class="daily-item__temperature">
-                    <div class="text-lg">{{ item.max }}</div>
-                    <div class="text-lg">{{ item.min }}</div>
+                    <div class="">{{ item.max }}</div>
+                    <div class="">{{ item.min }}</div>
                   </div>
                 </div>
               </div>
@@ -179,7 +179,7 @@ $TEXT: #e7d7c2;
     left: 0;
     bottom: 30%;
     background-color: #292c34;
-    height: 30%;
+    height: 26%;
     width: 20%;
     min-height: 100px;
     min-width: 100px;
