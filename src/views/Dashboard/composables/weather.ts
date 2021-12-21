@@ -4,7 +4,7 @@ import http from '@/common/http'
 
 import { token } from '@/common/config'
 
-function getweatherInfo(position: string): any {
+function getweatherInfo(position: string): string {
   // https://api.caiyunapp.com/v2.5/UnVaX9RcoCKpAsGa/121.6544,25.1552/weather.json
   // return http.get(`/v2.5/${token}/${position}/weather.json`)
   return `https://api.caiyunapp.com/v2.5/${token}/${position}/weather.jsonp`
@@ -38,7 +38,7 @@ const weather_config = [
 interface todayInfo {
   apparent_temperature: number
   temperature: number
-  humidity: number
+  humidity: string
   precipitation: number
   forecast_keypoint: string
   skycon: { label: string; value: string; icon: string }
@@ -69,7 +69,7 @@ export default function useWeather(position: string): any {
   const todayInfo = reactive<todayInfo>({
     apparent_temperature: 0,
     temperature: 26,
-    humidity: 0.4,
+    humidity: '0',
     skycon: { label: '晴', value: 'CLEAR_DAY', icon: 'qing' },
     precipitation: 0,
     forecast_keypoint: '--',
@@ -88,13 +88,13 @@ export default function useWeather(position: string): any {
     const idx = weather_config.findIndex(i => i.value === skycon)
     if (idx != -1) todayInfo.skycon = weather_config[idx]
     todayInfo.temperature = temperature
-    todayInfo.humidity = humidity
+    todayInfo.humidity = parseFloat(humidity).toFixed(4)
     todayInfo.forecast_keypoint = forecast_keypoint
     todayInfo.precipitation = precipitation.local.intensity
     todayInfo.precipitation_1h = minutely.precipitation
     dailyPrecipitationList.value = daily.precipitation
     dailyTemperatureList.value = daily.temperature
-    dailyPrecipitationList.value = daily.skycon
+    dailySkyconList.value = daily.skycon.map(skycon => weather_config[weather_config.findIndex(i => i.value === skycon.value)] || { label: '-', value: '-', icon: '-' })
   }
   onMounted(() => {
     askWeather()

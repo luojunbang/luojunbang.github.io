@@ -20,6 +20,7 @@ module.exports = {
     "no-console": !isDev ? "off" : "off",
     "no-debugger": !isDev ? "off" : "off",
     "@typescript-eslint/no-unused-vars": ["off"],
+    "@typescript-eslint/explicit-module-boundary-types": "off",
     "prettier/prettier": [
       "error",
       {
@@ -37,4 +38,13 @@ module.exports = {
       },
     ],
   },
+  overrides: [
+    {
+      // enable the rule specifically for TypeScript files
+      "files": ["*.ts", "*.tsx"],
+      "rules": {
+        "@typescript-eslint/explicit-module-boundary-types": ["error"]
+      }
+    }
+  ]
 };

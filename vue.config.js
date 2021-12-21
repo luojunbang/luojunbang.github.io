@@ -6,7 +6,7 @@ const isDev = process.env.NODE_ENV === 'development'
 console.log(resolve())
 
 module.exports = {
-  publicPath: './dist',
+  publicPath: isDev ? '/' : './dist',
   assetsDir: 'static',
   css: {
     loaderOptions: {
