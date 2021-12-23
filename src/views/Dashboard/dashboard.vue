@@ -28,12 +28,15 @@
             <div class="flex-row-nowrap mg-b-sm">
               <div class="daily-item mg-r-sm" v-for="(item, index) in dailyTemperatureList" :key="item.date">
                 <div class="daily-item__content flex-row-nowrap">
-                  <i class="text-lg iconfont color-primary" :class="'icon-' + dailySkyconList[index].icon"></i>
+                  <div>
+                    <i style="font-size: 28px" class="text-lg iconfont color-primary" :class="'icon-' + dailySkyconList[index].icon"></i>
+                  </div>
                   <div class="daily-item__temperature">
-                    <div class="">{{ ~~item.max }}</div>
-                    <div class="">{{ ~~item.min }}</div>
+                    <div class="">{{ ~~item.max.toFixed(0) }}</div>
+                    <div class="">{{ ~~item.min.toFixed(0) }}</div>
                   </div>
                 </div>
+                <div class="text-center text-sm" style="margin-top: -5px">{{ generatorDate(item.date.replace('T', ' ').replace('+08', ''), '周a') }}</div>
               </div>
             </div>
             <div class="nowrap">{{ todayInfo.forecast_keypoint }}</div>
@@ -202,7 +205,7 @@ $TEXT: #e7d7c2;
       &-item {
         &__content {
           i {
-            font-size: 36px;
+            // font-size: 28px;
             margin-right: 5px;
           }
         }
