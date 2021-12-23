@@ -30,8 +30,8 @@
                 <div class="daily-item__content flex-row-nowrap">
                   <i class="text-lg iconfont color-primary" :class="'icon-' + dailySkyconList[index].icon"></i>
                   <div class="daily-item__temperature">
-                    <div class="">{{ item.max }}</div>
-                    <div class="">{{ item.min }}</div>
+                    <div class="">{{ ~~item.max }}</div>
+                    <div class="">{{ ~~item.min }}</div>
                   </div>
                 </div>
               </div>
