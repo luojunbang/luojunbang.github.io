@@ -24,7 +24,7 @@ module.exports = {
     "prettier/prettier": [
       "error",
       {
-        trailingComma: "none",
+        trailingComma: 'all',
         arrowParens: "avoid",
         eslintIntegration: true,
         singleQuote: true,

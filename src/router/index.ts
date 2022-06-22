@@ -8,8 +8,36 @@ import { Component } from 'vue'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    redirect: '/dashboard'
-  }
+    redirect: '/dashboard',
+  },
+  // {
+  //   path: '/page1',
+  //   component: Appmain,
+  //   redirect: '/',
+  //   children: [
+  //     {
+  //       path: '',
+  //       children: [
+  //         {
+  //           path: '',
+  //           component: () => import('../views/Page1/index.vue'),
+  //         },
+  //       ],
+  //       redirect: '/',
+  //     },
+  //     {
+  //       path: 'subpage2',
+  //       component: main,
+  //       children: [
+  //         {
+  //           path: '',
+  //           component: () => import('../views/Page1/SubPage2/SubPage2.vue'),
+  //         },
+  //       ],
+  //       redirect: '/',
+  //     },
+  //   ],
+  // },
 ]
 
 /**
@@ -22,129 +50,123 @@ const routes: Array<RouteRecordRaw> = [
  * @param regExp /.vue$/
  * @returns Array<RouteRecordRaw>
  */
-function routerImport(requireContext, deep = 1, layouList: Array<Component>): Array<RouteRecordRaw> {
-  const ans: Array<RouteRecordRaw> = []
-  if (deep === 0) return ans
-  const isIndex = (name, dir) => {
-    return name === 'index.vue' || name.replace(/^([\S]+).vue$/, '$1').toLowerCase() === dir.toLowerCase()
-  }
-  requireContext
-    .keys()
-    .filter(i => {
-      const _l = i.split('/')
-      return _l.length <= deep + 2 && isIndex(_l[_l.length - 1], _l[_l.length - 2])
-    })
-    .forEach(componentPath => {
-      const _pathList: Array<string> = componentPath.slice(2).split('/') //remove './'
-      console.log(_pathList)
-      let _temp: Array<RouteRecordRaw> = ans
-      _pathList.forEach((p, i) => {
-        if (i == _pathList.length - 1) return
-        const _route = _temp.find(r => r.path == (i == 0 ? '/' : '') + p)
-        if (!_route && /.vue$/.test(_pathList[i + 1])) {
-          _temp.push({
-            component: () => import(`../views/${componentPath.slice(2)}`),
-            name: _pathList.slice(0, i + 1).join(''),
-            path: (i == 0 ? '/' : '') + p
-          })
-        }
-        if (!_route && !/.vue$/.test(_pathList[i + 1])) {
-          const _newRoute = { component: layouList[i], name: _pathList.slice(0, i + 1).join(''), path: (i == 0 ? '/' : '') + p, children: [] }
-          _temp.push(_newRoute)
-          _temp = _newRoute.children
-        }
-        if (_route && !/.vue$/.test(_pathList[i + 1])) {
-          if (!Array.isArray(_route.children)) {
-            _route.component = layouList[i]
-            _route.redirect = '/'
-            _route.children = [{ component: _route.component, name: _route.name, path: '' }]
-            delete _route.name
-          }
-          _temp = _route.children
-        }
-        if (_route && /.vue$/.test(_pathList[i + 1])) {
-          if (!Array.isArray(_route.children)) _route.children = []
-          _route.redirect = '/'
-          const _newRoute = {
-            meta: { path: componentPath.slice(2) },
-            component: () => import('../views/' + componentPath.slice(2)),
-            name: _pathList.slice(0, i + 1).join(''),
-            path: isIndex(_pathList[i + 1], p) ? '' : p
-          }
-          _route.children.push(_newRoute)
-          _temp = _route.children
-        }
-      })
-      console.log(ans)
-    })
-  return ans
-}
-
-function routerImport2(requireContext, deep = 1, layouList, config = {}) {
-  const ans: any[] = []
-  if (deep === 0) return ans
-  const isIndex = (name, dir) => {
-    if (!name || !dir) return false
-    return name === 'index.vue' || name.replace(/^([\S]+)\.vue$/, '$1').toLowerCase() === dir.toLowerCase()
-  }
-  const isVue = name => /^([\S]+)\.vue$/.test(name)
-  const routerList = requireContext
-    .keys()
-    .filter(i => {
-      if (/^\.\/[^/]+\.vue$/.test(i)) {
-        const name = i.replace(/^\.\/([^/]+)\.vue$/, '$1')
-        ans.push({ path: `/${name}`, name: name, component: () => import(`../views/${i.slice(2)}`) })
-      }
-      const _l = i.slice(2).split('/')
-      return _l.length <= deep + 1 && isIndex(_l[_l.length - 1], _l[_l.length - 2])
-    })
-    .map(path => path.slice(2).split('/'))
-  console.log(routerList)
-  let deepIdx = 0
-  while (routerList.some(i => i[deepIdx])) {
-    console.log('deep:', deepIdx)
-    routerList.forEach(route => {
-      if (!route[deepIdx] || isVue(route[deepIdx])) return
-      let _temp = ans
-      const inner = route.slice(0, deepIdx)
-      inner.forEach(p => {
-        _temp = _temp.find(i => i.path == p || i.path == '/' + p).children
-      })
-      const _route = _temp.find(i => i.path == '/' + route[deepIdx])
-      if (!_route) {
-        if (isVue(route[deepIdx + 1])) {
-          _temp.push({ path: `/${route[deepIdx]}`, name: route[deepIdx], component: () => import(`../views/${route.join('/')}`) })
-        } else {
-          _temp.push({ path: `/${route[deepIdx]}`, name: route[deepIdx], component: layouList[deepIdx], children: [] })
-        }
-      } else if (!_route.children) {
-        _route.redirect = '/'
-        _route.children = [{ name: _route.name, component: _route.component, path: '' }]
-        _route.component = layouList[deepIdx]
-        delete _route.name
-      }
-    })
-    deepIdx++
-  }
-  console.log(ans)
-
-  return ans
-}
-
 const config = {
-  './Todos/index.vue': { meta: {}, params: '/:id' },
-  './Page1/SubPage2/SubPage2.vue': { meta: {}, params: '/:userId' },
-  './Page1/SubPage2/SubPage2/Page2.vue': { meta: {}, params: '/:userId' }
+  'Todos/index.vue': { meta: {}, params: '/:id' },
+  'Page1/index.vue': { meta: { title: 'Page1Index' } },
+  'Page1/SubPage2/SubPage2.vue': { meta: {}, params: '/:userSubPage2Id' },
+  'Page1/SubPage2/Page2/index.vue': { meta: {}, params: '/:userPage2Id' },
 }
 
-console.log('fmtDateTime():', fmtDateTime(Date.now()))
-// const routeImport = routerImport(require.context('../views', true, /\.\/(?!Todos)[\S]+.vue$/), 3, [main, Appmain])
-const routeImport2 = routerImport2(require.context('../views', true, /\.vue$/), 3, [main, Appmain], config)
-console.log('fmtDateTime():', fmtDateTime(Date.now()))
+function routeAutoLink(routePath, layoutComponentLists, routeConfig) {
+  if (!Array.isArray(layoutComponentLists)) throw Error('Should be Array fo LayoutComponents.')
+  // 判断是否是index.vue或者 DIR/DIR.vue
+  const isIndex = path => {
+    if (!path) return false
+    const _path = path.replace(/^\.\//, '').split('/')
+    if (_path.length == 1) return /\.vue$/.test(path)
+    else if (_path.length == 2) {
+      const [dir, name] = _path.slice(_path.length - 2)
+      return dir.toLowerCase() + '.vue' === name.toLowerCase() || name.toLowerCase() === 'index.vue'
+    } else return false
+  }
+  const getRoutePath = val => {
+    const _val = val.split('/')
+    if (_val.length > 1) {
+      return _val[_val.length - 2].toLowerCase()
+    } else return val.replace(/\.vue$/, '').toLowerCase()
+  }
+  const generatorRoute = (path, fullPath, config) => {
+    const route = {
+      path: path,
+      component: () => import(`../views/${fullPath}`),
+      name: fullPath
+        .split('/')
+        .join('_')
+        .replace(/\.vue$/, ''),
+      meta: {},
+      componentPath: fullPath,
+    }
+    if (config?.params) route.path = route.path + config.params
+    if (config?.meta) route.meta = config.meta
+    return route
+  }
+  const routes: any = []
+  routePath = routePath
+    .map(i => i.replace(/^\.\//, ''))
+    .filter(i =>
+      isIndex(
+        i
+          .split('/')
+          .slice(i.split('/').length - 2)
+          .join('/'),
+      ),
+    )
+  console.log(routePath)
+
+  routePath.forEach(path => {
+    const path_ary = path.split('/')
+    let _routes = routes
+    const len = path_ary.length
+    while (path_ary.length) {
+      const _path = path_ary[0]
+      const rest_path = path_ary.join('/')
+      const foundRoute = _routes.find(({ path }) => path == `${_path.toLowerCase()}${routeConfig[path] || ''}`)
+      if (foundRoute) {
+        if (Array.isArray(foundRoute.children)) {
+          if (isIndex(rest_path)) {
+            _routes.push(generatorRoute('', path, routeConfig[path]))
+            break
+          }
+        } else {
+          const index_path = foundRoute.name.split('_').join('/') + '.vue' //复原
+          foundRoute.children = [generatorRoute('', index_path, routeConfig[index_path])]
+          foundRoute.component = layoutComponentLists[len - path_ary.length]
+          delete foundRoute.name
+          if (isIndex(rest_path)) {
+            _routes.push(generatorRoute(getRoutePath(rest_path), path, routeConfig[path]))
+            break
+          }
+        }
+        _routes = foundRoute.children
+      } else {
+        if (isIndex(rest_path)) {
+          _routes.push(generatorRoute(getRoutePath(rest_path), path, routeConfig[path]))
+          break
+        } else {
+          _routes.push({ path: `${_path.toLowerCase()}`, component: layoutComponentLists[len - path_ary.length], children: [] })
+          _routes = _routes[_routes.length - 1].children
+        }
+      }
+      path_ary.shift()
+    }
+  })
+  console.log(routes)
+
+  return routes.map(i => ({ ...i, path: '/' + i.path }))
+}
+
+const routePath = require.context('../views', true, /\.vue$/).keys()
+
+const routesAuto = routeAutoLink(
+  [
+    'About.vue',
+    'CssDisplay/index.vue',
+    'Dashboard/dashboard.vue',
+    'Home.vue',
+    'Page1/SubPage1/SubPage1.vue',
+    'Page1/SubPage2/Page2/index.vue',
+    'Page1/SubPage2/SubPage2.vue',
+    // 'Page1/index.vue',
+    // 'Todos/index.vue',
+    // 'demo/index.vue',
+  ],
+  [Appmain, main],
+  config,
+)
 
 const router = createRouter({
   history: createWebHashHistory(),
-  routes: [...routes, ...routeImport2]
+  routes: [...routes, ...routesAuto],
 })
 
 export default router
