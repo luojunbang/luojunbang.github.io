@@ -51,10 +51,10 @@ const routes: Array<RouteRecordRaw> = [
  * @returns Array<RouteRecordRaw>
  */
 const config = {
-  'Todos/index.vue': { meta: {}, params: '/:id' },
-  'Page1/index.vue': { meta: { title: 'Page1Index' } },
-  'Page1/SubPage2/SubPage2.vue': { meta: {}, params: '/:userSubPage2Id' },
-  'Page1/SubPage2/Page2/index.vue': { meta: {}, params: '/:userPage2Id' },
+  'Todos/index.vue': { meta: {}, params: ':id' },
+  'Page1/index.vue': { meta: { title: 'Page1Index' }, params: ':Page1Id' },
+  'Page1/SubPage2/SubPage2.vue': { meta: {}, params: ':userSubPage2Id' },
+  'Page1/SubPage2/Page2/index.vue': { meta: {}, params: ':userPage2Id' },
 }
 
 function routeAutoLink(routePath, layoutComponentLists, routeConfig) {
@@ -69,11 +69,13 @@ function routeAutoLink(routePath, layoutComponentLists, routeConfig) {
       return dir.toLowerCase() + '.vue' === name.toLowerCase() || name.toLowerCase() === 'index.vue'
     } else return false
   }
+  const removePathParam = path => path.replace(/\/:[\S]+$/, '')
+
   const getRoutePath = val => {
     const _val = val.split('/')
     if (_val.length > 1) {
-      return _val[_val.length - 2].toLowerCase()
-    } else return val.replace(/\.vue$/, '').toLowerCase()
+      return _val[_val.length - 2]
+    } else return val.replace(/\.vue$/, '')
   }
   const generatorRoute = (path, fullPath, config) => {
     const route = {
@@ -84,9 +86,8 @@ function routeAutoLink(routePath, layoutComponentLists, routeConfig) {
         .join('_')
         .replace(/\.vue$/, ''),
       meta: {},
-      componentPath: fullPath,
     }
-    if (config?.params) route.path = route.path + config.params
+    if (config?.params) route.path += (route.path ? '/' : '') + config.params
     if (config?.meta) route.meta = config.meta
     return route
   }
@@ -110,15 +111,16 @@ function routeAutoLink(routePath, layoutComponentLists, routeConfig) {
     while (path_ary.length) {
       const _path = path_ary[0]
       const rest_path = path_ary.join('/')
-      const foundRoute = _routes.find(({ path }) => path == `${_path.toLowerCase()}${routeConfig[path] || ''}`)
+      const foundRoute = _routes.find(({ path }) => removePathParam(path) == `${_path}`)
       if (foundRoute) {
         if (Array.isArray(foundRoute.children)) {
           if (isIndex(rest_path)) {
-            _routes.push(generatorRoute('', path, routeConfig[path]))
+            foundRoute.children.push(generatorRoute('', path, routeConfig[path]))
             break
           }
         } else {
           const index_path = foundRoute.name.split('_').join('/') + '.vue' //复原
+          // foundRoute.path = removePathParam(foundRoute.path)
           foundRoute.children = [generatorRoute('', index_path, routeConfig[index_path])]
           foundRoute.component = layoutComponentLists[len - path_ary.length]
           delete foundRoute.name
@@ -133,7 +135,7 @@ function routeAutoLink(routePath, layoutComponentLists, routeConfig) {
           _routes.push(generatorRoute(getRoutePath(rest_path), path, routeConfig[path]))
           break
         } else {
-          _routes.push({ path: `${_path.toLowerCase()}`, component: layoutComponentLists[len - path_ary.length], children: [] })
+          _routes.push({ path: `${_path}`, component: layoutComponentLists[len - path_ary.length], children: [] })
           _routes = _routes[_routes.length - 1].children
         }
       }
@@ -152,13 +154,14 @@ const routesAuto = routeAutoLink(
     'About.vue',
     'CssDisplay/index.vue',
     'Dashboard/dashboard.vue',
+    'Page1/index.vue',
     'Home.vue',
     'Page1/SubPage1/SubPage1.vue',
     'Page1/SubPage2/Page2/index.vue',
     'Page1/SubPage2/SubPage2.vue',
-    // 'Page1/index.vue',
-    // 'Todos/index.vue',
-    // 'demo/index.vue',
+    'Todos/index.vue',
+    'demo/index.vue',
+    // ...routePath,
   ],
   [Appmain, main],
   config,
