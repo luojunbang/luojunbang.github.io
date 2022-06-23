@@ -1,6 +1,6 @@
 <template>
   <div class="mg pd border">
-    <div>App-Main</div>
+    <div>sub</div>
     <router-view />
   </div>
 </template>

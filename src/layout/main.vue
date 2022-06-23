@@ -1,8 +1,8 @@
 <template>
   <div class="h-100">
-    <!-- <div class="fixed"><navbar></navbar></div> -->
-    <div>222</div>
-    <div class="h-100">
+    <div class="fixed"><navbar></navbar></div>
+    <div class="mg h-100 pd border">
+      <div>Main</div>
       <router-view />
     </div>
   </div>
@@ -12,7 +12,7 @@
 import navbar from './nav.vue'
 
 export default {
-  components: {}
+  components: { navbar },
 }
 </script>
 

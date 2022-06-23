@@ -1,1 +1,3 @@
-<template>SubPage2</template>
+<template>
+  <div>SubPage2:{{ $route.params.userId }}</div>
+</template>
