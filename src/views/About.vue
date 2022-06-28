@@ -9,7 +9,7 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue'
 
-import Todos from './Todos/index.vue'
+import Todos from '@/views/Example/Todos/index.vue'
 export default defineComponent({
   components: { Todos },
   setup() {

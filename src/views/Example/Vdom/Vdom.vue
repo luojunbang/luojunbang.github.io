@@ -3,17 +3,14 @@
 </template>
 
 <script>
-import { fmtTime } from 'lo-utils'
+import { generatorDate } from 'lo-utils'
 export default {
   mounted() {
-    const domArray = new Array(10).fill(0).map((_, i) => ({ value: i.toString(), time: fmtTime(Date.now(), '') }))
+    const domArray = new Array(10).fill(0).map((_, i) => ({ value: i.toString(), time: generatorDate(Date.now(), 's') }))
     console.log('mounted')
     const append = val => {
       const div = document.createElement('div')
-      div.innerHTML = val
-        .filter(i => i.time)
-        .map(i => `<span key="${i.value}" time="${i.time}">${i.value}:${i.time}</span>`)
-        .join('')
+      div.innerHTML = val.map(i => `<span key="${i.value}" time="${i.time}">${i.time ? `${i.value}:${i.time}` : '-'}</span>`).join('')
       document.getElementById('vdom').append(div)
     }
     append(domArray)
@@ -53,16 +50,43 @@ export default {
             newCh[newStartIdx].time = oldToMap[newCh[newStartIdx].key].time
           } else {
             console.log('234')
-            newCh[newStartIdx].time = fmtTime(Date.now(), '')
+            newCh[newStartIdx].time = generatorDate(Date.now(), 's')
           }
           newStartIdx++
         }
-        append(newCh.slice(0, newStartIdx))
+        console.log(newCh.map(i => i.value))
+        append(newCh)
+      }
+      if (oldStartIdx > oldEndIdx) {
+        for (let i = newStartIdx; i <= newEndIdx; i++) {
+          newCh[i].time = generatorDate(Date.now(), 's')
+          append(newCh)
+        }
+      } else if (newStartIdx < newEndIdx) {
+        for (let i = oldStartIdx; i <= oldEndIdx; i++) {
+          newCh[i].time = ''
+          append(newCh)
+        }
       }
     }
-    domArray.splice(4, 2, { value: '11' }, { value: '12' })
-    updateChildren(domArray)
-
+    setTimeout(() => {
+      domArray.splice(4, 2, { value: '11' }, { value: '12' })
+      updateChildren(domArray.map(i => ({ value: i.value })))
+    }, 1000)
+    setTimeout(() => {
+      domArray.splice(0, 0, { value: '13' }, { value: '14' }, { value: '15' }, { value: '18' })
+      updateChildren(domArray.map(i => ({ value: i.value })))
+    }, 2000)
+    setTimeout(() => {
+      domArray.splice(5, 10)
+      domArray.splice(1, 2, { value: '19' }, { value: '46' }, { value: '65' }, { value: '78' })
+      updateChildren(domArray.map(i => ({ value: i.value })))
+    }, 3000)
+    setTimeout(() => {
+      domArray.unshift(domArray.pop())
+      domArray.splice(1, 2, { value: '99' })
+      updateChildren(domArray.map(i => ({ value: i.value })))
+    }, 4000)
     //
   },
 }
@@ -73,8 +97,8 @@ export default {
 }
 span {
   display: inline-block;
-  min-width: 100px;
-  padding: 5px 20px;
+  width: 60px;
+  padding: 5px 10px;
   background-color: #efefef;
   text-align: center;
   margin: 0 5px;

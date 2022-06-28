@@ -3,7 +3,8 @@ import main from '@/layout/main.vue'
 import sub from '@/layout/sub.vue'
 import Appmain from '@/layout/Appmain.vue'
 
-import { routeAutoLink } from 'lo-utils/src/routerHelper/index.js'
+// import { routeAutoLink } from 'lo-utils/src/routerHelper'
+import { routeAutoLink } from 'lo-utils'
 
 const routes: Array<RouteRecordRaw> = [
   {
