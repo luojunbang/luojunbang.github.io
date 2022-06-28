@@ -1,31 +1,24 @@
 const isDev = process.env.NODE_ENV === 'development'
 
-
 module.exports = {
   root: true,
   env: {
     node: true,
   },
-  extends: [
-    "plugin:vue/vue3-essential",
-    "eslint:recommended",
-    "@vue/typescript/recommended",
-    "@vue/prettier/@typescript-eslint",
-    "@vue/prettier",
-  ],
+  extends: ['plugin:vue/vue3-essential', 'eslint:recommended', '@vue/typescript/recommended', '@vue/prettier/@typescript-eslint', '@vue/prettier'],
   parserOptions: {
     ecmaVersion: 2020,
   },
   rules: {
-    "no-console": !isDev ? "off" : "off",
-    "no-debugger": !isDev ? "off" : "off",
-    "@typescript-eslint/no-unused-vars": ["off"],
-    "@typescript-eslint/explicit-module-boundary-types": "off",
-    "prettier/prettier": [
-      "error",
+    'no-console': !isDev ? 'off' : 'off',
+    'no-debugger': !isDev ? 'off' : 'off',
+    '@typescript-eslint/no-unused-vars': ['off'],
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    'prettier/prettier': [
+      'error',
       {
         trailingComma: 'all',
-        arrowParens: "avoid",
+        arrowParens: 'avoid',
         eslintIntegration: true,
         singleQuote: true,
         semi: false,
@@ -34,17 +27,17 @@ module.exports = {
         sortAttributes: false,
         bracketSpacing: true,
         tabWidth: 2,
-        endOfLine: "auto",
+        endOfLine: 'auto',
       },
     ],
   },
   overrides: [
     {
       // enable the rule specifically for TypeScript files
-      "files": ["*.ts", "*.tsx"],
-      "rules": {
-        "@typescript-eslint/explicit-module-boundary-types": ["error"]
-      }
-    }
-  ]
-};
+      files: ['*.ts', '*.tsx'],
+      rules: {
+        '@typescript-eslint/explicit-module-boundary-types': ['error'],
+      },
+    },
+  ],
+}

@@ -13,9 +13,9 @@ module.exports = {
       sass: {
         additionalData: `
         @import "@/common/style/variables.scss";
-        `
-      }
-    }
+        `,
+      },
+    },
   },
   devServer: {
     proxy: {
@@ -24,10 +24,10 @@ module.exports = {
         ws: true,
         changeOrigin: true,
         pathRewrite: {
-          '^/v2.5': '/v2.5'
-        }
-      }
-    }
+          '^/v2.5': '/v2.5',
+        },
+      },
+    },
   },
   chainWebpack(cfg) {
     // env.prod
@@ -36,13 +36,13 @@ module.exports = {
         {
           events: {
             onStart: {
-              delete: ['./index.html']
+              delete: ['./index.html'],
             },
             onEnd: {
-              move: [{ source: './dist/index.html', destination: './index.html' }]
-            }
-          }
-        }
+              move: [{ source: './dist/index.html', destination: './index.html' }],
+            },
+          },
+        },
       ])
-  }
+  },
 }

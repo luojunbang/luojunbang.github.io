@@ -32,7 +32,7 @@ const weather_config = [
   { label: '暴雪', value: 'STORM_SNOW', icon: 'baoxue' },
   { label: '浮尘', value: 'DUST', icon: 'shachen' },
   { label: '沙尘', value: 'SAND', icon: 'shachen' },
-  { label: '大风', value: 'WIND', icon: 'feng' }
+  { label: '大风', value: 'WIND', icon: 'feng' },
 ]
 
 interface todayInfo {
@@ -73,7 +73,7 @@ export default function useWeather(position: string): any {
     skycon: { label: '晴', value: 'CLEAR_DAY', icon: 'qing' },
     precipitation: 0,
     forecast_keypoint: '--',
-    precipitation_1h: []
+    precipitation_1h: [],
   })
   const dailySkyconList = ref<dailySkycon[]>([])
   const dailyTemperatureList = ref<dailyTemperature[]>([])
@@ -104,6 +104,6 @@ export default function useWeather(position: string): any {
     todayInfo,
     dailySkyconList,
     dailyTemperatureList,
-    dailyPrecipitationList
+    dailyPrecipitationList,
   }
 }

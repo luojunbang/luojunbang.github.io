@@ -15,17 +15,17 @@ export default defineComponent({
   props: {
     width: {
       type: String,
-      default: '400px'
+      default: '400px',
     },
     height: {
       type: String,
-      default: '200px'
+      default: '200px',
     },
     title: {
       type: String,
-      default: ''
-    }
-  }
+      default: '',
+    },
+  },
 })
 </script>
 

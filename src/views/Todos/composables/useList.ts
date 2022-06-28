@@ -8,7 +8,7 @@ const cached_list = () =>
     id: Math.random().toString(16).slice(2),
     type: Math.random() > 0.5 ? TYPE.GREEN : TYPE.RED,
     status: Math.random() > 0.5 ? STATUS.SUCCESS : STATUS.FAIL,
-    label: Math.random().toString(16).slice(2)
+    label: Math.random().toString(16).slice(2),
   }))
 
 export function useModify(list: Ref<Todo[]>): {
@@ -18,7 +18,7 @@ export function useModify(list: Ref<Todo[]>): {
 } {
   const todoAdd = reactive<{ label: string; type: TYPE }>({
     type: TYPE.DEFAULT,
-    label: ''
+    label: '',
   })
   const addItem = () => {
     const { label, type } = todoAdd
@@ -30,7 +30,7 @@ export function useModify(list: Ref<Todo[]>): {
       id: Math.random().toString(16).slice(2),
       label: label,
       type: todoAdd.type,
-      status: STATUS.FAIL
+      status: STATUS.FAIL,
     })
     todoAdd.label = ''
     todoAdd.type = TYPE.DEFAULT
@@ -39,7 +39,7 @@ export function useModify(list: Ref<Todo[]>): {
     const { id } = item
     list.value.splice(
       list.value.findIndex(i => i.id === id),
-      1
+      1,
     )
   }
   return { todoAdd, addItem, deleteItem }
@@ -65,6 +65,6 @@ export function useList(userId: Ref<string>): {
     addText,
     addType,
     list,
-    getList
+    getList,
   }
 }

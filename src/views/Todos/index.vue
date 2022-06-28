@@ -11,11 +11,11 @@
       搜索：
       <input v-model="listFilter.queryText" />
       类型：
-      <select name="type" @change="updateFilter('type', $event.target.value)">
+      <select name="type" v-model="currType" @change="updateFilter('type', currType)">
         <option v-for="item in typeList" :value="item" :key="item">{{ item }}</option>
       </select>
       状态：
-      <select name="status" @change="updateFilter('status', $event.target.value)">
+      <select name="status" v-model="currStatus" @change="updateFilter('status', currStatus)">
         <option v-for="item in statusList" :value="item" :key="item">{{ item }}</option>
       </select>
       <ul class="w-50 mg0auto mg-t">
@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, toRefs } from 'vue'
+import { defineComponent, toRefs, ref } from 'vue'
 import { useList, useModify } from './composables/useList'
 import useFilter from './composables/useFilter'
 import { TYPE, STATUS } from './composables/todo'
@@ -41,20 +41,22 @@ export default defineComponent({
   props: {
     userId: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   data: () => ({
     typeList: TYPE,
-    statusList: STATUS
+    statusList: STATUS,
   }),
   setup(props) {
     const { userId } = toRefs(props)
+    const currType = ref('')
+    const currStatus = ref('')
     const { list, getList } = useList(userId)
     const { todoAdd, addItem, deleteItem } = useModify(list)
     const { listFilter, updateFilter, listMatchFilter } = useFilter(list)
-    return { list: listMatchFilter, getList, listFilter, updateFilter, addItem, todoAdd, deleteItem }
-  }
+    return { list: listMatchFilter, getList, listFilter, updateFilter, addItem, todoAdd, deleteItem, currType, currStatus }
+  },
 })
 </script>
 

@@ -22,7 +22,7 @@ export default {
       apparent_temperature: 19.4,
       precipitation: { local: { status: 'ok', datasource: 'radar', intensity: 0.0 }, nearest: { status: 'ok', distance: 10000.0, intensity: 0.0 } },
       air_quality: { pm25: 10, pm10: 30, o3: 92, so2: 8, no2: 22, co: 0.5, aqi: { chn: 30, usa: 31 }, description: { chn: '\u4f18', usa: '\u4f18' } },
-      life_index: { ultraviolet: { index: 0.0, desc: '\u65e0' }, comfort: { index: 4, desc: '\u6e29\u6696' } }
+      life_index: { ultraviolet: { index: 0.0, desc: '\u65e0' }, comfort: { index: 4, desc: '\u6e29\u6696' } },
     },
     minutely: {
       status: 'ok',
@@ -31,14 +31,14 @@ export default {
         0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
         0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
         0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-        0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+        0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
       ],
       precipitation: [
         0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-        0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+        0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
       ],
       probability: [0.0, 0.0, 0.0, 0.0],
-      description: '\u672a\u6765\u4e24\u5c0f\u65f6\u4e0d\u4f1a\u4e0b\u96e8\uff0c\u653e\u5fc3\u51fa\u95e8\u5427'
+      description: '\u672a\u6765\u4e24\u5c0f\u65f6\u4e0d\u4f1a\u4e0b\u96e8\uff0c\u653e\u5fc3\u51fa\u95e8\u5427',
     },
     hourly: {
       status: 'ok',
@@ -91,7 +91,7 @@ export default {
         { datetime: '2021-11-12T13:00+08:00', value: 0.0 },
         { datetime: '2021-11-12T14:00+08:00', value: 0.0 },
         { datetime: '2021-11-12T15:00+08:00', value: 0.0 },
-        { datetime: '2021-11-12T16:00+08:00', value: 0.0 }
+        { datetime: '2021-11-12T16:00+08:00', value: 0.0 },
       ],
       temperature: [
         { datetime: '2021-11-10T17:00+08:00', value: 21.0 },
@@ -141,7 +141,7 @@ export default {
         { datetime: '2021-11-12T13:00+08:00', value: 21.83 },
         { datetime: '2021-11-12T14:00+08:00', value: 20.97 },
         { datetime: '2021-11-12T15:00+08:00', value: 20.3 },
-        { datetime: '2021-11-12T16:00+08:00', value: 22.0 }
+        { datetime: '2021-11-12T16:00+08:00', value: 22.0 },
       ],
       wind: [
         { datetime: '2021-11-10T17:00+08:00', speed: 7.2, direction: 28.0 },
@@ -191,7 +191,7 @@ export default {
         { datetime: '2021-11-12T13:00+08:00', speed: 14.27, direction: 4.71 },
         { datetime: '2021-11-12T14:00+08:00', speed: 14.85, direction: 359.9 },
         { datetime: '2021-11-12T15:00+08:00', speed: 17.45, direction: 359.14 },
-        { datetime: '2021-11-12T16:00+08:00', speed: 15.48, direction: 7.43 }
+        { datetime: '2021-11-12T16:00+08:00', speed: 15.48, direction: 7.43 },
       ],
       humidity: [
         { datetime: '2021-11-10T17:00+08:00', value: 0.32 },
@@ -241,7 +241,7 @@ export default {
         { datetime: '2021-11-12T13:00+08:00', value: 0.36 },
         { datetime: '2021-11-12T14:00+08:00', value: 0.4 },
         { datetime: '2021-11-12T15:00+08:00', value: 0.39 },
-        { datetime: '2021-11-12T16:00+08:00', value: 0.39 }
+        { datetime: '2021-11-12T16:00+08:00', value: 0.39 },
       ],
       cloudrate: [
         { datetime: '2021-11-10T17:00+08:00', value: 0.3 },
@@ -291,7 +291,7 @@ export default {
         { datetime: '2021-11-12T13:00+08:00', value: 0.92 },
         { datetime: '2021-11-12T14:00+08:00', value: 0.91 },
         { datetime: '2021-11-12T15:00+08:00', value: 0.38 },
-        { datetime: '2021-11-12T16:00+08:00', value: 0.79 }
+        { datetime: '2021-11-12T16:00+08:00', value: 0.79 },
       ],
       skycon: [
         { datetime: '2021-11-10T17:00+08:00', value: 'PARTLY_CLOUDY_NIGHT' },
@@ -341,7 +341,7 @@ export default {
         { datetime: '2021-11-12T13:00+08:00', value: 'CLOUDY' },
         { datetime: '2021-11-12T14:00+08:00', value: 'CLOUDY' },
         { datetime: '2021-11-12T15:00+08:00', value: 'PARTLY_CLOUDY_DAY' },
-        { datetime: '2021-11-12T16:00+08:00', value: 'PARTLY_CLOUDY_DAY' }
+        { datetime: '2021-11-12T16:00+08:00', value: 'PARTLY_CLOUDY_DAY' },
       ],
       pressure: [
         { datetime: '2021-11-10T17:00+08:00', value: 101333.5226880409 },
@@ -391,7 +391,7 @@ export default {
         { datetime: '2021-11-12T13:00+08:00', value: 101615.1479954636 },
         { datetime: '2021-11-12T14:00+08:00', value: 101529.5093028864 },
         { datetime: '2021-11-12T15:00+08:00', value: 101455.1479954636 },
-        { datetime: '2021-11-12T16:00+08:00', value: 101449.5093028864 }
+        { datetime: '2021-11-12T16:00+08:00', value: 101449.5093028864 },
       ],
       visibility: [
         { datetime: '2021-11-10T17:00+08:00', value: 20.0 },
@@ -441,7 +441,7 @@ export default {
         { datetime: '2021-11-12T13:00+08:00', value: 20.0 },
         { datetime: '2021-11-12T14:00+08:00', value: 20.0 },
         { datetime: '2021-11-12T15:00+08:00', value: 20.0 },
-        { datetime: '2021-11-12T16:00+08:00', value: 20.0 }
+        { datetime: '2021-11-12T16:00+08:00', value: 20.0 },
       ],
       dswrf: [
         { datetime: '2021-11-10T17:00+08:00', value: 413.072688 },
@@ -491,7 +491,7 @@ export default {
         { datetime: '2021-11-12T13:00+08:00', value: 346.7161695903 },
         { datetime: '2021-11-12T14:00+08:00', value: 323.8307533711 },
         { datetime: '2021-11-12T15:00+08:00', value: 222.1049586058 },
-        { datetime: '2021-11-12T16:00+08:00', value: 299.2089791959 }
+        { datetime: '2021-11-12T16:00+08:00', value: 299.2089791959 },
       ],
       air_quality: {
         aqi: [
@@ -542,7 +542,7 @@ export default {
           { datetime: '2021-11-12T13:00+08:00', value: { chn: 41, usa: 41 } },
           { datetime: '2021-11-12T14:00+08:00', value: { chn: 41, usa: 41 } },
           { datetime: '2021-11-12T15:00+08:00', value: { chn: 41, usa: 41 } },
-          { datetime: '2021-11-12T16:00+08:00', value: { chn: 43, usa: 43 } }
+          { datetime: '2021-11-12T16:00+08:00', value: { chn: 43, usa: 43 } },
         ],
         pm25: [
           { datetime: '2021-11-10T17:00+08:00', value: 10 },
@@ -592,9 +592,9 @@ export default {
           { datetime: '2021-11-12T13:00+08:00', value: 29 },
           { datetime: '2021-11-12T14:00+08:00', value: 29 },
           { datetime: '2021-11-12T15:00+08:00', value: 29 },
-          { datetime: '2021-11-12T16:00+08:00', value: 30 }
-        ]
-      }
+          { datetime: '2021-11-12T16:00+08:00', value: 30 },
+        ],
+      },
     },
     daily: {
       status: 'ok',
@@ -603,63 +603,63 @@ export default {
         { date: '2021-11-11T00:00+08:00', sunrise: { time: '06:37' }, sunset: { time: '17:43' } },
         { date: '2021-11-12T00:00+08:00', sunrise: { time: '06:37' }, sunset: { time: '17:42' } },
         { date: '2021-11-13T00:00+08:00', sunrise: { time: '06:38' }, sunset: { time: '17:42' } },
-        { date: '2021-11-14T00:00+08:00', sunrise: { time: '06:39' }, sunset: { time: '17:42' } }
+        { date: '2021-11-14T00:00+08:00', sunrise: { time: '06:39' }, sunset: { time: '17:42' } },
       ],
       precipitation: [
         { date: '2021-11-10T00:00+08:00', max: 0.0, min: 0.0, avg: 0.0 },
         { date: '2021-11-11T00:00+08:00', max: 0.0, min: 0.0, avg: 0.0 },
         { date: '2021-11-12T00:00+08:00', max: 0.0, min: 0.0, avg: 0.0 },
         { date: '2021-11-13T00:00+08:00', max: 0.0, min: 0.0, avg: 0.0 },
-        { date: '2021-11-14T00:00+08:00', max: 0.0, min: 0.0, avg: 0.0 }
+        { date: '2021-11-14T00:00+08:00', max: 0.0, min: 0.0, avg: 0.0 },
       ],
       temperature: [
         { date: '2021-11-10T00:00+08:00', max: 23.0, min: 11.0, avg: 15.63 },
         { date: '2021-11-11T00:00+08:00', max: 23.0, min: 12.0, avg: 18.0 },
         { date: '2021-11-12T00:00+08:00', max: 22.0, min: 13.0, avg: 18.07 },
         { date: '2021-11-13T00:00+08:00', max: 22.0, min: 13.0, avg: 18.21 },
-        { date: '2021-11-14T00:00+08:00', max: 22.0, min: 14.0, avg: 18.27 }
+        { date: '2021-11-14T00:00+08:00', max: 22.0, min: 14.0, avg: 18.27 },
       ],
       wind: [
         { date: '2021-11-10T00:00+08:00', max: { speed: 17.89, direction: 4.48 }, min: { speed: 7.2, direction: 28.0 }, avg: { speed: 13.18, direction: 5.2 } },
         { date: '2021-11-11T00:00+08:00', max: { speed: 11.5, direction: 357.29 }, min: { speed: 8.88, direction: 9.83 }, avg: { speed: 10.29, direction: 12.36 } },
         { date: '2021-11-12T00:00+08:00', max: { speed: 20.59, direction: 356.2 }, min: { speed: 9.51, direction: 11.63 }, avg: { speed: 13.55, direction: 4.21 } },
         { date: '2021-11-13T00:00+08:00', max: { speed: 14.19, direction: 2.97 }, min: { speed: 8.61, direction: 22.94 }, avg: { speed: 11.94, direction: 5.31 } },
-        { date: '2021-11-14T00:00+08:00', max: { speed: 13.09, direction: 10.9 }, min: { speed: 5.39, direction: 12.52 }, avg: { speed: 9.56, direction: 10.63 } }
+        { date: '2021-11-14T00:00+08:00', max: { speed: 13.09, direction: 10.9 }, min: { speed: 5.39, direction: 12.52 }, avg: { speed: 9.56, direction: 10.63 } },
       ],
       humidity: [
         { date: '2021-11-10T00:00+08:00', max: 0.47, min: 0.28, avg: 0.38 },
         { date: '2021-11-11T00:00+08:00', max: 0.46, min: 0.27, avg: 0.38 },
         { date: '2021-11-12T00:00+08:00', max: 0.58, min: 0.36, avg: 0.45 },
         { date: '2021-11-13T00:00+08:00', max: 0.58, min: 0.37, avg: 0.48 },
-        { date: '2021-11-14T00:00+08:00', max: 0.55, min: 0.44, avg: 0.51 }
+        { date: '2021-11-14T00:00+08:00', max: 0.55, min: 0.44, avg: 0.51 },
       ],
       cloudrate: [
         { date: '2021-11-10T00:00+08:00', max: 0.99, min: 0.0, avg: 0.09 },
         { date: '2021-11-11T00:00+08:00', max: 1.0, min: 0.0, avg: 0.52 },
         { date: '2021-11-12T00:00+08:00', max: 1.0, min: 0.22, avg: 0.75 },
         { date: '2021-11-13T00:00+08:00', max: 1.0, min: 0.12, avg: 0.67 },
-        { date: '2021-11-14T00:00+08:00', max: 1.0, min: 0.07, avg: 0.61 }
+        { date: '2021-11-14T00:00+08:00', max: 1.0, min: 0.07, avg: 0.61 },
       ],
       pressure: [
         { date: '2021-11-10T00:00+08:00', max: 101855.15, min: 101295.15, avg: 101485.46 },
         { date: '2021-11-11T00:00+08:00', max: 101695.15, min: 101295.15, avg: 101517.14 },
         { date: '2021-11-12T00:00+08:00', max: 101855.15, min: 101449.51, avg: 101649.61 },
         { date: '2021-11-13T00:00+08:00', max: 101775.15, min: 101295.15, avg: 101575.77 },
-        { date: '2021-11-14T00:00+08:00', max: 101653.52, min: 101215.15, avg: 101448.06 }
+        { date: '2021-11-14T00:00+08:00', max: 101653.52, min: 101215.15, avg: 101448.06 },
       ],
       visibility: [
         { date: '2021-11-10T00:00+08:00', max: 24.13, min: 20.0, avg: 20.0 },
         { date: '2021-11-11T00:00+08:00', max: 20.0, min: 20.0, avg: 20.0 },
         { date: '2021-11-12T00:00+08:00', max: 20.0, min: 20.0, avg: 20.0 },
         { date: '2021-11-13T00:00+08:00', max: 20.0, min: 20.0, avg: 20.0 },
-        { date: '2021-11-14T00:00+08:00', max: 20.0, min: 14.29, avg: 19.16 }
+        { date: '2021-11-14T00:00+08:00', max: 20.0, min: 14.29, avg: 19.16 },
       ],
       dswrf: [
         { date: '2021-11-10T00:00+08:00', max: 605.0, min: 0.0, avg: 164.9 },
         { date: '2021-11-11T00:00+08:00', max: 533.7, min: 0.0, avg: 132.8 },
         { date: '2021-11-12T00:00+08:00', max: 346.7, min: 0.0, avg: 109.8 },
         { date: '2021-11-13T00:00+08:00', max: 575.8, min: 0.0, avg: 208.6 },
-        { date: '2021-11-14T00:00+08:00', max: 575.7, min: 0.0, avg: 114.8 }
+        { date: '2021-11-14T00:00+08:00', max: 575.7, min: 0.0, avg: 114.8 },
       ],
       air_quality: {
         aqi: [
@@ -667,36 +667,36 @@ export default {
           { date: '2021-11-11T00:00+08:00', max: { chn: 47, usa: 47 }, avg: { chn: 33.04, usa: 33.04 }, min: { chn: 26, usa: 26 } },
           { date: '2021-11-12T00:00+08:00', max: { chn: 54, usa: 54 }, avg: { chn: 45.79, usa: 45.79 }, min: { chn: 41, usa: 41 } },
           { date: '2021-11-13T00:00+08:00', max: { chn: 52, usa: 52 }, avg: { chn: 40.88, usa: 40.88 }, min: { chn: 31, usa: 31 } },
-          { date: '2021-11-14T00:00+08:00', max: { chn: 61, usa: 61 }, avg: { chn: 51.67, usa: 51.67 }, min: { chn: 44, usa: 44 } }
+          { date: '2021-11-14T00:00+08:00', max: { chn: 61, usa: 61 }, avg: { chn: 51.67, usa: 51.67 }, min: { chn: 44, usa: 44 } },
         ],
         pm25: [
           { date: '2021-11-10T00:00+08:00', max: 21, avg: 14.86, min: 8 },
           { date: '2021-11-11T00:00+08:00', max: 33, avg: 23.04, min: 18 },
           { date: '2021-11-12T00:00+08:00', max: 38, avg: 32.12, min: 29 },
           { date: '2021-11-13T00:00+08:00', max: 37, avg: 28.62, min: 22 },
-          { date: '2021-11-14T00:00+08:00', max: 44, avg: 36.46, min: 31 }
-        ]
+          { date: '2021-11-14T00:00+08:00', max: 44, avg: 36.46, min: 31 },
+        ],
       },
       skycon: [
         { date: '2021-11-10T00:00+08:00', value: 'CLEAR_NIGHT' },
         { date: '2021-11-11T00:00+08:00', value: 'PARTLY_CLOUDY_DAY' },
         { date: '2021-11-12T00:00+08:00', value: 'PARTLY_CLOUDY_DAY' },
         { date: '2021-11-13T00:00+08:00', value: 'PARTLY_CLOUDY_DAY' },
-        { date: '2021-11-14T00:00+08:00', value: 'PARTLY_CLOUDY_DAY' }
+        { date: '2021-11-14T00:00+08:00', value: 'PARTLY_CLOUDY_DAY' },
       ],
       skycon_08h_20h: [
         { date: '2021-11-10T00:00+08:00', value: 'PARTLY_CLOUDY_DAY' },
         { date: '2021-11-11T00:00+08:00', value: 'PARTLY_CLOUDY_DAY' },
         { date: '2021-11-12T00:00+08:00', value: 'PARTLY_CLOUDY_DAY' },
         { date: '2021-11-13T00:00+08:00', value: 'PARTLY_CLOUDY_DAY' },
-        { date: '2021-11-14T00:00+08:00', value: 'PARTLY_CLOUDY_DAY' }
+        { date: '2021-11-14T00:00+08:00', value: 'PARTLY_CLOUDY_DAY' },
       ],
       skycon_20h_32h: [
         { date: '2021-11-10T00:00+08:00', value: 'CLEAR_NIGHT' },
         { date: '2021-11-11T00:00+08:00', value: 'CLOUDY' },
         { date: '2021-11-12T00:00+08:00', value: 'PARTLY_CLOUDY_NIGHT' },
         { date: '2021-11-13T00:00+08:00', value: 'PARTLY_CLOUDY_NIGHT' },
-        { date: '2021-11-14T00:00+08:00', value: 'PARTLY_CLOUDY_NIGHT' }
+        { date: '2021-11-14T00:00+08:00', value: 'PARTLY_CLOUDY_NIGHT' },
       ],
       life_index: {
         ultraviolet: [
@@ -704,39 +704,39 @@ export default {
           { date: '2021-11-11T00:00+08:00', index: '3', desc: '\u4e2d\u7b49' },
           { date: '2021-11-12T00:00+08:00', index: '2', desc: '\u5f31' },
           { date: '2021-11-13T00:00+08:00', index: '2', desc: '\u5f31' },
-          { date: '2021-11-14T00:00+08:00', index: '1', desc: '\u6700\u5f31' }
+          { date: '2021-11-14T00:00+08:00', index: '1', desc: '\u6700\u5f31' },
         ],
         carWashing: [
           { date: '2021-11-10T00:00+08:00', index: '1', desc: '\u9002\u5b9c' },
           { date: '2021-11-11T00:00+08:00', index: '1', desc: '\u9002\u5b9c' },
           { date: '2021-11-12T00:00+08:00', index: '1', desc: '\u9002\u5b9c' },
           { date: '2021-11-13T00:00+08:00', index: '1', desc: '\u9002\u5b9c' },
-          { date: '2021-11-14T00:00+08:00', index: '1', desc: '\u9002\u5b9c' }
+          { date: '2021-11-14T00:00+08:00', index: '1', desc: '\u9002\u5b9c' },
         ],
         dressing: [
           { date: '2021-11-10T00:00+08:00', index: '4', desc: '\u6e29\u6696' },
           { date: '2021-11-11T00:00+08:00', index: '4', desc: '\u6e29\u6696' },
           { date: '2021-11-12T00:00+08:00', index: '4', desc: '\u6e29\u6696' },
           { date: '2021-11-13T00:00+08:00', index: '4', desc: '\u6e29\u6696' },
-          { date: '2021-11-14T00:00+08:00', index: '4', desc: '\u6e29\u6696' }
+          { date: '2021-11-14T00:00+08:00', index: '4', desc: '\u6e29\u6696' },
         ],
         comfort: [
           { date: '2021-11-10T00:00+08:00', index: '4', desc: '\u6e29\u6696' },
           { date: '2021-11-11T00:00+08:00', index: '4', desc: '\u6e29\u6696' },
           { date: '2021-11-12T00:00+08:00', index: '4', desc: '\u6e29\u6696' },
           { date: '2021-11-13T00:00+08:00', index: '4', desc: '\u6e29\u6696' },
-          { date: '2021-11-14T00:00+08:00', index: '4', desc: '\u6e29\u6696' }
+          { date: '2021-11-14T00:00+08:00', index: '4', desc: '\u6e29\u6696' },
         ],
         coldRisk: [
           { date: '2021-11-10T00:00+08:00', index: '4', desc: '\u6781\u6613\u53d1' },
           { date: '2021-11-11T00:00+08:00', index: '4', desc: '\u6781\u6613\u53d1' },
           { date: '2021-11-12T00:00+08:00', index: '4', desc: '\u6781\u6613\u53d1' },
           { date: '2021-11-13T00:00+08:00', index: '4', desc: '\u6781\u6613\u53d1' },
-          { date: '2021-11-14T00:00+08:00', index: '4', desc: '\u6781\u6613\u53d1' }
-        ]
-      }
+          { date: '2021-11-14T00:00+08:00', index: '4', desc: '\u6781\u6613\u53d1' },
+        ],
+      },
     },
     primary: 0,
-    forecast_keypoint: '\u672a\u6765\u4e24\u5c0f\u65f6\u4e0d\u4f1a\u4e0b\u96e8\uff0c\u653e\u5fc3\u51fa\u95e8\u5427'
-  }
+    forecast_keypoint: '\u672a\u6765\u4e24\u5c0f\u65f6\u4e0d\u4f1a\u4e0b\u96e8\uff0c\u653e\u5fc3\u51fa\u95e8\u5427',
+  },
 }

@@ -24,6 +24,6 @@ export default function useFilter(list: Ref<Array<Todo>>): {
   return {
     listFilter,
     updateFilter,
-    listMatchFilter
+    listMatchFilter,
   }
 }

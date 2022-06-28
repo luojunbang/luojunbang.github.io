@@ -17,7 +17,7 @@ function errorHandle(err: any) {
 // 创建axios实例
 const instance = axios.create({
   // withCredentials: true, //需要携带cookie
-  timeout: process.env.NODE_ENV === 'development' ? 1000 * 5 : 1000 * 60 * 10 //最小化策略分析测试统一超时时间
+  timeout: process.env.NODE_ENV === 'development' ? 1000 * 5 : 1000 * 60 * 10, //最小化策略分析测试统一超时时间
 })
 
 // 添加方法
@@ -34,7 +34,7 @@ instance.interceptors.request.use(
   },
   error => {
     return Promise.reject(error)
-  }
+  },
 )
 
 // 响应拦截器
@@ -79,7 +79,7 @@ instance.interceptors.response.use(
         return Promise.reject(error)
       }
     }
-  }
+  },
 )
 
 export default instance

@@ -1,13 +1,13 @@
 export enum TYPE {
   DEFAULT = '',
   GREEN = 'GREEN',
-  RED = 'RED'
+  RED = 'RED',
 }
 
 export enum STATUS {
   DEFAULT = '',
   SUCCESS = 'SUCCESS',
-  FAIL = 'FAIL'
+  FAIL = 'FAIL',
 }
 
 export interface option {

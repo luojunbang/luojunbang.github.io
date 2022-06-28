@@ -25,8 +25,8 @@ export default defineComponent({
     })
     return {
       userId,
-      handleChange
+      handleChange,
     }
-  }
+  },
 })
 </script>

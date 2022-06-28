@@ -94,7 +94,7 @@ const { date, time, ms } = (() => {
   return {
     ms,
     date,
-    time
+    time,
   }
 })()
 
@@ -108,7 +108,7 @@ const { onInput, inputText, handleSearchClick, onKeyup, onChange } = (() => {
     const config = {
       baidu: 'https://www.baidu.com/s?wd=',
       google: 'https://www.google.com.hk/search?q=',
-      mdn: 'https://developer.mozilla.org/zh-CN/search?q='
+      mdn: 'https://developer.mozilla.org/zh-CN/search?q=',
     }
     const url = config[type] + encodeURIComponent(inputText.value)
     window.location.href = url

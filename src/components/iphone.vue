@@ -38,19 +38,19 @@ export default {
   props: {
     badgeLeft: {
       type: String,
-      default: ''
+      default: '',
     },
     badgeRight: {
       type: String,
-      default: '5G'
-    }
+      default: '5G',
+    },
   },
   computed: {
     cpTime() {
       const d = new Date()
       return `${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`
-    }
-  }
+    },
+  },
 }
 </script>
 <style lang="scss" scoped>
