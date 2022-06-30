@@ -30,6 +30,10 @@ module.exports = {
     },
   },
   chainWebpack(cfg) {
+    !isDev &
+      cfg.set('externals', {
+        vue: 'Vue',
+      })
     // env.prod
     !isDev &&
       cfg.plugin('FileManagerPlugin').use('filemanager-webpack-plugin', [

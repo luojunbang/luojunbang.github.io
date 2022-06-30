@@ -95,7 +95,7 @@ export default {
 #vdom > div {
   height: 50px;
 }
-span {
+#vdom > span {
   display: inline-block;
   width: 60px;
   padding: 5px 10px;

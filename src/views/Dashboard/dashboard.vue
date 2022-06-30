@@ -68,10 +68,10 @@
 <script lang="ts" setup>
 import { Ref, ref, onMounted, onUnmounted } from 'vue'
 import useWeatherInfo from './composables/weather'
+import { generatorDate } from 'lo-utils'
 
 const position = '113.459749,23.106402'
 
-import { generatorDate } from 'lo-utils'
 const { date, time, ms } = (() => {
   const date = ref<string>('')
   const time = ref<string>('')

@@ -32,6 +32,13 @@
         <div class="ball"></div>
       </div>
     </content-box>
+    <content-box title="融合">
+      <div class="h-100 w-100 pd relative">
+        <div class="border-item ab-center"></div>
+        <div class="border-item ab-center"></div>
+        <div class="border-item ab-center"></div>
+      </div>
+    </content-box>
   </div>
 </template>
 
@@ -46,6 +53,20 @@
       //url中对应的是上面svg filter的id
       filter: url(#displacement-wave-filter);
     }
+  }
+}
+
+.border-item {
+  height: 1px;
+  width: 100px;
+  border-bottom: 1px solid black;
+  &:nth-child(1) {
+    transform-origin: bottom left;
+    transform: translate(-50%, -50%) rotate(-60deg);
+  }
+  &:nth-child(2) {
+    transform-origin: bottom right;
+    transform: translate(-50%, -50%) rotate(60deg);
   }
 }
 

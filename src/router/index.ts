@@ -26,7 +26,7 @@ const config = {
 
 const routePath = require.context('../views', true, /\.vue$/).keys()
 
-const routesAuto = routeAutoLink(routePath, [Appmain, main, sub], config)(path => () => import(`@/views/${path}`))
+const routesAuto = routeAutoLink(routePath, [Appmain, main, sub], config)(path => () => import(/*webpackChunkName:"[request]"*/ `@/views/${path.replace(/\.vue$/, '')}.vue`))
 
 const router = createRouter({
   history: createWebHashHistory(),
