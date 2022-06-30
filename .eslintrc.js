@@ -8,12 +8,14 @@ module.exports = {
   extends: ['plugin:vue/vue3-essential', 'eslint:recommended', '@vue/typescript/recommended', '@vue/prettier/@typescript-eslint', '@vue/prettier'],
   parserOptions: {
     ecmaVersion: 2020,
+    parser: '@typescript-eslint/parser'
   },
   rules: {
     'no-console': !isDev ? 'off' : 'off',
     'no-debugger': !isDev ? 'off' : 'off',
     '@typescript-eslint/no-unused-vars': ['off'],
     '@typescript-eslint/explicit-module-boundary-types': 'off',
+    'vue/multi-word-component-names':'off',
     'prettier/prettier': [
       'error',
       {
