@@ -1,9 +1,10 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { resolve } = require('path')
+const TerserPlugin = require('terser-webpack-plugin')
 
 const isDev = process.env.NODE_ENV === 'development'
 
-console.log(resolve())
+console.log(resolve(), isDev)
 
 module.exports = {
   publicPath: isDev ? '/' : './dist',
@@ -17,6 +18,7 @@ module.exports = {
       },
     },
   },
+  productionSourceMap: false,
   devServer: {
     proxy: {
       '/v2.5': {
@@ -29,11 +31,28 @@ module.exports = {
       },
     },
   },
+  configureWebpack: {
+    optimization: {
+      splitChunks: {
+        cacheGroups: {
+          css: {
+            name: 'autoCss',
+            test: /[\\/]src[\\/]views[\\/]CssDisplay/,
+            minChunks: 1,
+            priority: 1,
+            minSize: 100,
+            chunks: 'all',
+            reuseExistingChunk: true,
+          },
+        },
+      },
+    },
+  },
   chainWebpack(cfg) {
-    !isDev &
-      cfg.set('externals', {
-        vue: 'Vue',
-      })
+    // !isDev &&
+    //   cfg.set('externals', {
+    //     vue: 'Vue',
+    //   })
     // env.prod
     !isDev &&
       cfg.plugin('FileManagerPlugin').use('filemanager-webpack-plugin', [

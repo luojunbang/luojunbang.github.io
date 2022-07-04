@@ -39,8 +39,19 @@
         <div class="border-item ab-center"></div>
       </div>
     </content-box>
+
+    <div>{{ JSON.stringify(forcast) }}</div>
+    <div>{{ JSON.stringify(a) }}</div>
+    <div>{{ JSON.stringify(b) }}</div>
   </div>
 </template>
+<script lang="ts" setup>
+import forcast from './forcast'
+import { a, b } from './forcast'
+setTimeout(() => {
+  throw new Error('1233')
+}, 2000)
+</script>
 
 <style lang="scss" scoped>
 .reflections {

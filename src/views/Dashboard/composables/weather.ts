@@ -1,7 +1,5 @@
 import { onMounted, reactive, Ref, ref, watch } from 'vue'
 
-import http from '@/common/http'
-
 import { token } from '@/common/config'
 
 function getweatherInfo(position: string): string {

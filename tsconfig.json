@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    // "useDefineForClassFields":false,
+    // "isolatedModules":true,
     "noImplicitAny":false,
     "target": "esnext",
     "module": "esnext",
@@ -13,6 +15,7 @@
     "sourceMap": true,
     "baseUrl": ".",
     "types": [
+      // "vite/client"
       "webpack-env"
     ],
     "paths": {
