@@ -45,9 +45,12 @@
 </template>
 <script lang="ts" setup>
 import forcast from './forcast'
-import { a, b } from './forcast'
+import * as forcastall from './forcast'
+
 setTimeout(() => {
   throw new Error('1233')
+  // eslint-disable-next-line no-unreachable
+  console.log('lojb', forcastall.a, forcastall.b)
 }, 2000)
 </script>
 

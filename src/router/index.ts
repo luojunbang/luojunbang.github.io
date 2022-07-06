@@ -32,7 +32,13 @@ const config = {
   'Page1/SubPage2/Page2/index.vue': { meta: {} },
 }
 
-const routePath = require.context('../views', true, /\.vue$/).keys()
+const routePath = require
+  .context('../views', true, /\.vue$/)
+  .keys()
+  .filter(i => !i.includes('Charts/'))
+
+console.log(routePath)
+
 // const routePath = Object.keys(import.meta.globEager('../views/*.vue')).map(i => i.replace(/^\.\.\//g, ''))
 // console.log(routePath)
 

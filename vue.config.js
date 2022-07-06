@@ -34,15 +34,13 @@ module.exports = {
   configureWebpack: {
     cache: {
       type: 'filesystem',
-      name: 'elementui',
       profile: true,
     },
     optimization: {
-      runtimeChunk: 'single',
-      moduleIds: 'deterministic',
-      usedExports: false,
-      sideEffects: true,
-      providedExports: false,
+      // runtimeChunk: 'single',
+      // moduleIds: 'deterministic',
+      // -
+      // providedExports: true,
       splitChunks: {
         cacheGroups: {
           element: {
@@ -54,11 +52,48 @@ module.exports = {
             chunks: 'all',
             reuseExistingChunk: true,
           },
+          cssDisplay: {
+            name: 'css-display',
+            test: /[\\/]src[\\/]views[\\/]CssDisplay[\\/]/,
+            minChunks: 1,
+            priority: 1,
+            minSize: 100,
+            chunks: 'all',
+            reuseExistingChunk: true,
+          },
+          Charts: {
+            name: 'charts',
+            test: /[\\/]src[\\/]views[\\/]Charts[\\/]/,
+            minChunks: 1,
+            priority: 1,
+            minSize: 100,
+            chunks: 'all',
+            reuseExistingChunk: true,
+          },
+          echarts: {
+            name: 'echarts',
+            test: /[\\/]node_modules[\\/]echarts[\\/]/,
+            minChunks: 1,
+            priority: 1,
+            minSize: 100,
+            chunks: 'all',
+            reuseExistingChunk: true,
+          },
+          g6: {
+            name: 'g6',
+            test: /[\\/]node_modules[\\/]@antv[\\/]/,
+            minChunks: 1,
+            priority: 1,
+            minSize: 100,
+            chunks: 'all',
+            reuseExistingChunk: true,
+          },
         },
       },
     },
   },
   chainWebpack(cfg) {
+    // cfg.optimization.minimizers.delete('terser')
     // !isDev &&
     //   cfg.set('externals', {
     //     vue: 'Vue',
