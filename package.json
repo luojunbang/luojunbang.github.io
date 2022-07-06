@@ -2,6 +2,7 @@
   "name": "luojunbang.github.io",
   "version": "0.1.0",
   "private": true,
+  "sideEffects": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -13,8 +14,11 @@
     "vite:review": "vite preview"
   },
   "dependencies": {
+    "@antv/g6": "^4.6.15",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "echarts": "^5.3.3",
+    "element-plus": "^2.2.8",
     "lo-utils": "^1.2.8",
     "vue": "^3.2.23",
     "vue-jsonp": "^2.0.0",

@@ -41,8 +41,6 @@
     </content-box>
 
     <div>{{ JSON.stringify(forcast) }}</div>
-    <div>{{ JSON.stringify(a) }}</div>
-    <div>{{ JSON.stringify(b) }}</div>
   </div>
 </template>
 <script lang="ts" setup>

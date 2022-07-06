@@ -32,12 +32,22 @@ module.exports = {
     },
   },
   configureWebpack: {
+    cache: {
+      type: 'filesystem',
+      name: 'elementui',
+      profile: true,
+    },
     optimization: {
+      runtimeChunk: 'single',
+      moduleIds: 'deterministic',
+      usedExports: false,
+      sideEffects: true,
+      providedExports: false,
       splitChunks: {
         cacheGroups: {
-          css: {
-            name: 'autoCss',
-            test: /[\\/]src[\\/]views[\\/]CssDisplay/,
+          element: {
+            name: 'element-plus',
+            test: /[\\/]node_modules[\\/]element-plus[\\/]/,
             minChunks: 1,
             priority: 1,
             minSize: 100,
@@ -54,18 +64,18 @@ module.exports = {
     //     vue: 'Vue',
     //   })
     // env.prod
-    !isDev &&
-      cfg.plugin('FileManagerPlugin').use('filemanager-webpack-plugin', [
-        {
-          events: {
-            onStart: {
-              delete: ['./index.html'],
-            },
-            onEnd: {
-              move: [{ source: './dist/index.html', destination: './index.html' }],
-            },
-          },
-        },
-      ])
+    // !isDev &&
+    //   cfg.plugin('FileManagerPlugin').use('filemanager-webpack-plugin', [
+    //     {
+    //       events: {
+    //         onStart: {
+    //           delete: ['./index.html'],
+    //         },
+    //         onEnd: {
+    //           move: [{ source: './dist/index.html', destination: './index.html' }],
+    //         },
+    //       },
+    //     },
+    //   ])
   },
 }

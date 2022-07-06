@@ -88,6 +88,8 @@ export default {
       updateChildren(domArray.map(i => ({ value: i.value })))
     }, 4000)
     //
+    const a = 'a,b,c,d,e,f,g,h,i'
+    const b = 'a,b,n,f,c,d,i,e,h,i'
   },
 }
 </script>
