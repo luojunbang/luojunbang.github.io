@@ -1,11 +1,21 @@
 <template>
-  <div class="nav broder-b flex-row-nowrap">nav</div>
+  <div class="nav broder-b flex-row-nowrap">
+    <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+      <template v-for="item in routerNest" :key="item.path">
+        <el-menu-item v-if="item.children.length == 0" :index="item.path">{{ item.title }}</el-menu-item>
+        <el-sub-menu v-else :index="item.path">
+          <template v-slot:title>{{ item.title }}</template>
+          <el-menu-item v-for="subitem in item.children" :key="subitem.path" :index="subitem.path">{{ subitem.title }}</el-menu-item>
+        </el-sub-menu>
+      </template>
+    </el-menu>
+  </div>
 </template>
 
 <script lang="ts" setup>
 import { navRoutePath } from '@/router'
-import { Interface } from 'readline'
-
+import { Ref, ref } from 'vue'
+import { useRouter } from 'vue-router'
 type routeConfig = routeInfo
 
 interface routeInfo {
@@ -13,15 +23,22 @@ interface routeInfo {
   title: string
   children: routeConfig[]
 }
+const activeIndex: Ref = ref('1')
+const router = useRouter()
+function handleSelect(e) {
+  console.log(e)
+  activeIndex.value = e
+  router.push('/' + e)
+}
 
 function filePathToNest(pathList: string[][]): routeConfig[] {
-  console.log(pathList)
   const ROOT = '$$__loroot'
   let idx = -1
   const generator = (path: string[]): string[] => {
     if (path.length == 1) return path.map(i => i.replace(/\.vue$/, ''))
     return path[path.length - 1] === 'index.vue' || path[path.length - 1].toLowerCase() === path[path.length - 2].toLowerCase() + '.vue' ? path.slice(0, path.length - 1) : path
   }
+
   const navConfig2: Map<string, routeConfig> = new Map()
   while (idx++ < pathList.length - 1) {
     const path = generator(pathList[idx])
@@ -49,11 +66,11 @@ function filePathToNest(pathList: string[][]): routeConfig[] {
     }
   }
   // console.log(ans)
-
   return ans
 }
 
-filePathToNest(navRoutePath)
+const routerNest = filePathToNest(navRoutePath)
+console.log(routerNest)
 </script>
 
 <style lang="scss" scoped>
