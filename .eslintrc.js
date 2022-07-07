@@ -1,3 +1,5 @@
+const { off } = require('process')
+
 const isDev = process.env.NODE_ENV === 'development'
 
 module.exports = {
@@ -14,6 +16,7 @@ module.exports = {
     'no-console': !isDev ? 'off' : 'off',
     'no-debugger': !isDev ? 'off' : 'off',
     '@typescript-eslint/no-unused-vars': ['off'],
+    'no-empty': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     'vue/multi-word-component-names': 'off',
     '@typescript-eslint/no-empty-function': 'off',

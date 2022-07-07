@@ -37,12 +37,18 @@ const routePath = require
   .keys()
   .filter(i => !i.includes('Charts/'))
 
-console.log(routePath)
+export const navRoutePath: string[][] = routePath
+  .map(route => route.replace(/^\.\//, '').split('/'))
+  .filter(route => {
+    const routeAry: string[] = route.slice(-2)
+    if (routeAry.length == 1) return true
+    return routeAry[1] === 'index.vue' || routeAry[0].toLocaleLowerCase() === routeAry[1].replace(/\.vue$/, '').toLocaleLowerCase()
+  })
 
 // const routePath = Object.keys(import.meta.globEager('../views/*.vue')).map(i => i.replace(/^\.\.\//g, ''))
 // console.log(routePath)
 
-const routesAuto = routeAutoLink(routePath, [Appmain, main, sub], config)(path => () => import(/*webpackChunkName:"[request]"*/ `../views/${path.replace(/\.vue$/, '')}.vue`))
+const routesAuto = routeAutoLink(routePath, [main, Appmain, sub], config)(path => () => import(/*webpackChunkName:"[request]"*/ `../views/${path.replace(/\.vue$/, '')}.vue`))
 
 const router = createRouter({
   history: createWebHashHistory(),

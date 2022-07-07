@@ -4,7 +4,14 @@
   </div>
 </template>
 
-<style lang="scss"></style>
+<style lang="scss">
+#app {
+  height: 100%;
+}
+.view-container {
+  height: 100%;
+}
+</style>
 <style>
 /* @media only screen and (max-width: 375px) {
   .view-container {
