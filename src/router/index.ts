@@ -4,8 +4,8 @@ import sub from '@/layout/sub.vue'
 import Appmain from '@/layout/Appmain.vue'
 import dashboard from '@/views/Dashboard/dashboard.vue'
 // import { routeAutoLink } from 'lo-utils/src/routerHelper'
-// import { routeAutoLink } from './routerImport'
-import { routeAutoLink } from 'lo-utils'
+import { routeAutoLink } from './routerImport'
+// import { routeAutoLink } from 'lo-utils'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -27,7 +27,7 @@ const routes: Array<RouteRecordRaw> = [
  * @param viewsRootPath
  */
 export const config = {
-  'Todos/index.vue': { meta: {}, params: ':id?' },
+  'Example/Todos/index.vue': { meta: {}, params: ':userId?', props: true },
   'Example/Page1/SubPage2/SubPage2.vue': { meta: { title: '改名字' }, params: ':userId?' },
   'Example/Page1/SubPage2/Page2/index.vue': { meta: {} },
 }

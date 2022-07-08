@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div>userId:{{ userId }}</div>
     <div class="mg-tb border pd-sm">
       类型：<select name="type" v-model="todoAdd.type" class="mg-r">
         <option v-for="item in typeList" :value="item" :key="item">{{ item }}</option>

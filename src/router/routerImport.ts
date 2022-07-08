@@ -53,16 +53,16 @@ export function routeAutoLink(routePath: string[], layoutComponentLists: Compone
     while (path_ary.length) {
       const _path = path_ary[0]
       const rest_path = path_ary.join('/')
-      const foundRoute: RouteRecordRaw | undefined = _routes.find(({ path }) => removePathParam(path) == `${_path}`)
-      if (foundRoute && foundRoute.name) {
+      const foundRoute = _routes.find(({ path }) => removePathParam(path) == `${_path}`)
+      if (foundRoute) {
         if (Array.isArray(foundRoute.children)) {
           if (isIndex(rest_path)) {
             foundRoute.children.push(generatorRoute('', path, routeConfig[path]))
             break
           }
         } else {
-          //   console.log(foundRoute)
-          const index_path = (foundRoute.name as string).split('_').join('/') + '.vue' //复原
+          console.log(foundRoute)
+          const index_path = typeof foundRoute.name == 'string' ? foundRoute.name.split('_').join('/') + '.vue' : '' //复原
           foundRoute.children = [generatorRoute('', index_path, routeConfig[index_path])]
           foundRoute.path = removePathParam(foundRoute.path)
           if (!layoutComponentLists[len - path_ary.length]) throw new Error(`Level ${len - path_ary.length + 1} LayoutComponents is not definded`)
