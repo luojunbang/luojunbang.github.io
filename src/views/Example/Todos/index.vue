@@ -33,7 +33,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, toRefs, ref } from 'vue'
+import { defineComponent, toRefs, ref, onMounted } from 'vue'
 import { useList, useModify } from './composables/useList'
 import useFilter from './composables/useFilter'
 import { TYPE, STATUS } from './composables/todo'

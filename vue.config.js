@@ -32,10 +32,10 @@ module.exports = {
     },
   },
   configureWebpack: {
-    cache: {
-      type: 'filesystem',
-      profile: true,
-    },
+    // cache: {
+    //   type: 'filesystem',
+    //   profile: true,
+    // },
     optimization: {
       // runtimeChunk: 'single',
       // moduleIds: 'deterministic',

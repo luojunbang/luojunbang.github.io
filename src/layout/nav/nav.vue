@@ -11,7 +11,7 @@ import { navRoutePath, config } from '@/router'
 import { Ref, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import NavMenu from './NavMenu.vue'
-import { filePathToNest } from '../../router/routerImport'
+import { filePathToNest } from 'lo-utils'
 const activeIndex: Ref = ref('dashboard')
 
 const router = useRouter()

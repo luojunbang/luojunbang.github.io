@@ -3,10 +3,8 @@ import main from '@/layout/main.vue'
 import sub from '@/layout/sub.vue'
 import Appmain from '@/layout/Appmain.vue'
 import dashboard from '@/views/Dashboard/dashboard.vue'
-// import { routeAutoLink } from 'lo-utils/src/routerHelper'
-import { routeAutoLink } from './routerImport'
-// import { routeAutoLink } from 'lo-utils'
-
+import { routeAutoLink } from 'lo-utils'
+import { fmtDate } from 'lo-utils'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
