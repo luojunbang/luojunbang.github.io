@@ -43,7 +43,6 @@ const handleBackward = () => {
 
 const onTransitionend = debounce(
   function (e) {
-    // console.log(isPending.value)
     isPending.value = false
   },
   300,
@@ -79,17 +78,14 @@ div.carousel {
     z-index: 8;
     // visibility: hidden;
     &__next {
-      transition: all 1s;
       z-index: 10;
       transform: translate(100%, 0);
     }
     &__active {
-      transition: all 1s;
       z-index: 10;
       transform: translate(0, 0);
     }
     &__last {
-      transition: all 1s;
       transform: translate(-100%, 0);
       z-index: 9;
     }

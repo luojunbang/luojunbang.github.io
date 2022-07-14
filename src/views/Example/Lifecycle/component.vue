@@ -12,7 +12,7 @@ export default defineComponent({
   setup(props, { emit }) {
     const a = ref('lo')
     setTimeout(() => {
-      a.value = 'luojunbang'
+      a.value = 'a'
     }, 8000)
     const handleEmit = () => {
       emit('change', 123)

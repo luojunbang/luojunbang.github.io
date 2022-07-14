@@ -32,15 +32,13 @@
         <div class="ball"></div>
       </div>
     </content-box>
-    <content-box title="融合">
+    <content-box title="等边三角形">
       <div class="h-100 w-100 pd relative">
         <div class="border-item ab-center"></div>
         <div class="border-item ab-center"></div>
         <div class="border-item ab-center"></div>
       </div>
     </content-box>
-
-    <div>{{ JSON.stringify(forcast) }}</div>
   </div>
 </template>
 <script lang="ts" setup>

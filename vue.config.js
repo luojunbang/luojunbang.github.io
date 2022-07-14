@@ -92,25 +92,35 @@ module.exports = {
       },
     },
   },
-  chainWebpack(cfg) {
-    // cfg.optimization.minimizers.delete('terser')
-    // !isDev &&
-    //   cfg.set('externals', {
-    //     vue: 'Vue',
-    //   })
+  chainWebpack: config => {
+    config.module
+      .rule('vue')
+      .use('vue-loader')
+      .tap(options => {
+        options.compilerOptions = {
+          ...(options.compilerOptions || {}),
+          isCustomElement: tag => /^micro-app/.test(tag),
+        }
+        return options
+      })
+    config.optimization.minimizers.delete('terser')
+    !isDev &&
+      config.set('externals', {
+        vue: 'Vue',
+      })
     // env.prod
-    // !isDev &&
-    //   cfg.plugin('FileManagerPlugin').use('filemanager-webpack-plugin', [
-    //     {
-    //       events: {
-    //         onStart: {
-    //           delete: ['./index.html'],
-    //         },
-    //         onEnd: {
-    //           move: [{ source: './dist/index.html', destination: './index.html' }],
-    //         },
-    //       },
-    //     },
-    //   ])
+    !isDev &&
+      config.plugin('FileManagerPlugin').use('filemanager-webpack-plugin', [
+        {
+          events: {
+            onStart: {
+              delete: ['./index.html'],
+            },
+            onEnd: {
+              move: [{ source: './dist/index.html', destination: './index.html' }],
+            },
+          },
+        },
+      ])
   },
 }

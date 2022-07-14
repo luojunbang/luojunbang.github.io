@@ -4,20 +4,20 @@ import sub from '@/layout/sub.vue'
 import Appmain from '@/layout/Appmain.vue'
 import dashboard from '@/views/Dashboard/dashboard.vue'
 import { routeAutoLink } from 'lo-utils'
-import { fmtDate } from 'lo-utils'
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     redirect: '/dashboard',
   },
-  // {
-  //   path: '/dashboard',
-  //   component: dashboard,
-  // },
-  // {
-  //   path: '/css',
-  //   component: () => import('@/views/CssDisplay/index.vue'),
-  // },
+  {
+    path: '/dashboard',
+    component: dashboard,
+  },
+  {
+    path: '/css',
+    component: () => import('@/views/CssDisplay/index.vue'),
+  },
 ]
 
 /**
@@ -30,7 +30,9 @@ export const config = {
   'Example/Page1/SubPage2/Page2/index.vue': { meta: {} },
 }
 
-const routePath = require.context('../views', true, /\.vue$/).keys()
+const PATH = '../views/Example/'
+
+const routePath = require.context('../views/Example/', true, /\.vue$/).keys()
 
 export const navRoutePath: string[] = [...routePath].filter(route => {
   const routeAry: string[] = route.split('/').slice(-2)
@@ -39,15 +41,22 @@ export const navRoutePath: string[] = [...routePath].filter(route => {
 })
 
 // const routePath = Object.keys(import.meta.globEager('../views/*.vue')).map(i => i.replace(/^\.\.\//g, ''))
-// console.log(routePath)
+console.log(routePath)
 
-const routesAuto = routeAutoLink(routePath, [main, Appmain, sub], config)(path => () => import(/*webpackChunkName:"[request]"*/ `../views/${path.replace(/\.vue$/, '')}.vue`))
+const routesAuto = routeAutoLink(routePath, [main, Appmain, sub], config)(path => () => import(/*webpackChunkName:"[request]"*/ `../views/Example/${path.replace(/\.vue$/, '')}.vue`))
 
 console.log(routesAuto)
 
 const router = createRouter({
-  history: createWebHashHistory(),
-  routes: [...routes, ...routesAuto], //
+  history: createWebHashHistory(process.env.BASE_URL),
+  routes: [
+    ...routes,
+    {
+      path: '/Example',
+      component: main,
+      children: routesAuto,
+    },
+  ], //
 })
 
 export default router
