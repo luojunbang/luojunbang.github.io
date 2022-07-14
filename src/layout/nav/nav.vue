@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts" setup>
-import { navRoutePath, config } from '@/router'
+import { config } from '@/router'
 import { Ref, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import NavMenu from './NavMenu.vue'
@@ -22,10 +22,24 @@ function handleSelect(e) {
   router.push('/' + e)
 }
 
+const navRoutePath = require
+  .context('../../views/Example/', true, /\.vue$/)
+  .keys()
+  .filter(route => {
+    const routeAry: string[] = route.split('/').slice(-2)
+    if (routeAry.length == 1) return true
+    return routeAry[1] === 'index.vue' || routeAry[0].toLocaleLowerCase() === routeAry[1].replace(/\.vue$/, '').toLocaleLowerCase()
+  })
+
 const routerNest = [
   {
-    path: '/css',
-    title: 'CSS',
+    path: 'Dashboard',
+    title: 'Dashboard',
+    children: [],
+  },
+  {
+    path: 'Carousel',
+    title: 'Carousel',
     children: [],
   },
   {
