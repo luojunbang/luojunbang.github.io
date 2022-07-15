@@ -2,7 +2,7 @@
   <div class="pd-t">
     <div class="carousel">
       <swiper>
-        <swiper-item v-for="(item, index) in list" :key="index">item:{{ index }}</swiper-item>
+        <!-- <swiper-item v-for="(item, index) in list" :key="index">item:{{ index }}</swiper-item> -->
       </swiper>
     </div>
   </div>

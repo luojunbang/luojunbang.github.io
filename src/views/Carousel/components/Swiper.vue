@@ -1,6 +1,14 @@
 <template>
   <div class="swiper-container">
-    <div class="swiper-item text-center pd-t-lg" :style="cpStyle(index)" v-for="(item, index) in swiperList" :key="index" :class="{ animating: animating(index) }">item:{{ index }}-{{ item.id }}</div>
+    <div
+      class="swiper-item text-center pd-t-lg"
+      :style="initing && index == nextIndex ? { ...cpStyle(index), ...nextPositionStyle } : cpStyle(index)"
+      v-for="(item, index) in swiperList"
+      :key="index"
+      :class="{ animating: animating(index) }"
+    >
+      item:{{ index }}-{{ item.id }}
+    </div>
   </div>
   <div class="text-center">
     <button @click="prev">Prev</button>
@@ -16,22 +24,44 @@ const swiperList = reactive(new Array(4).fill(0).map((i, idx) => ({ id: r() })))
 
 const calc = i => (i + swiperList.length) % swiperList.length
 
+const nextIndex = ref(-1)
 const activeIndex = ref(0)
 const lastIndex = ref(swiperList.length - 1)
 const diretion = ref('')
 function next() {
   diretion.value = 'next'
+  nextIndex.value = calc(activeIndex.value + 1 + IN_SHOW_COUNT - 1)
+  initNextPosition()
   setTimeout(() => {
+    initing.value = false
     lastIndex.value = activeIndex.value
     activeIndex.value = calc(activeIndex.value + 1)
-  })
+  }, 3000)
 }
 function prev() {
   diretion.value = 'prev'
+  nextIndex.value = calc(activeIndex.value - 1)
+  initNextPosition()
   setTimeout(() => {
+    initing.value = false
     lastIndex.value = activeIndex.value
     activeIndex.value = calc(activeIndex.value - 1)
-  })
+  }, 3000)
+}
+
+const initing = ref(false)
+const nextPositionStyle = computed(() => {
+  let tranX
+  if (diretion.value == 'prev') tranX = -1
+  if (diretion.value == 'next') tranX = IN_SHOW_COUNT
+  return tranX === undefined
+    ? {}
+    : {
+        transform: `translateX(${tranX * 100}%)`,
+      }
+})
+const initNextPosition = () => {
+  initing.value = true
 }
 
 const wait = 0.3
@@ -76,12 +106,11 @@ const animating = computed(() => {
     }
     console.log(list)
 
-    return list.indexOf(index) != -1
+    return list.indexOf(index) != -1 && !initing.value
   }
 })
 
 const cpStyle = computed(() => {
-  const dir = diretion.value
   const activeIdx = activeIndex.value
   const { list, safeCount } = calcList(activeIdx)
   return index => {
