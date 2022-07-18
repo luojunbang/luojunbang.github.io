@@ -20,7 +20,7 @@
 import { computed } from '@vue/reactivity'
 import { r } from 'lo-utils'
 import { onMounted, reactive, ref } from 'vue'
-const swiperList = reactive(new Array(4).fill(0).map((i, idx) => ({ id: r() })))
+const swiperList = reactive(new Array(2).fill(0).map((i, idx) => ({ id: r() })))
 
 const calc = i => (i + swiperList.length) % swiperList.length
 
@@ -31,37 +31,18 @@ const diretion = ref('')
 function next() {
   diretion.value = 'next'
   nextIndex.value = calc(activeIndex.value + 1 + IN_SHOW_COUNT - 1)
-  initNextPosition()
   setTimeout(() => {
-    initing.value = false
     lastIndex.value = activeIndex.value
     activeIndex.value = calc(activeIndex.value + 1)
-  }, 3000)
+  }, 300)
 }
 function prev() {
   diretion.value = 'prev'
   nextIndex.value = calc(activeIndex.value - 1)
-  initNextPosition()
   setTimeout(() => {
-    initing.value = false
     lastIndex.value = activeIndex.value
     activeIndex.value = calc(activeIndex.value - 1)
-  }, 3000)
-}
-
-const initing = ref(false)
-const nextPositionStyle = computed(() => {
-  let tranX
-  if (diretion.value == 'prev') tranX = -1
-  if (diretion.value == 'next') tranX = IN_SHOW_COUNT
-  return tranX === undefined
-    ? {}
-    : {
-        transform: `translateX(${tranX * 100}%)`,
-      }
-})
-const initNextPosition = () => {
-  initing.value = true
+  }, 300)
 }
 
 const wait = 0.3
@@ -77,55 +58,9 @@ onMounted(() => {
   // handleMove()
 })
 
-const IN_SHOW_COUNT = 3 // Count
+const IN_SHOW_COUNT = 1 // Count
 
 const SAFE_COUNT = 1
-
-function calcList(activeIdx) {
-  let list: number[] = []
-  while (list.length < IN_SHOW_COUNT && list.length < swiperList.length) {
-    list.push(calc(activeIdx + list.length))
-  }
-  let _safe = 0
-  while (_safe++ < SAFE_COUNT && list.length < swiperList.length) {
-    list.unshift(calc(activeIdx - _safe))
-    list.length < swiperList.length && list.push(calc(activeIdx + IN_SHOW_COUNT - 1 + _safe))
-  }
-  console.log(_safe, list)
-
-  return { safeCount: _safe - 1, list }
-}
-
-const animating = computed(() => {
-  const activeIdx = activeIndex.value
-  const { list, safeCount } = calcList(activeIdx)
-  return index => {
-    if (swiperList.length - IN_SHOW_COUNT > 1) {
-      if (diretion.value === 'prev') new Array(safeCount).fill(0).forEach((i, idx) => (list[idx] = -1))
-      if (diretion.value === 'next') new Array(safeCount).fill(0).forEach((i, idx) => (list[list.length - 1 - idx] = -1))
-    }
-    console.log(list)
-
-    return list.indexOf(index) != -1 && !initing.value
-  }
-})
-
-const cpStyle = computed(() => {
-  const activeIdx = activeIndex.value
-  const { list, safeCount } = calcList(activeIdx)
-  return index => {
-    const _idx = list.indexOf(index)
-    let tranX = IN_SHOW_COUNT + 3
-    if (_idx != -1) {
-      tranX = _idx - safeCount
-    }
-    return {
-      // transition: _idx === -1 ? '' : `all ${wait}s linear`,
-      transform: `translateX(${100 * tranX}%)`,
-      display: _idx === -1 ? 'none' : 'block',
-    }
-  }
-})
 </script>
 
 <style lang="scss" scoped>
@@ -136,7 +71,7 @@ const cpStyle = computed(() => {
 }
 .swiper-item {
   // width: 300px;
-  width: 33.33%;
+  width: 100%;
   border: 1px solid black;
   height: 100%;
   position: absolute;
