@@ -30,16 +30,14 @@ onMounted(() => {
   ball.value.addEventListener('transitionend', () => {})
 })
 
-function start() {
+async function start() {
   style.left = '100px'
   style.top = '0px'
   reset.value = false
-  setTimeout(() => {
-    console.log('transitionend')
-    reset.value = true
-    real.value = true
-    style.top = '100px'
-  })
+  await nextTick()
+  reset.value = true
+  real.value = true
+  style.top = '100px'
 }
 watchPostEffect(() => {
   console.log('reset watchPostEffect:', reset.value)

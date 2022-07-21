@@ -4,7 +4,7 @@
   <div>lastIndex:{{ lastIndex }}</div>
   <div>diretion:{{ diretion }}</div>
   <div id="ready" style="width: 0; height: 0; display: none">ready:{{ ready }}</div>
-  <div class="swiper-container">
+  <div ref="root" class="swiper-container">
     <div class="swiper-item text-center pd-t-lg" :style="cpStyle(index)" v-for="(item, index) in swiperList" :key="index" :class="{ animating: ready && activeList.includes(index) }">
       <div>{{ index }}<br />{{ item.id }}<br />{{ ready ? 'T' : 'F' }}</div>
     </div>
@@ -18,10 +18,13 @@
 <script lang="ts" setup>
 import { computed, unref } from '@vue/reactivity'
 import { r } from 'lo-utils'
-import { CSSProperties, nextTick, onMounted, reactive, ref } from 'vue'
+import { CSSProperties, shallowRef, getCurrentInstance, nextTick, onMounted, reactive, ref } from 'vue'
 const swiperList = reactive(new Array(11).fill(0).map((i, idx) => ({ id: r(2) })))
 
 const calc = i => (i + swiperList.length) % swiperList.length
+const ins = getCurrentInstance()
+
+const root = shallowRef<HTMLDivElement>()
 
 const nextIndex = ref(-1)
 const activeIndex = ref(0)
@@ -33,9 +36,10 @@ const nextStyle = reactive({
 })
 
 const activeList = computed(() => {
-  return [lastIndex.value, ...new Array(IN_SHOW_COUNT).fill(0).map((i, idx) => activeIndex.value + idx)].map(calc)
+  if (diretion.value == 'prev') {
+    return [activeIndex.value, ...new Array(IN_SHOW_COUNT).fill(0).map((i, idx) => lastIndex.value + idx)].map(calc)
+  } else return [lastIndex.value, ...new Array(IN_SHOW_COUNT).fill(0).map((i, idx) => activeIndex.value + idx)].map(calc)
 })
-
 function next() {
   diretion.value = 'next'
   nextIndex.value = calc(activeIndex.value + IN_SHOW_COUNT)
@@ -43,23 +47,22 @@ function next() {
   animating.value = false
   nextStyle.transform = `translateX(${100 * 2}%)`
   setTimeout(() => {
-    console.log('ready:', ready.value, document.getElementById('ready')?.innerText)
+    // console.log('ready:', ready.value, document.getElementById('ready')?.innerText)
     ready.value = true
     lastIndex.value = activeIndex.value
     activeIndex.value = calc(activeIndex.value + 1)
-  })
+  }, 20)
 }
-function prev() {
+async function prev() {
   diretion.value = 'prev'
   nextIndex.value = calc(activeIndex.value - 1)
   ready.value = false
   nextStyle.transform = `translateX(${100 * -1}%)`
-  nextTick(() => {
-    console.log('ready:', ready.value, document.getElementById('ready')?.innerText)
-    ready.value = true
-    lastIndex.value = activeIndex.value
-    activeIndex.value = calc(activeIndex.value - 1)
-  })
+  await nextTick()
+  root.value && getComputedStyle(root.value).width // force brower render css quene
+  ready.value = true
+  lastIndex.value = activeIndex.value
+  activeIndex.value = calc(activeIndex.value - 1)
 }
 
 const ready = ref(true)
@@ -75,11 +78,8 @@ const cpStyle = computed(() => {
   // console.log('diretion:', diretion.value)
   // console.log('diretion:', ready.value)
   return index => {
-    if (index === activeIndex.value) {
-      console.log(activeIndex.value)
-    }
     if (!ready.value && index == nextIndex.value) {
-      console.log('nextIndex computedindex:', index)
+      // console.log('nextIndex computedindex:', index)
       if (diretion.value == 'prev') return { transform: `translateX(${100 * -1}%)` }
       else if (diretion.value == 'next') return { transform: `translateX(${100 * IN_SHOW_COUNT + 1}%)` }
     }
@@ -95,7 +95,7 @@ const cpStyle = computed(() => {
       list = [lastIndex.value, ...new Array(IN_SHOW_COUNT).fill(0).map((i, idx) => activeIndex.value + idx)].map(calc)
     } else list = [...new Array(IN_SHOW_COUNT).fill(0).map((i, idx) => activeIndex.value + idx)].map(calc)
     if (list.indexOf(index) != -1) {
-      console.log('list computedindex:', index)
+      // console.log('list computedindex:', index)
       ans.transform = `translateX(${100 * (list.indexOf(index) + base)}%)`
     } else {
       ans.transform = `translateX(${100 * IN_SHOW_COUNT + 1}%)`
@@ -105,19 +105,19 @@ const cpStyle = computed(() => {
   }
 })
 
-const wait = ref(0.5)
+const wait = ref(0.1)
 const cpWait = computed(() => {
   return wait.value + 's'
 })
 let timer
 const handleMove = () => {
   timer = setInterval(() => {
-    next()
+    prev()
   }, wait.value * 1000)
 }
 
 onMounted(() => {
-  handleMove()
+  // handleMove()
 })
 
 const IN_SHOW_COUNT = 10 // Count
