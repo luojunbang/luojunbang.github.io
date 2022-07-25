@@ -14,5 +14,5 @@ import { defineProps } from 'vue'
 const props = defineProps<{
   menuList: routeConfig[]
 }>()
-console.log(props)
+// console.log(props)
 </script>

@@ -6,20 +6,20 @@
           <div class="ph-screen">
             <div class="ph-screen--header">
               <div class="ph-screen--header__left">
-                <slot name="badgeLeft" />
+                <slot name="badgeLeft"></slot>
                 {{ badgeLeft || cpTime }}
               </div>
               <div class="ph-screen--header__faceid">
                 <div class="ph-screen--header__faceid-receiver"></div>
               </div>
               <div class="ph-screen--header__right">
-                <slot name="badgeRight" />
+                <slot name="badgeRight"></slot>
                 {{ badgeRight }}
                 <div class="ph-screen--header__battery"></div>
               </div>
             </div>
             <div class="ph-screen--content">
-              <slot />
+              <slot></slot>
             </div>
           </div>
           <div class="ph-tool--aerial ph-tool--aerial-top"></div>

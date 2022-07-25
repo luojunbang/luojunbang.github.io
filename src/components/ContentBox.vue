@@ -1,7 +1,7 @@
 <template>
   <div :key="item" class="fl content-container">
     <div class="content-box">
-      <slot />
+      <slot></slot>
       <div class="content-title">{{ title }}</div>
     </div>
   </div>

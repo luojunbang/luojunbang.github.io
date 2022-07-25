@@ -19,6 +19,18 @@ module.exports = {
     'no-empty': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     'vue/multi-word-component-names': 'off',
+    // 'vue/html-self-closing': [
+    //   'error',
+    //   {
+    //     html: {
+    //       void: 'always',
+    //       normal: 'never',
+    //       component: 'always',
+    //     },
+    //     svg: 'always',
+    //     math: 'always',
+    //   },
+    // ],
     '@typescript-eslint/no-empty-function': 'off',
     '@typescript-eslint/no-this-alias': 'off',
     'prettier/prettier': [

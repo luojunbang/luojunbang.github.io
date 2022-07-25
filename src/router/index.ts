@@ -33,7 +33,7 @@ export const config = {
 const routePath = require.context('../views/', true, /\.vue$/).keys()
 
 // const routePath = Object.keys(import.meta.globEager('../views/*.vue')).map(i => i.replace(/^\.\.\//g, ''))
-console.log(routePath)
+// console.log(routePath)
 
 const routesAuto = routeAutoLink(routePath, [main, Appmain, sub], config)(path => () => import(/*webpackChunkName:"[request]"*/ `../views/${path.replace(/\.vue$/, '')}.vue`))
 

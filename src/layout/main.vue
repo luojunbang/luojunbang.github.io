@@ -1,6 +1,6 @@
 <template>
   <div class="h-100 flex-column">
-    <div class=""><navbar></navbar></div>
+    <div class=""><navbar /></div>
     <div class="pd border flex1 overflow-a scroll-container">
       <router-view />
     </div>

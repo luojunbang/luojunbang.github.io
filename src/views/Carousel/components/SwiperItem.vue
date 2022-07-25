@@ -1,6 +1,6 @@
 <template>
   <div class="swiper-item">
-    <slot />
+    <slot></slot>
   </div>
 </template>
 
