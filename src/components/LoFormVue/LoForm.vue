@@ -1,7 +1,13 @@
 <template>
-  <el-form ref="FormRef" class="lo-form" :model="form" v-bind="$attrs" :inline="inline" :label-width="labelWidth">
-    <el-form-item v-for="item in list" :key="item.field" :label="item.label + ':'" :prop="[item.field]" :required="item.required" :rules="item.rules">
-      <el-select v-if="item.type === 'select'" v-model="form[item.field]" clearable>
+  <el-form ref="FormRef" size="large" class="lo-form" :model="form" v-bind="$attrs" :inline="inline" :label-width="labelWidth">
+    <el-form-item v-for="item in list" :key="item.field" :label="item.label + ':'" :prop="item.field" :required="item.required" :rules="item.rules">
+      <template v-if="item.labelSlot" v-slot:label>
+        <slot :name="item.labelSlot" :item="item" />
+      </template>
+      <template v-if="item.formSlot">
+        <slot :name="item.formSlot" :item="item" />
+      </template>
+      <el-select v-else-if="item.type === 'select'" v-model="form[item.field]" clearable>
         <el-option v-for="opt in item.options" :value="opt.value" :key="opt.value" :label="opt.label" />
       </el-select>
       <el-date-picker
@@ -13,7 +19,7 @@
       />
       <el-time-picker v-else-if="item.type === 'time'" v-model="form[item.field]" :is-range="item.isRange ?? false" :default-value="item.value" format="HH:mm" />
       <el-input-number v-else-if="item.type === 'number'" :type="item.type ?? 'text'" v-model="form[item.field]" :controls="item.controls ?? false" />
-      <el-input v-else :type="item.type ?? 'text'" v-model="form[item.field]" />
+      <el-input v-else :type="item.type ?? 'text'" v-model="form[item.field]" v-bind="item" />
     </el-form-item>
   </el-form>
 </template>
@@ -23,11 +29,12 @@ import { computed } from '@vue/reactivity'
 import { ElInput, ElForm, ElFormItem, ElCheckbox, datePickTypes } from 'element-plus'
 import { defineProps, defineEmits, toRefs, ref, reactive, defineExpose, watch, unref, onMounted, shallowRef } from 'vue'
 import { IDatePickerType, LoFormProps, FORM_CHANGE_EVENT, defaultValue } from './LoForm'
-
+import type { FormInstance } from 'element-plus'
+import { Arrayable } from 'element-plus/es/utils'
 const props = defineProps(LoFormProps)
 const emits = defineEmits([FORM_CHANGE_EVENT])
 
-const FormRef = shallowRef()
+const FormRef = ref<FormInstance>()
 
 const form = reactive(
   props.list.reduce((rs, i) => {
@@ -64,6 +71,7 @@ function bindEmitWatch(item) {
   watch(
     () => form[item.field],
     val => {
+      console.log('bindEmitWatch:', item.field, ' Emit')
       emits(FORM_CHANGE_EVENT, item, val)
     },
   )
@@ -80,13 +88,15 @@ function validate() {
 function setFormValue(field, val) {
   form[field] = val
 }
-function resetForm(field) {}
+function resetFields(fields?: Arrayable<string>) {
+  FormRef.value?.resetFields(fields)
+}
 
 defineExpose({
   form,
   validate,
   setFormValue,
-  resetForm,
+  resetFields,
 })
 </script>
 

@@ -2,7 +2,6 @@ import type LoForm from './LoForm.vue'
 
 export type LoFormInstance = InstanceType<typeof LoForm>
 import type { PropType } from 'vue'
-import { Obj } from '@popperjs/core'
 import { FormItemRule, datePickTypes } from 'element-plus'
 export const LoFormProps = {
   list: {
@@ -51,6 +50,8 @@ declare interface formBase {
   valueFormat?: string
   isRange?: boolean
   controls?: boolean
+  labelSlot?: string
+  formSlot?: string
 }
 
 export function defaultValue(type) {

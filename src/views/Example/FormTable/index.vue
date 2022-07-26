@@ -1,10 +1,14 @@
 <template>
   <div>
-    <LoForm ref="LoFormRef" label-position="right" :list="list" :inline="true" @formChange="onFormChange" />
+    <LoForm ref="LoFormRef" label-position="right" :list="list" :inline="false" @formChange="onFormChange">
+      <template v-slot:templatelabelSlot="{ item }">{{ item.label + '-slot' }}</template>
+      <template v-slot:templateformSlot="{ item }">{{ item.type + '-slot' }}</template>
+    </LoForm>
   </div>
   <div class="mg-t-lg" style="word-break: break-word; width: 500px">{{ JSON.stringify(form) }}</div>
   <button @click="handleClick">Push</button>
   <button @click="handleSubmit">Submit</button>
+  <button @click="handleReset">Reset</button>
 </template>
 
 <script lang="ts" setup>
@@ -24,7 +28,7 @@ let list = reactive<LoFormItem[]>([
   { field: 'text', label: 'Text' },
   { field: 'textarea', label: 'Textarea', type: 'textarea' },
   { field: 'number', label: 'Number', type: 'number' },
-  { field: 'email', label: 'email', isRelative: true },
+  { field: 'email', label: 'email', isRelative: true, placeholder: 'email input' },
   {
     field: 'province',
     label: 'Province',
@@ -43,6 +47,7 @@ let list = reactive<LoFormItem[]>([
   }),
   { field: 'time', label: 'Time', type: 'time' },
   { field: 'timerange', label: 'Timerange', isRange: true, type: 'time' },
+  { field: 'labelSlot', label: 'LabelSlot', labelSlot: 'templatelabelSlot', formSlot: 'templateformSlot' },
 ])
 
 const LoFormRef = ref<LoFormInstance>()
@@ -77,6 +82,10 @@ function handleClick() {
   }, 3000)
 }
 
+function handleReset() {
+  LoFormRef.value?.resetFields(['email'])
+}
+
 const form = computed(() => {
   return LoFormRef.value?.form
 })
@@ -85,7 +94,7 @@ function handleSubmit() {
   LoFormRef.value
     ?.validate()
     .then(res => {
-      console.log()
+      console.log('pass')
     })
     .catch(err => {
       console.log(err)
