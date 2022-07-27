@@ -19,11 +19,8 @@ import { onMounted, reactive, ref, defineExpose } from 'vue'
 import { t } from 'lo-utils'
 import { datePickTypes } from 'element-plus'
 
-import { useAddressSelect } from './useAddress'
+import { useAddressSelect, addressProps } from './useAddress'
 import { isDef } from '@vueuse/shared'
-const provinceOptions = ref<LoFormOption[]>([])
-const cityOptions = ref<LoFormOption[]>([])
-const countryOptions = ref<LoFormOption[]>([])
 
 let list = reactive<LoFormItem[]>([
   { field: 'text', label: 'Text' },
@@ -48,10 +45,12 @@ let list = reactive<LoFormItem[]>([
     label: 'Province',
     isRelative: true,
     type: 'select',
-    options: provinceOptions,
+    options: [],
   },
-  { field: 'city', label: 'City', isRelative: true, type: 'select', options: cityOptions },
-  { field: 'country', label: 'Country', isRelative: true, type: 'select', options: countryOptions },
+  { field: 'city', label: 'City', isRelative: true, type: 'select', options: [] },
+  { field: 'country', label: 'Country', isRelative: true, type: 'select', options: [] },
+  { field: 'town', label: 'town', isRelative: true, type: 'select', options: [] },
+  { field: 'street', label: 'street', isRelative: true, type: 'select', options: [] },
   // ...datePickTypes.map(i => {
   //   return {
   //     field: i,
@@ -69,20 +68,16 @@ onMounted(() => {
   console.log('LoFormRef.value:', LoFormRef.value?.form)
 })
 
-const addressList = ['province', 'city', 'country']
-
 function onFormChange(item: LoFormItem, value, oldVal) {
   console.log('onFormChange:', item.field, value, oldVal)
-  const idx = addressList.indexOf(item.field) + 1
-  const refConfig = {
-    province: provinceOptions,
-    city: cityOptions,
-    country: countryOptions,
-  }
-  if (addressList.includes(item.field)) {
-    // const res = useAddressSelect(item.field, value, refConfig[addressList[idx]])
-    const res = useAddressSelect(item.field, value, list.find(i => i.field == addressList[idx])?.options)
-    addressList.slice(idx).forEach(field => LoFormRef.value?.setFormValue(field, res[field]))
+  if (addressProps.includes(item.field)) {
+    const idx = addressProps.indexOf(item.field) + 1
+    const res = useAddressSelect(
+      item.field,
+      value,
+      list.find(i => i.field == addressProps[idx]),
+    )
+    addressProps.slice(idx).forEach(field => LoFormRef.value?.setFormValue(field, res[field]))
   }
 }
 
@@ -99,15 +94,13 @@ async function handleClick() {
 
 async function handleReset() {
   // LoFormRef.value?.resetFields(['email'])
-  const _fieldItem = list.find(i => i.field == 'province')
-  _fieldItem && (_fieldItem.options = provinceOptions.value)
-  await t(2)
-  provinceOptions.value = [
-    { label: 'Please Select', value: '' },
-    { label: 'province1', value: 'province1' },
-    { label: 'province2', value: 'province2' },
-  ]
-  LoFormRef.value?.setFormValue('province', '')
+  const idx = addressProps.indexOf('') + 1
+  const res = useAddressSelect(
+    '',
+    '',
+    list.find(i => i.field == addressProps[idx]),
+  )
+  addressProps.slice(idx).forEach(field => LoFormRef.value?.setFormValue(field, res[field]))
 }
 
 const form = computed(() => {

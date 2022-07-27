@@ -1,7 +1,7 @@
 import { r } from 'lo-utils'
-import { isRef } from 'vue'
+import { isReactive, isRef } from 'vue'
 
-export const addressProps = ['province', 'city', 'country']
+export const addressProps = ['province', 'city', 'country', 'town', 'street']
 
 type AddressProps = typeof addressProps[number]
 
@@ -9,12 +9,11 @@ export function useAddressSelect(step: AddressProps, values: string | undefined,
   const idx = addressProps.indexOf(step)
   queryOptions(addressProps[idx + 1], values)
     .then(res => {
-      if (!optionsRef) return
       if (isRef(optionsRef)) optionsRef.value = res
-      else optionsRef = res
+      else if (isReactive(optionsRef)) optionsRef[optionsKey] = res
     })
     .catch(err => {
-      console.log(err)
+      console.log('err:', err)
     })
   const initObj = idx == -1 ? {} : { [step]: values }
   const ans = addressProps.slice(idx + 1).reduce((rs, key, i) => {
