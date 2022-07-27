@@ -1,8 +1,8 @@
 <template>
   <div>
-    <LoForm ref="LoFormRef" label-position="right" :list="list" :inline="false" @formChange="onFormChange">
+    <LoForm ref="LoFormRef" label-position="right" :list="list" :inline="true" @formChange="onFormChange">
       <template v-slot:templatelabelSlot="{ item }">{{ item.label + '-slot' }}</template>
-      <template v-slot:templateformSlot="{ item }">{{ item.type + '-slot' }}</template>
+      <template v-slot:templateformSlot="{ item }">{{ item.field + '-slot' }}</template>
     </LoForm>
   </div>
   <div class="mg-t-lg" style="word-break: break-word; width: 500px">{{ JSON.stringify(form) }}</div>
@@ -16,19 +16,33 @@ import LoForm from '@/components/LoFormVue/LoForm.vue'
 import { LoFormInstance, LoFormConfig, LoFormItem, LoFormOption } from '@/components/LoFormVue/LoForm'
 import { computed } from '@vue/reactivity'
 import { onMounted, reactive, ref, defineExpose } from 'vue'
-import { r } from 'lo-utils'
+import { t } from 'lo-utils'
 import { datePickTypes } from 'element-plus'
-const provinceOptions = reactive([
-  { label: 'Please Select', value: '' },
-  { label: 'province1', value: 'province1' },
-  { label: 'province2', value: 'province2' },
-])
+
+import { useAddressSelect } from './useAddress'
+import { isDef } from '@vueuse/shared'
+const provinceOptions = ref<LoFormOption[]>([])
+const cityOptions = ref<LoFormOption[]>([])
+const countryOptions = ref<LoFormOption[]>([])
 
 let list = reactive<LoFormItem[]>([
   { field: 'text', label: 'Text' },
   { field: 'textarea', label: 'Textarea', type: 'textarea' },
   { field: 'number', label: 'Number', type: 'number' },
-  { field: 'email', label: 'email', isRelative: true, placeholder: 'email input' },
+  { field: 'email', label: 'email', isRelative: true, placeholder: 'email input', throttle: 1 },
+  { field: 'switch', label: 'Switch', type: 'switch' },
+  {
+    field: 'checkboxgroup',
+    label: 'Checkboxgroup',
+    type: 'checkbox-group',
+    options: ['province1', 'province2'],
+  },
+  {
+    field: 'radiogroup',
+    label: 'Radiogroup',
+    type: 'radio-group',
+    options: ['province1', 'province2'],
+  },
   {
     field: 'province',
     label: 'Province',
@@ -36,15 +50,15 @@ let list = reactive<LoFormItem[]>([
     type: 'select',
     options: provinceOptions,
   },
-  { field: 'city', label: 'City', isRelative: true, type: 'select', options: [] },
-  { field: 'area', label: 'Area', isRelative: true, type: 'select', options: [] },
-  ...datePickTypes.map(i => {
-    return {
-      field: i,
-      type: i,
-      label: i.toUpperCase(),
-    }
-  }),
+  { field: 'city', label: 'City', isRelative: true, type: 'select', options: cityOptions },
+  { field: 'country', label: 'Country', isRelative: true, type: 'select', options: countryOptions },
+  // ...datePickTypes.map(i => {
+  //   return {
+  //     field: i,
+  //     type: i,
+  //     label: i.toUpperCase(),
+  //   }
+  // }),
   { field: 'time', label: 'Time', type: 'time' },
   { field: 'timerange', label: 'Timerange', isRange: true, type: 'time' },
   { field: 'labelSlot', label: 'LabelSlot', labelSlot: 'templatelabelSlot', formSlot: 'templateformSlot' },
@@ -55,35 +69,45 @@ onMounted(() => {
   console.log('LoFormRef.value:', LoFormRef.value?.form)
 })
 
-function onFormChange(item: LoFormItem, value) {
-  console.log('onFormChange:', item.field, value)
-  if (['province', 'city', 'area'].includes(item.field)) {
-    CitySelect(item.field as CityProps, value)
-      ?.then(res => {
-        console.log('CitySelect:', res)
-        ;['city', 'area'].forEach(field => {
-          res[field] !== undefined && LoFormRef.value?.setFormValue(field, res[field])
-          const _idx = list.findIndex(i => i.field === field)
-          _idx != -1 && res[field + 'Options'] !== undefined && (list[_idx].options = res[field + 'Options'])
-        })
-      })
-      .catch(err => {
-        console.log(err)
-      })
+const addressList = ['province', 'city', 'country']
+
+function onFormChange(item: LoFormItem, value, oldVal) {
+  console.log('onFormChange:', item.field, value, oldVal)
+  const idx = addressList.indexOf(item.field) + 1
+  const refConfig = {
+    province: provinceOptions,
+    city: cityOptions,
+    country: countryOptions,
+  }
+  if (addressList.includes(item.field)) {
+    // const res = useAddressSelect(item.field, value, refConfig[addressList[idx]])
+    const res = useAddressSelect(item.field, value, list.find(i => i.field == addressList[idx])?.options)
+    addressList.slice(idx).forEach(field => LoFormRef.value?.setFormValue(field, res[field]))
   }
 }
 
-function handleClick() {
-  const field = 'select' + r(2)
-  list.push({ label: 'Select', field: field, type: 'select', options: [{ label: '--all', value: 'all' }] })
+async function handleClick() {
+  const field = 'select'
+  list.splice(list.length - 1, 1)
+  await t(2)
+  list.push({ label: 'Select', field: field, type: 'select', options: [{ label: '--all', value: 'all' }], isRelative: true })
   setTimeout(() => {
     list[list.length - 1].options = [{ label: 'reveal', value: 'reveal' }]
     if (LoFormRef.value) LoFormRef.value.form[field] = 'reveal'
   }, 3000)
 }
 
-function handleReset() {
-  LoFormRef.value?.resetFields(['email'])
+async function handleReset() {
+  // LoFormRef.value?.resetFields(['email'])
+  const _fieldItem = list.find(i => i.field == 'province')
+  _fieldItem && (_fieldItem.options = provinceOptions.value)
+  await t(2)
+  provinceOptions.value = [
+    { label: 'Please Select', value: '' },
+    { label: 'province1', value: 'province1' },
+    { label: 'province2', value: 'province2' },
+  ]
+  LoFormRef.value?.setFormValue('province', '')
 }
 
 const form = computed(() => {
@@ -99,56 +123,5 @@ function handleSubmit() {
     .catch(err => {
       console.log(err)
     })
-}
-
-type CityProps = 'province' | 'city' | 'area'
-const CitySelect = (step: CityProps, val) => {
-  const list = ['province', 'city', 'area']
-  const ans: {
-    province?: string
-    city?: string
-    area?: string
-    cityOptions?: LoFormOption[]
-    areaOptions?: LoFormOption[]
-  } = {}
-  const handler = {
-    province: val => {},
-    city: province => {
-      return new Promise((rs, rj) => {
-        ans.city = ''
-        if (province == '') {
-          rs('')
-          ans.cityOptions = []
-        } else {
-          setTimeout(() => {
-            ans.cityOptions = [province + '-city1', province + '-city2'].map(i => ({ label: i, value: i }))
-            rs('')
-          }, 1000)
-        }
-      })
-    },
-    area: city => {
-      return new Promise((rs, rj) => {
-        ans.area = ''
-        if (city == '') {
-          rs('')
-          ans.areaOptions = []
-        } else {
-          setTimeout(() => {
-            ans.areaOptions = [city + '-area1', city + '-area2'].map(i => ({ label: i, value: i }))
-            rs('')
-          }, 1000)
-        }
-      })
-    },
-  }
-  const startIdx = list.indexOf(step)
-  if (startIdx == -1) return
-  return list
-    .slice(startIdx + 1)
-    .reduce((rs, item) => {
-      return rs.then(res => handler[item](res))
-    }, Promise.resolve(val))
-    .then(res => ans)
 }
 </script>

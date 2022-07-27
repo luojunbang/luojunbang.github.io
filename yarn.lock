@@ -5829,9 +5829,9 @@ lines-and-columns@^1.1.6:
   integrity sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==
 
 lo-utils@^1.2.12:
-  version "1.2.17"
-  resolved "https://registry.yarnpkg.com/lo-utils/-/lo-utils-1.2.17.tgz#08f94db00bd76fab99997b202e7c5dcb26dad9f0"
-  integrity sha512-PDMpD6HJcV8ISNFz2JHrVEGqqwtmA7q2TzFHk3wOzIZ4PlNoO5y0mPnkQMWNy9mBqp8pj9OUIVYYW+tndSjMuA==
+  version "1.2.18"
+  resolved "https://registry.yarnpkg.com/lo-utils/-/lo-utils-1.2.18.tgz#f02214919c5c42654fc7cb857998a5dac54a9168"
+  integrity sha512-zmXnsaLM8WnMn6JP+SrJkTLAFmm8pbtrreIbLSKAfP6DRSwXluS/C3b5cF82IbPAXaPCCVA8oUlRzsr9py1+mA==
 
 load-json-file@^1.0.0:
   version "1.1.0"

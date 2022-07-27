@@ -1,40 +1,61 @@
 <template>
-  <el-form ref="FormRef" size="large" class="lo-form" :model="form" v-bind="$attrs" :inline="inline" :label-width="labelWidth">
+  <el-form ref="FormRef" class="lo-form" :model="form" v-bind="$attrs" :inline="inline" :label-width="labelWidth">
     <el-form-item v-for="item in list" :key="item.field" :label="item.label + ':'" :prop="item.field" :required="item.required" :rules="item.rules">
+      <!-- label slot -->
       <template v-if="item.labelSlot" v-slot:label>
         <slot :name="item.labelSlot" :item="item" />
       </template>
+      <!-- form item slot -->
       <template v-if="item.formSlot">
         <slot :name="item.formSlot" :item="item" />
       </template>
-      <el-select v-else-if="item.type === 'select'" v-model="form[item.field]" clearable>
-        <el-option v-for="opt in item.options" :value="opt.value" :key="opt.value" :label="opt.label" />
+      <!-- select -->
+      <el-select v-else-if="item.type === 'select'" v-model="form[item.field]" v-bind="item">
+        <el-option v-for="opt in item.options" :value="optionsFmt(opt, 'value')" :key="optionsFmt(opt, 'value')" :label="optionsFmt(opt)" />
       </el-select>
-      <el-date-picker
-        v-else-if="datePickTypes.includes(item.type as IDatePickerType)"
-        v-model="form[item.field]"
-        :type="(item.type as IDatePickerType)"
-        :value-format="item.valueFormat ?? 'x'"
-        :default-value="item.value"
-      />
-      <el-time-picker v-else-if="item.type === 'time'" v-model="form[item.field]" :is-range="item.isRange ?? false" :default-value="item.value" format="HH:mm" />
+      <!-- switch -->
+      <el-switch v-else-if="item.type === 'switch'" v-model="form[item.field]" />
+      <!-- checkbox -->
+      <el-checkbox-group v-else-if="item.type === 'checkbox-group'" v-model="form[item.field]" v-bind="item">
+        <el-checkbox v-for="opt in item.options" :key="optionsFmt(opt)" :label="optionsFmt(opt)" />
+      </el-checkbox-group>
+      <!-- radio -->
+      <el-radio-group v-else-if="item.type === 'radio-group'" v-model="form[item.field]" v-bind="item">
+        <el-radio v-for="opt in item.options" :key="optionsFmt(opt)" :label="optionsFmt(opt)" />
+      </el-radio-group>
+      <!-- date -->
+      <el-date-picker v-else-if="isValidDatePickType(item.type)" v-model="form[item.field]" :type="item.type" :value-format="item.valueFormat ?? 'x'" :default-value="item.value" v-bind="item" />
+      <!-- time -->
+      <el-time-picker v-else-if="item.type === 'time'" v-model="form[item.field]" :is-range="item.isRange ?? false" :default-value="item.value" format="HH:mm" v-bind="item" />
+      <!-- input-number -->
       <el-input-number v-else-if="item.type === 'number'" :type="item.type ?? 'text'" v-model="form[item.field]" :controls="item.controls ?? false" />
+      <!-- input -->
       <el-input v-else :type="item.type ?? 'text'" v-model="form[item.field]" v-bind="item" />
     </el-form-item>
   </el-form>
+  <button @click="handle">emit</button>
 </template>
 
 <script lang="ts" setup>
 import { computed } from '@vue/reactivity'
 import { ElInput, ElForm, ElFormItem, ElCheckbox, datePickTypes } from 'element-plus'
 import { defineProps, defineEmits, toRefs, ref, reactive, defineExpose, watch, unref, onMounted, shallowRef } from 'vue'
-import { IDatePickerType, LoFormProps, FORM_CHANGE_EVENT, defaultValue } from './LoForm'
-import type { FormInstance } from 'element-plus'
+import { IDatePickerType, LoFormProps, FORM_CHANGE_EVENT, defaultValue, fromNormalList } from './LoForm'
+import type { LoFormOption } from './LoForm'
+import type { FormInstance, DatePickType } from 'element-plus'
 import { Arrayable } from 'element-plus/es/utils'
+import { throttle } from 'lo-utils'
+import { debounce } from 'lodash'
 const props = defineProps(LoFormProps)
 const emits = defineEmits([FORM_CHANGE_EVENT])
 
+const isValidDatePickType = (val: string): val is DatePickType => ([...datePickTypes] as string[]).includes(val)
+
 const FormRef = ref<FormInstance>()
+
+function optionsFmt(opt, field = 'label') {
+  return typeof opt == 'string' ? opt : opt[field]
+}
 
 const form = reactive(
   props.list.reduce((rs, i) => {
@@ -48,10 +69,9 @@ onMounted(() => {
   })
 })
 
-// console.log(form)
-// const rowCount = ref(3)
+const handle = throttle(() => console.log(Date.now() % 10000))
+
 watch(props.list, () => {
-  console.log('watch emit')
   const list = unref(props.list)
   Reflect.ownKeys(form).forEach(i => {
     if (list.findIndex(({ field }) => i == field) == -1) delete form[i]
@@ -64,17 +84,19 @@ watch(props.list, () => {
   })
 })
 
-console.log('formList', props.list)
-console.log('form', form)
+const watchList = {}
 
 function bindEmitWatch(item) {
-  watch(
+  if (watchList[item.field] && typeof watchList[item.field] === 'function') {
+    watchList[item.field]()
+  }
+  const stop = watch(
     () => form[item.field],
-    val => {
-      console.log('bindEmitWatch:', item.field, ' Emit')
-      emits(FORM_CHANGE_EVENT, item, val)
-    },
+    debounce((val, oldVal) => {
+      emits(FORM_CHANGE_EVENT, item, val, oldVal)
+    }, item.throttle),
   )
+  watchList[item.field] = stop
 }
 
 function validate() {
@@ -85,7 +107,7 @@ function validate() {
     })
   })
 }
-function setFormValue(field, val) {
+function setFormValue(field: string, val: Exclude<any, undefined>): void {
   form[field] = val
 }
 function resetFields(fields?: Arrayable<string>) {
