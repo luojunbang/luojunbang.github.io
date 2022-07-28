@@ -1,5 +1,5 @@
 <template>
-  <div></div>
+  <div>{{ parentname }}</div>
   <cmp :name="name" @change="change" />
 </template>
 
@@ -18,7 +18,8 @@ const change = () => {
   name.value = 'change ParentName'
 }
 const name: Ref<string> = ref('myName')
+const parentname = ref('123')
 setTimeout(() => {
-  name.value = 'ParentName'
+  parentname.value = 'ParentName'
 }, 3000)
 </script>

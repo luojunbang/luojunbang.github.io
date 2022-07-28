@@ -5,6 +5,8 @@
 </template>
 
 <script lang="ts" setup>
+import { fmtDate, fmtTime } from 'lo-utils'
+
 function handleError(e) {
   console.log(e, JSON.stringify(e.currTarget))
 }
