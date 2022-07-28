@@ -2,58 +2,51 @@
   <div class="container relative">
     <div class="left h-100 fl">
       <div class="left-top relative">
-        <div class="left-datetime left-m">
-          <div class="time">
-            <div class="relative time__content">
-              {{ time }}
-              <span class="right-b time__ms">{{ ms }}</span>
-            </div>
+        <div class="datetime left-m">
+          <div class="time relative">
+            <span class="time__content">{{ time }}</span>
+            <span class="time__ms right-b">{{ ms }}</span>
           </div>
           <div class="date">{{ date }}</div>
         </div>
       </div>
       <div class="left-bottom">
-        <div class="left-weather">
-          <div class="weather-container left-m" v-show="isWeatherReady">
-            <div class="realtime nowrap clearfix">
-              <div class="fl mg-r mg-b-sm">
-                <span class="mg-r"><i class="color-primary text-lg iconfont mg-r-xs" :class="'icon-' + todayInfo.skycon.icon"></i>{{ todayInfo.skycon.label }}</span>
-                <span class="mg-r"><i class="color-primary text-lg iconfont mg-r-xs icon-wenduji"></i>{{ todayInfo.temperature }} <i class="iconfont icon-sheshidu01"></i></span>
-                <span><i class="color-primary text-lg iconfont mg-r-xs icon-shidu"></i>{{ todayInfo.humidity * 100 }}%</span>
+        <transition name="slide-fade">
+          <div v-if="isWeatherReady" class="weather-container left-m">
+            <div class="">
+              <div class="mg-r mg-b-sm">
+                <span class="mg-r"><icon class="color-primary mg-r-xs" :icon="todayInfo.skycon.icon"></icon>{{ todayInfo.skycon.label }}</span>
+                <span class="mg-r"><icon class="color-primary mg-r-xs" icon="wenduji"></icon>{{ todayInfo.temperature }} <i class="iconfont icon-sheshidu01"></i></span>
+                <span><icon class="color-primary mg-r-xs" icon="shidu"></icon>{{ todayInfo.humidity }}</span>
               </div>
-              <div v-if="todayInfo.precipitation_1h.some(i => !!i)" class="fl flex-row-nowrap align-end precipitation-container">
+              <div v-if="todayInfo.precipitation_1h.some(i => !!i)" class="flex-row-nowrap align-end precipitation-container">
                 <div class="precipitation" v-for="(item, index) in todayInfo.precipitation_1h" :key="index" :style="{ height: 100 * item + '%' }"></div>
               </div>
             </div>
             <div class="flex-row-nowrap mg-b-sm">
-              <div class="daily-item mg-r-sm" v-for="(item, index) in dailyTemperatureList" :key="item.date">
-                <div class="daily-item__content flex-row-nowrap">
-                  <div>
-                    <i style="font-size: 28px" class="text-lg iconfont color-primary" :class="'icon-' + dailySkyconList[index].icon"></i>
-                  </div>
+              <div class="daily-item mg-r" v-for="item in dailyTemperatureList" :key="item.date">
+                <div class="flex-row-nowrap">
+                  <icon size="28" class="color-primary mg-r-xs" :icon="item.skycon.icon"></icon>
                   <div class="daily-item__temperature">
-                    <div class="">{{ ~~item.max.toFixed(0) }}</div>
-                    <div class="">{{ ~~item.min.toFixed(0) }}</div>
+                    <div>{{ item.max }}</div>
+                    <div>{{ item.min }}</div>
                   </div>
                 </div>
-                <div class="text-center text-sm" style="margin-top: -5px">{{ generatorDate(item.date.replace('T', ' ').replace('+08', ''), '周a') }}</div>
+                <div class="text-sm">{{ item.week }}</div>
               </div>
             </div>
             <div class="nowrap">{{ todayInfo.forecast_keypoint }}</div>
           </div>
-          <div class="weather-container daily-container left-m"></div>
-        </div>
+        </transition>
       </div>
     </div>
     <div class="right h-100 fl">
       <div class="right-top relative">
         <div class="search middle-b mg-b-lg w-100">
-          <!-- <div class="search-logo"></div> -->
           <div class="search-input flex-row-nowrap">
-            <i class="iconfont icon-sousuo mg-r-sm"></i>
+            <icon class="mg-r-sm" icon="sousuo"></icon>
             <input autofocus class="search-input__content flex1" v-model="inputText" @change="onChange" @keyup.enter="onKeyup" @input="onInput" />
           </div>
-
           <div class="search-button text-center">
             <button @click="handleSearchClick('google')">Google</button>
             <button @click="handleSearchClick('baidu')">Baidu</button>
@@ -68,19 +61,19 @@
 <script lang="ts" setup>
 import { Ref, ref, onMounted, onUnmounted } from 'vue'
 import useWeatherInfo from './composables/weather'
-import { generatorDate } from 'lo-utils'
+import { generatorDate, fmtTime } from 'lo-utils'
 
 const position = '113.459749,23.106402'
 
 const { date, time, ms } = (() => {
   const date = ref<string>('')
-  const time = ref<string>('')
+  const time = ref<string>()
   const ms = ref<string>('')
-  let timer = ref<number | undefined>(undefined)
+  let timer = ref<ReturnType<typeof setInterval>>()
   function updateDateTime() {
     const currTime = Date.now()
-    date.value = generatorDate(currTime, 'y-m-d  星期a')
-    time.value = generatorDate(currTime, 'h·i·s')
+    date.value = generatorDate(currTime, 'y - m - d  星期a')
+    time.value = fmtTime(currTime, '·')
     ms.value = currTime.toString().slice(-3, -2)
   }
   onMounted(() => {
@@ -123,13 +116,12 @@ const { onInput, inputText, handleSearchClick, onKeyup, onChange } = (() => {
   return { inputText, handleSearchClick, onInput, onChange, onKeyup }
 })()
 
-const { isWeatherReady, todayInfo, dailySkyconList, dailyTemperatureList, dailyPrecipitationList } = useWeatherInfo(position)
-console.log(dailySkyconList, dailyTemperatureList, dailyPrecipitationList)
+const { isWeatherReady, todayInfo, dailyTemperatureList } = useWeatherInfo(position)
 </script>
 
-<style lang="scss" scoped>
-@import './common/iconfont.css';
+<style lang="scss"></style>
 
+<style lang="scss" scoped>
 $PRIMARY: #f0713a;
 $BG: #1b1f25;
 $TEXT: #e7d7c2;
@@ -149,53 +141,56 @@ $TEXT: #e7d7c2;
 .left {
   background-color: #1b1f25;
   width: 38.2%;
-  &-datetime {
-    padding-left: 3vw;
-    height: 9vw;
-    .time {
-      user-select: none;
-      // transform: translateX(-1vw);
-      &__ms {
-        transform: translate(2vw, -0.7vw);
-        line-height: 1;
-        font-size: 3vw;
-      }
-      &__content {
-        line-height: 1;
-        font-size: 7.5vw;
-      }
-    }
-    .date {
-      font-size: 1vw;
-      margin-left: 1.5vw;
-    }
-  }
   &-top {
     height: 38.2%;
+    .datetime {
+      padding-left: 3vw;
+      height: 9vw;
+      user-select: none;
+      .time {
+        &__ms {
+          transform: translate(2vw, -0.75vw);
+          line-height: 1em;
+          font-size: 3vw;
+        }
+        &__content {
+          line-height: 1em;
+          font-size: 7.5vw;
+        }
+      }
+      .date {
+        font-size: 1vw;
+        margin-left: 1.5vw;
+      }
+    }
   }
   &-bottom {
     height: 61.8%;
     position: relative;
-  }
-  &-weather {
-    position: absolute;
-    left: 0;
-    bottom: 30%;
-    background-color: #292c34;
-    height: 26%;
-    width: 20%;
-    min-height: 100px;
-    min-width: 100px;
     .weather-container {
+      // height: 180px;
+      position: absolute;
+      left: 0;
+      top: 61.8%;
       margin-left: 4vw;
-      .realtime {
-        width: 750px;
+      &::after {
+        content: '';
+        z-index: -1;
+        position: absolute;
+        background-color: #292c34;
+        height: 140%;
+        width: 6vw;
+        left: 0;
+        top: 50%;
+        transform: translate(-4vw, -50%);
+        min-height: 100px;
+        min-width: 100px;
       }
     }
     .precipitation {
       &-container {
         height: 30px;
-        background-color: rgba(240, 113, 58, 0.1);
+        background-color: rgba($color: $PRIMARY, $alpha: 0.1);
       }
       width: 4px;
       margin-right: 1px;
@@ -203,12 +198,6 @@ $TEXT: #e7d7c2;
     }
     .daily {
       &-item {
-        &__content {
-          i {
-            // font-size: 28px;
-            margin-right: 5px;
-          }
-        }
         &__temperature {
           div:nth-child(1) {
             border-bottom: 1px solid $PRIMARY;
@@ -228,14 +217,8 @@ $TEXT: #e7d7c2;
   &-top {
     height: 38.2%;
     .search {
-      &-logo {
-        // background-color: #1b1f25;
-        height: 150px;
-        width: 40%;
-        margin: 0 auto 50px;
-      }
       &-input {
-        width: 75%;
+        width: 61.8%;
         height: 45px;
         border: 1px solid $PRIMARY;
         padding: 10px 20px;
@@ -254,7 +237,8 @@ $TEXT: #e7d7c2;
         button {
           height: 36px;
           outline: none;
-          border: 1px solid $PRIMARY;
+          border: 1px solid rgba($color: $PRIMARY, $alpha: 0.8);
+          border-radius: 5px;
           color: $PRIMARY;
           background-color: transparent;
           padding: 5px 10px;
@@ -271,6 +255,19 @@ $TEXT: #e7d7c2;
       }
     }
   }
+}
+
+/* 可以为进入和离开动画设置不同的持续时间和动画函数 */
+.slide-fade-enter-active {
+  transition: all 0.3s ease-out;
+}
+.slide-fade-leave-active {
+  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+}
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateX(-20px);
+  opacity: 0;
 }
 
 @media only screen and (max-width: 1000px) {
@@ -293,9 +290,6 @@ $TEXT: #e7d7c2;
     }
     .weather-container {
       margin-left: 5vw;
-      .realtime {
-        width: auto;
-      }
     }
   }
   .right {

@@ -9,7 +9,7 @@ export const LoFormProps = {
     default: (): LoFormConfig => [],
     validator(val) {
       return !val.some(i => {
-        i.type == FORM_TYPE.SELECT && !i.options
+        ;['select', 'checkbox-group', 'radio-group'].includes(i.type) && !i.options
       })
     },
   },
@@ -31,6 +31,8 @@ export enum FORM_TYPE {
   INPUT = 'input',
   SELECT = 'select',
   TEXTAREA = 'textarea',
+  CHECKBOX_GROUP = 'checkbox-group',
+  RADIO_GROUP = 'radio-group',
 }
 
 export const FORM_CHANGE_EVENT = 'formChange'
@@ -66,14 +68,6 @@ export function defaultValue(type) {
     switch: false,
   }
   return typeConfig[type] ?? ''
-}
-
-declare interface fromInput extends formBase {
-  type: FORM_TYPE.INPUT
-}
-
-declare interface fromSelect extends formBase {
-  type: FORM_TYPE.SELECT
 }
 
 export type LoFormOption = {

@@ -1,5 +1,5 @@
 import { onMounted, reactive, Ref, ref, watch } from 'vue'
-
+import { generatorDate } from 'lo-utils'
 import { token } from '@/common/config'
 
 function getweatherInfo(position: string): string {
@@ -10,28 +10,32 @@ function getweatherInfo(position: string): string {
 
 import { jsonp } from 'vue-jsonp'
 
-const weather_config = [
-  { label: '晴', value: 'CLEAR_DAY', icon: 'qing' },
-  { label: '晴', value: 'CLEAR_NIGHT', icon: 'qing' },
-  { label: '多云', value: 'PARTLY_CLOUDY_DAY', icon: 'duoyun' },
-  { label: '多云', value: 'PARTLY_CLOUDY_NIGHT', icon: 'duoyun' },
-  { label: '阴', value: 'CLOUDY', icon: 'yin' },
-  { label: '轻度雾霾', value: 'LIGHT_HAZE', icon: 'mai' },
-  { label: '中度雾霾', value: 'MODERATE_HAZE', icon: 'mai' },
-  { label: '重度雾霾', value: 'HEAVY_HAZE', icon: 'mai' },
-  { label: '小雨', value: 'LIGHT_RAIN', icon: 'xiaoyu' },
-  { label: '中雨', value: 'MODERATE_RAIN', icon: 'zhongyu' },
-  { label: '大雨', value: 'HEAVY_RAIN', icon: 'dayu' },
-  { label: '暴雨', value: 'STORM_RAIN', icon: 'baoyu' },
-  { label: '雾', value: 'FOG', icon: 'wu' },
-  { label: '小雪', value: 'LIGHT_SNOW', icon: 'xiaoxue' },
-  { label: '中雪', value: 'MODERATE_SNOW', icon: 'zhongxue' },
-  { label: '大雪', value: 'HEAVY_SNOW', icon: 'daxue' },
-  { label: '暴雪', value: 'STORM_SNOW', icon: 'baoxue' },
-  { label: '浮尘', value: 'DUST', icon: 'shachen' },
-  { label: '沙尘', value: 'SAND', icon: 'shachen' },
-  { label: '大风', value: 'WIND', icon: 'feng' },
-]
+const weather_config = {
+  CLEAR_DAY: { label: '晴', value: 'CLEAR_DAY', icon: 'qing' },
+  CLEAR_NIGHT: { label: '晴', value: 'CLEAR_NIGHT', icon: 'qing' },
+  PARTLY_CLOUDY_DAY: { label: '多云', value: 'PARTLY_CLOUDY_DAY', icon: 'duoyun' },
+  PARTLY_CLOUDY_NIGHT: { label: '多云', value: 'PARTLY_CLOUDY_NIGHT', icon: 'duoyun' },
+  CLOUDY: { label: '阴', value: 'CLOUDY', icon: 'yin' },
+  LIGHT_HAZE: { label: '轻度雾霾', value: 'LIGHT_HAZE', icon: 'mai' },
+  MODERATE_HAZE: { label: '中度雾霾', value: 'MODERATE_HAZE', icon: 'mai' },
+  HEAVY_HAZE: { label: '重度雾霾', value: 'HEAVY_HAZE', icon: 'mai' },
+  LIGHT_RAIN: { label: '小雨', value: 'LIGHT_RAIN', icon: 'xiaoyu' },
+  MODERATE_RAIN: { label: '中雨', value: 'MODERATE_RAIN', icon: 'zhongyu' },
+  HEAVY_RAIN: { label: '大雨', value: 'HEAVY_RAIN', icon: 'dayu' },
+  STORM_RAIN: { label: '暴雨', value: 'STORM_RAIN', icon: 'baoyu' },
+  FOG: { label: '雾', value: 'FOG', icon: 'wu' },
+  LIGHT_SNOW: { label: '小雪', value: 'LIGHT_SNOW', icon: 'xiaoxue' },
+  MODERATE_SNOW: { label: '中雪', value: 'MODERATE_SNOW', icon: 'zhongxue' },
+  HEAVY_SNOW: { label: '大雪', value: 'HEAVY_SNOW', icon: 'daxue' },
+  STORM_SNOW: { label: '暴雪', value: 'STORM_SNOW', icon: 'baoxue' },
+  DUST: { label: '浮尘', value: 'DUST', icon: 'shachen' },
+  SAND: { label: '沙尘', value: 'SAND', icon: 'shachen' },
+  WIND: { label: '大风', value: 'WIND', icon: 'feng' },
+}
+
+const getSkyconDecription = skycon => {
+  return weather_config[skycon] ?? { label: '-', value: '-', icon: '-' }
+}
 
 interface todayInfo {
   apparent_temperature: number
@@ -83,16 +87,23 @@ export default function useWeather(position: string): any {
     const { realtime, minutely, daily, forecast_keypoint } = result
     const { apparent_temperature, temperature, humidity, skycon, precipitation } = realtime
     todayInfo.apparent_temperature = apparent_temperature
-    const idx = weather_config.findIndex(i => i.value === skycon)
-    if (idx != -1) todayInfo.skycon = weather_config[idx]
+    todayInfo.skycon = getSkyconDecription(skycon)
     todayInfo.temperature = temperature
-    todayInfo.humidity = parseFloat(humidity).toFixed(4)
+    todayInfo.humidity = (parseFloat(humidity) * 100).toFixed(0) + '%'
     todayInfo.forecast_keypoint = forecast_keypoint
     todayInfo.precipitation = precipitation.local.intensity
     todayInfo.precipitation_1h = minutely.precipitation
+
     dailyPrecipitationList.value = daily.precipitation
-    dailyTemperatureList.value = daily.temperature
-    dailySkyconList.value = daily.skycon.map(skycon => weather_config[weather_config.findIndex(i => i.value === skycon.value)] || { label: '-', value: '-', icon: '-' })
+    dailyTemperatureList.value = daily.temperature.map((i, index) => {
+      return {
+        max: ~~i.max,
+        min: ~~i.min,
+        skycon: getSkyconDecription(daily.skycon[index].value),
+        week: generatorDate(i.date.replace('T', ' ').replace('+08', ''), '周a'),
+      }
+    })
+    dailySkyconList.value = daily.skycon.map(i => getSkyconDecription(i.value))
   }
   onMounted(() => {
     askWeather()

@@ -6,9 +6,6 @@
     </LoForm>
   </div>
   <div class="mg-t-lg" style="word-break: break-word; width: 500px">{{ JSON.stringify(form) }}</div>
-  <button @click="handleClick">Push</button>
-  <button @click="handleSubmit">Submit</button>
-  <button @click="handleReset">Reset</button>
 </template>
 
 <script lang="ts" setup>
@@ -20,7 +17,6 @@ import { t } from 'lo-utils'
 import { datePickTypes } from 'element-plus'
 
 import { useAddressSelect, addressProps } from './useAddress'
-import { isDef } from '@vueuse/shared'
 
 let list = reactive<LoFormItem[]>([
   { field: 'text', label: 'Text' },
