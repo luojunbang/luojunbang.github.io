@@ -5,11 +5,6 @@
         <!-- <swiper-item v-for="(item, index) in list" :key="index">item:{{ index }}</swiper-item> -->
       </swiper>
     </div>
-    <div>reset:{{ reset }}</div>
-    <div class="relative border" style="height: 300px; width: 300px">
-      <div ref="ball" class="ball" id="reset" :style="style" :class="{ animating: reset, 'ball-green': !reset }">{{ reset }}</div>
-    </div>
-    <button @click="start">123</button>
   </div>
 </template>
 
