@@ -21,5 +21,5 @@ pnpm-debug.log*
 *.sln
 *.sw?
 app.config.js
-src/common/config.ts
+# src/common/config.ts
 output*.js
