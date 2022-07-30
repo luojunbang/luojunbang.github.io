@@ -37,9 +37,8 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from '@vue/reactivity'
 import { ElInput, ElForm, ElFormItem, ElCheckbox, datePickTypes } from 'element-plus'
-import { defineProps, defineEmits, toRefs, ref, reactive, defineExpose, watch, unref, onMounted, shallowRef } from 'vue'
+import { computed, defineProps, defineEmits, toRefs, ref, reactive, defineExpose, watch, unref, onMounted, shallowRef } from 'vue'
 import { IDatePickerType, LoFormProps, FORM_CHANGE_EVENT, defaultValue, fromNormalList } from './LoForm'
 import type { LoFormOption } from './LoForm'
 import type { FormInstance, DatePickType } from 'element-plus'

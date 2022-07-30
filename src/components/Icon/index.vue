@@ -3,9 +3,8 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from '@vue/reactivity'
 import { isNumber, isString } from 'lodash'
-import { defineProps } from 'vue'
+import { defineProps, computed } from 'vue'
 const props = defineProps({
   icon: {
     type: String,

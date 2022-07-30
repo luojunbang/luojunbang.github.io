@@ -1,7 +1,7 @@
 {
   "name": "luojunbang.github.io",
   "version": "0.1.0",
-  "packageManager": "pnpm@7.1.0",
+  "packageManager": "pnpm@7.0.0",
   "private": true,
   "sideEffects": false,
   "scripts": {
@@ -22,6 +22,7 @@
     "echarts": "^5.3.3",
     "element-plus": "^2.2.8",
     "lo-utils": "^1.2.12",
+    "lodash": "^4.17.21",
     "vue": "^3.2.23",
     "vue-jsonp": "^2.0.0",
     "vue-router": "^4.0.0-0",
@@ -30,6 +31,7 @@
   "devDependencies": {
     "@babel/core": "^7.0.0",
     "@types/node": "^18.0.1",
+    "@types/webpack-env": "^1.17.0",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
     "@vitejs/plugin-vue": "^2.3.3",
@@ -43,7 +45,7 @@
     "@vue/eslint-config-prettier": "^6.0.0",
     "@vue/eslint-config-typescript": "^9.1.0",
     "eslint": "^7.32.0",
-    "eslint-config-prettier": "^8.3.0",
+    "eslint-config-prettier": "6",
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-vue": "^8.0.3",
     "filemanager-webpack-plugin": "^6.1.6",

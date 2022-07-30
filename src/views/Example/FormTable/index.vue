@@ -11,8 +11,7 @@
 <script lang="ts" setup>
 import LoForm from '@/components/LoFormVue/LoForm.vue'
 import { LoFormInstance, LoFormConfig, LoFormItem, LoFormOption } from '@/components/LoFormVue/LoForm'
-import { computed } from '@vue/reactivity'
-import { onMounted, reactive, ref, defineExpose } from 'vue'
+import { computed, onMounted, reactive, ref, defineExpose } from 'vue'
 import { t } from 'lo-utils'
 import { datePickTypes } from 'element-plus'
 

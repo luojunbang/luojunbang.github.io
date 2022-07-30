@@ -16,9 +16,8 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, unref } from '@vue/reactivity'
 import { r } from 'lo-utils'
-import { CSSProperties, shallowRef, getCurrentInstance, nextTick, onMounted, reactive, ref } from 'vue'
+import { computed, unref, CSSProperties, shallowRef, getCurrentInstance, nextTick, onMounted, reactive, ref } from 'vue'
 const swiperList = reactive(new Array(11).fill(0).map((i, idx) => ({ id: r(2) })))
 
 const calc = i => (i + swiperList.length) % swiperList.length
