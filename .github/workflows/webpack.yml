@@ -44,17 +44,4 @@ jobs:
         repository-name: luojunbang/luojunbang.github.io
         git-config-name: luojunbangBot
         git-config-email: luojunbang@foxmail.com
-        target-folder: dist
-        commit-message: github actions
-
-    - name: Upload-index
-      uses: JamesIves/github-pages-deploy-action@v4.3.3
-      with:
-        token: ${{ secrets.ACTION_SECRET }}
-        branch: gh-page
-        folder: ./index.html
-        repository-name: luojunbang/luojunbang.github.io
-        git-config-name: luojunbangBot
-        git-config-email: luojunbang@foxmail.com
-        target-folder: ./
         commit-message: github actions
