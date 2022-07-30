@@ -36,12 +36,16 @@ jobs:
       run:  pnpm build
 
     - name: Upload
-      run: |
-        git config --local user.name="lp"
-        git config --local user.exmail="luojunbang@foxmail.com"
-        git add .
-        git commit -m "1"
-        git push origin master
+      uses: JamesIves/github-pages-deploy-action@v4.3.3
+        with:
+          token: ${{ secrets.ACTION_SECRET }}
+          branch: master
+          folder: dist
+          repository-name: luojunbang/luojunbang.github.io
+          git-config-name: luojunbangBot
+          git-config-email: luojunbang@foxmail.com
+          target-folder: dist
+          commit-message: github actions
     # - name: Deploy to GitHub Pages
     #   uses: crazy-max/ghaction-github-pages@v2
     #   # 环境变量
