@@ -28,5 +28,5 @@ import Icon from '@/components/Icon/index.vue'
 
 const app = createApp(App)
 app.use(store).use(ElementPlus).use(router).mount('#app')
-// app.component('content-box', ContentBox)
-// app.component('icon', Icon)
+app.component('content-box', ContentBox)
+app.component('icon', Icon)
