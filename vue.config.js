@@ -103,11 +103,11 @@ module.exports = {
         }
         return options
       })
-    config.optimization.minimizers.delete('terser')
-    !isDev &&
-      config.set('externals', {
-        vue: 'Vue',
-      })
+    // config.optimization.minimizers.delete('terser')
+    // !isDev &&
+    //   config.set('externals', {
+    //     vue: 'Vue',
+    //   })
     // env.prod
     !isDev &&
       config.plugin('FileManagerPlugin').use('filemanager-webpack-plugin', [
