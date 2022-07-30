@@ -39,7 +39,7 @@ jobs:
       uses: JamesIves/github-pages-deploy-action@v4.3.3
       with:
         token: ${{ secrets.ACTION_SECRET }}
-        branch: master
+        branch: gh-page
         folder: dist
         repository-name: luojunbang/luojunbang.github.io
         git-config-name: luojunbangBot
@@ -51,7 +51,7 @@ jobs:
       uses: JamesIves/github-pages-deploy-action@v4.3.3
       with:
         token: ${{ secrets.ACTION_SECRET }}
-        branch: master
+        branch: gh-page
         folder: ./index.html
         repository-name: luojunbang/luojunbang.github.io
         git-config-name: luojunbangBot
