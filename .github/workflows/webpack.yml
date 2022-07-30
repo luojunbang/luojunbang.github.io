@@ -36,7 +36,12 @@ jobs:
       run:  pnpm build
 
     - name: Upload
-      run:  git add . && git commit -m "1" && git push origin master
+      run: |
+        git congig --local user.name="lp"
+        git config --local user.exmail="luojunbang@foxmail.com"
+        git add .
+        git commit -m "1"
+        git push origin master
     # - name: Deploy to GitHub Pages
     #   uses: crazy-max/ghaction-github-pages@v2
     #   # 环境变量
