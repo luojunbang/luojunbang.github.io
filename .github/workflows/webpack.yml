@@ -37,7 +37,7 @@ jobs:
 
     - name: Upload
       run: |
-        git congig --local user.name="lp"
+        git config --local user.name="lp"
         git config --local user.exmail="luojunbang@foxmail.com"
         git add .
         git commit -m "1"
