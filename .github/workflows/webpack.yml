@@ -35,13 +35,13 @@ jobs:
     - name: Build
       run:  pnpm build
 
-    - name: upload
+    - name: Upload
       uses: actions/upload-artifact@v2.1.3
-        with:
-          # 制品名称
-          name: artifact # optional, default is artifact
-          # 一个文件, 一个目录 或者 通配符模式 上传
-          path: dist
+      with:
+        # 制品名称
+        name: artifact # optional, default is artifact
+        # 一个文件, 一个目录 或者 通配符模式 上传
+        path: dist
     # - name: Deploy to GitHub Pages
     #   uses: crazy-max/ghaction-github-pages@v2
     #   # 环境变量
