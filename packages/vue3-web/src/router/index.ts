@@ -1,8 +1,8 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
-import main from '@vue3/layout/main.vue'
-import sub from '@vue3/layout/sub.vue'
-import Appmain from '@vue3/layout/Appmain.vue'
-import dashboard from '@vue3/views/Dashboard/dashboard.vue'
+import main from '@/layout/main.vue'
+import sub from '@/layout/sub.vue'
+import Appmain from '@/layout/Appmain.vue'
+import dashboard from '@/views/Dashboard/dashboard.vue'
 import { routeAutoLink } from 'lo-utils'
 
 const routes: Array<RouteRecordRaw> = [
@@ -10,14 +10,14 @@ const routes: Array<RouteRecordRaw> = [
     path: '/',
     redirect: '/dashboard',
   },
-  // {
-  //   path: '/dashboard',
-  //   component: dashboard,
-  // },
-  // {
-  //   path: '/demo',
-  //   component: () => import('@vue3/views/Example/demo/index.vue'),
-  // },
+  {
+    path: '/dashboard',
+    component: dashboard,
+  },
+  {
+    path: '/demo',
+    component: () => import('@/views/Example/demo/index.vue'),
+  },
 ]
 
 /**
@@ -38,7 +38,7 @@ const routesAuto = routeAutoLink(routePath, [main, Appmain, sub], config)(path =
 
 const router = createRouter({
   history: createWebHashHistory(process.env.BASE_URL),
-  routes: [...routes, ...routesAuto.map(i => ({ ...i, path: '/' + i.path }))], //
+  routes: routes,//[...routes, ...routesAuto.map(i => ({ ...i, path: '/' + i.path }))], //
 })
 
 export default router

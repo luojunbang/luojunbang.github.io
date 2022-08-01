@@ -1,4 +1,4 @@
-import api from '@vue3/api'
+import api from '@/api'
 
 import { onMounted, reactive, Ref, ref, watch } from 'vue'
 import { Todo, STATUS, TYPE } from './todo'

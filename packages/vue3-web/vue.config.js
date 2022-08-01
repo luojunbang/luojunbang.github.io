@@ -13,7 +13,7 @@ module.exports = {
     loaderOptions: {
       sass: {
         additionalData: `
-        @import "@vue3/common/style/variables.scss";
+        @import "@/common/style/variables.scss";
         `,
       },
     },

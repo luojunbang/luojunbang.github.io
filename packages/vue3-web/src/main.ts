@@ -3,13 +3,13 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-import ElementPlus from 'element-plus'
+// import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 
 import 'lo-utils/style/index.scss'
 
-import ContentBox from '@vue3/components/ContentBox.vue'
-import Icon from '@vue3/components/Icon/index.vue'
+import ContentBox from '@/components/ContentBox.vue'
+import Icon from '@/components/Icon/index.vue'
 // const observer = new PerformanceObserver(function (list, obj) {
 //   const entries = list.getEntries()
 //   for (let i = 0; i < entries.length; i++) {
@@ -27,6 +27,7 @@ import Icon from '@vue3/components/Icon/index.vue'
 // )
 
 const app = createApp(App)
-app.use(store).use(ElementPlus).use(router).mount('#app')
+// .use(ElementPlus)
+app.use(store).use(router).mount('#app')
 app.component('content-box', ContentBox)
 app.component('icon', Icon)

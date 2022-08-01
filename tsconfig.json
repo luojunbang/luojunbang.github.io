@@ -11,19 +11,21 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
-    "baseUrl": ".",
+    // "baseUrl": "./",
     "types": [
       // "vite/client"
       "webpack-env",
       "element-plus/global"
     ],
     "paths": {
-      "@/*": ["src/*"],
-      "@vue3/*": ["vue3-web/src/*"],
-      "@react/*": ["react-web/*"]
+      /* 指定一组将导入重新映射到其他查找位置的条目。 */
+      // "@/*": ["src/*"],
+      "@lo-vue3/*": ["packages/*"]
+      // "@/*": ["vue3-web/src/*"],
+      // "@react/*": ["react-web/*"]
     },
     "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },
-  "include": ["vue3-web/**.ts", "vue3-web/src/**.ts"],
+  "include": ["vue3-web/*"],
   "exclude": ["node_modules"]
 }

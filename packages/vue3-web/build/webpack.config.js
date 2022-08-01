@@ -3,19 +3,23 @@ const HTMLWebpackPlugin = require('html-webpack-plugin')
 const { DefinePlugin } = require('webpack')
 
 const { resolve } = require('path')
-
+console.log(resolve(__dirname, '../src/main.ts'))
 const config = {
-  entry: resolve('./src/main.ts'),
+  entry: { app: [resolve(__dirname, '../src/main.ts')] },
   output: {
-    path: resolve('./dist'),
+    path: resolve(__dirname + '../vue3-dist'),
   },
   resolve: {
-    alias: {
-      '@vue3': 'vue3-web/src',
-    },
+    // alias: {
+    //   '@': 'src',
+    // },
     extensions: ['.ts', '.tsx', '.js', '.vue'],
   },
+  devServer: {
+    // port: 9988,
+  },
   module: {
+    noParse: /^(vue|vue-router|vuex|vuex-router-sync)$/,
     rules: [
       {
         test: /\.vue$/,
@@ -29,7 +33,7 @@ const config = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'babel-loader'
+        loader: 'babel-loader',
       },
       {
         test: /\.scss$/,
@@ -57,11 +61,10 @@ const config = {
     new VueLoaderPlugin(),
     new HTMLWebpackPlugin({
       BASE_URL: process.env.BASE_URL,
-      template: './public/index.html',
+      template: resolve(__dirname, '../public/index.html'),
     }),
     new DefinePlugin({
       'process.env': {
-        VUE_APP_BASE_API: '"/dsmp"',
         NODE_ENV: '"development"',
         BASE_URL: '""',
       },
