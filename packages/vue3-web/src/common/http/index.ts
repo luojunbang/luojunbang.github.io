@@ -2,7 +2,7 @@
  * axios封装
  * 请求拦截、响应拦截、错误统一处理
  */
-import axios from 'axios'
+import axios, { AxiosInstance } from 'axios'
 
 function showFullScreenLoading() {
   console.log('loading')
@@ -27,7 +27,7 @@ instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlenco
 //请求拦截器
 instance.interceptors.request.use(
   config => {
-    if (config.headers.showLoading !== false) {
+    if (config.headers?.showLoading !== false) {
       showFullScreenLoading()
     }
     return config
@@ -41,7 +41,7 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   // 请求成功
   res => {
-    if (res.config.headers.showLoading !== false) {
+    if (res.config.headers?.showLoading !== false) {
       tryHideFullScreenLoading()
     }
     if (res.status === 200) {
@@ -82,4 +82,4 @@ instance.interceptors.response.use(
   },
 )
 
-export default instance
+export default (instance as AxiosInstance)

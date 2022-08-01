@@ -5,12 +5,13 @@
   "private": true,
   "sideEffects": false,
   "workspaces": [
-    "vue3-web"
+    "packages/*"
   ],
   "scripts": {
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "serve:vue": "pnpm run -C ./vue3-web dev",
+    "serve:vue": "pnpm run -C ./packages/vue3-web serve",
+    "build:vue": "pnpm run -C ./packages/vue3-web build",
     "webpack:build": "webpack --config  --mode=producticon ./webpack.config.js",
     "vite": "vite",
     "vite:build": "vite build",

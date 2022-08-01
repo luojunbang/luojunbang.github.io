@@ -10,10 +10,10 @@ const config = {
     path: resolve(__dirname + '../vue3-dist'),
   },
   resolve: {
-    // alias: {
-    //   '@': 'src',
-    // },
-    extensions: ['.ts', '.tsx', '.js', '.vue'],
+    alias: {
+      '@': resolve(__dirname, '../src'),
+    },
+    extensions: ['.ts', '.tsx', '.vue', '.js'],
   },
   devServer: {
     // port: 9988,

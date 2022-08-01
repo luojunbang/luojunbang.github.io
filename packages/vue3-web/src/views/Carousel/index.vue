@@ -13,7 +13,6 @@ import Swiper from './components/Swiper.vue'
 import SwiperItem from './components/SwiperItem.vue'
 import { r } from 'lo-utils'
 import { computed, reactive, ref, nextTick, watchPostEffect, watchSyncEffect, onMounted } from 'vue'
-import { watch } from 'fs'
 const list = reactive(new Array(20).fill(0).map((i, idx) => ({ id: r() })))
 const reset = ref(false)
 const real = ref(false)

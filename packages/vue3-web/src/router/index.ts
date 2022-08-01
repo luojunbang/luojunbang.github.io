@@ -38,7 +38,7 @@ const routesAuto = routeAutoLink(routePath, [main, Appmain, sub], config)(path =
 
 const router = createRouter({
   history: createWebHashHistory(process.env.BASE_URL),
-  routes: routes,//[...routes, ...routesAuto.map(i => ({ ...i, path: '/' + i.path }))], //
+  routes: [...routes, ...routesAuto.map(i => ({ ...i, path: '/' + i.path }))], //
 })
 
 export default router
