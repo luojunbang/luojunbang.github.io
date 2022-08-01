@@ -1,7 +1,5 @@
 {
   "compilerOptions": {
-    // "useDefineForClassFields":false,
-    // "isolatedModules":true,
     "noImplicitAny":false,
     "target": "esnext",
     "module": "esnext",
@@ -17,12 +15,11 @@
     "types": [
       // "vite/client"
       "webpack-env",
-      "element-plus/global"
     ],
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
+      "@/*": [ "src/*" ],
+      "@lo-vue3/*":["vue3-web/"],
+      "@lo-react/*":["react-web/"]
     },
     "lib": [
       "esnext",
@@ -32,11 +29,8 @@
     ]
   },
   "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
-    "tests/**/*.ts",
-    "tests/**/*.tsx"
+    "vue3-web/**.ts",
+    "vue3-web/src/**.ts",
   ],
   "exclude": [
     "node_modules"
