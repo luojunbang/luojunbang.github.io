@@ -10,16 +10,18 @@
   "scripts": {
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "serve": "webpack-dev-server --config ./webpack.config.js",
+    "serve:vue": "pnpm run -C ./vue3-web dev",
     "webpack:build": "webpack --config --mode=producticon ./webpack.config.js",
     "vite": "vite",
     "vite:build": "vite build",
     "vite:review": "vite preview"
   },
   "devDependencies": {
+    "@babel/core": "^7.18.9",
     "@types/webpack-env": "^1.17.0",
     "babel-loader": "^8.2.5",
     "css-loader": "^6.7.1",
+    "sass": "^1.54.0",
     "style-loader": "^3.3.1",
     "typescript": "^4.7.4",
     "webpack": "^5.74.0",
