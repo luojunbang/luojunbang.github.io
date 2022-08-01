@@ -1,0 +1,18 @@
+{
+  "name": "luojunbang.github.io",
+  "version": "0.1.0",
+  "packageManager": "pnpm@7.0.0", //For github action
+  "private": true, // refuse to Publish
+  "sideEffects": false, // No sideEffects,For Treeshaking
+  "scripts": {
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "serve": "webpack-dev-server --config ./webpack.config.js",
+    "webpack:build": "webpack --config --mode=producticon ./webpack.config.js",
+    "vite": "vite",
+    "vite:build": "vite build",
+    "vite:review": "vite preview"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
