@@ -7,11 +7,11 @@
 </template>
 
 <script lang="ts" setup>
-import { config } from '@/router'
+import { config } from '@vue3/router'
 import { Ref, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import NavMenu from './NavMenu.vue'
-import { filePathToNest } from '@/router/routerImport'
+import { filePathToNest } from '@vue3/router/routerImport'
 const activeIndex: Ref = ref('dashboard')
 
 const router = useRouter()

@@ -1,8 +1,8 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
-import main from '@/layout/main.vue'
-import sub from '@/layout/sub.vue'
-import Appmain from '@/layout/Appmain.vue'
-import dashboard from '@/views/Dashboard/dashboard.vue'
+import main from '@vue3/layout/main.vue'
+import sub from '@vue3/layout/sub.vue'
+import Appmain from '@vue3/layout/Appmain.vue'
+import dashboard from '@vue3/views/Dashboard/dashboard.vue'
 import { routeAutoLink } from 'lo-utils'
 
 const routes: Array<RouteRecordRaw> = [
@@ -16,7 +16,7 @@ const routes: Array<RouteRecordRaw> = [
   // },
   // {
   //   path: '/demo',
-  //   component: () => import('@/views/Example/demo/index.vue'),
+  //   component: () => import('@vue3/views/Example/demo/index.vue'),
   // },
 ]
 

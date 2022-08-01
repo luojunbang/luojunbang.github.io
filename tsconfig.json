@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "noImplicitAny":false,
+    "noImplicitAny": false,
     "target": "esnext",
     "module": "esnext",
     "strict": true,
@@ -15,24 +15,15 @@
     "types": [
       // "vite/client"
       "webpack-env",
+      "element-plus/global"
     ],
     "paths": {
-      "@/*": [ "src/*" ],
-      "@lo-vue3/*":["vue3-web/"],
-      "@lo-react/*":["react-web/"]
+      "@/*": ["src/*"],
+      "@vue3/*": ["vue3-web/src/*"],
+      "@react/*": ["react-web/*"]
     },
-    "lib": [
-      "esnext",
-      "dom",
-      "dom.iterable",
-      "scripthost"
-    ]
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },
-  "include": [
-    "vue3-web/**.ts",
-    "vue3-web/src/**.ts",
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["vue3-web/**.ts", "vue3-web/src/**.ts"],
+  "exclude": ["node_modules"]
 }

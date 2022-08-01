@@ -9,8 +9,8 @@
 </template>
 
 <script lang="ts" setup>
-import LoForm from '@/components/LoFormVue/LoForm.vue'
-import { LoFormInstance, LoFormConfig, LoFormItem, LoFormOption } from '@/components/LoFormVue/LoForm'
+import LoForm from '@vue3/components/LoFormVue/LoForm.vue'
+import { LoFormInstance, LoFormConfig, LoFormItem, LoFormOption } from '@vue3/components/LoFormVue/LoForm'
 import { computed, onMounted, reactive, ref, defineExpose } from 'vue'
 import { t } from 'lo-utils'
 import { datePickTypes } from 'element-plus'

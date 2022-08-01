@@ -8,8 +8,8 @@ import 'element-plus/dist/index.css'
 
 import 'lo-utils/style/index.scss'
 
-import ContentBox from '@/components/ContentBox.vue'
-import Icon from '@/components/Icon/index.vue'
+import ContentBox from '@vue3/components/ContentBox.vue'
+import Icon from '@vue3/components/Icon/index.vue'
 // const observer = new PerformanceObserver(function (list, obj) {
 //   const entries = list.getEntries()
 //   for (let i = 0; i < entries.length; i++) {
