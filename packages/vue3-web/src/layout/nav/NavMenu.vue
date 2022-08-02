@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ElSubMenu } from 'element-plus';
+import { ElMenuItem,ElSubMenu } from 'element-plus';
 import type { routeConfig } from './nav'
 import { defineProps } from 'vue'
 const props = defineProps<{

@@ -9,13 +9,20 @@ const chalk = require('chalk')
 
 const resolve = p => path.resolve(__dirname, p)
 
-console.warn('NODE_ENV:', process.env.NODE_ENV, ':', resolve(__dirname, '../src/main.ts'))
-console.time('Start Time:', fmtDateTime(d))
+console.warn('NODE_ENV:', process.env.NODE_ENV, ':', resolve('../src/main.ts'))
+console.info('Start Time:', fmtDateTime(d))
+
+const externals = {
+  echarts: '<script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.3.3/echarts.min.js"></script>',
+}
+
 const config = {
   mode: process.env.NODE_ENV,
   entry: { app: [resolve('../src/main.ts')] },
   output: {
     path: resolve('../dist/'),
+    publicPath:'/',
+    filename: '[name]-[contenthash:8].js',
   },
   resolve: {
     alias: {
@@ -67,15 +74,18 @@ const config = {
     new VueLoaderPlugin(),
     new HTMLWebpackPlugin({
       BASE_URL: process.env.BASE_URL,
+      externals: Object.values(externals).join(''),
       template: resolve('../public/index.html'),
     }),
     new ProgressPlugin((percentage, message, ...args) => {
       console.info(chalk.green((percentage * 100).toFixed(0) + '%'), message, ...args)
       if (percentage === 1) {
-        console.log("\33[2J");
+        // console.log('\33[2J')
       }
     }),
     new DefinePlugin({
+      __VUE_OPTIONS_API__: 'true',
+      __VUE_PROD_DEVTOOLS__: 'false',
       'process.env': {
         NODE_ENV: '"development"',
         BASE_URL: '""',
