@@ -1,7 +1,6 @@
 <template>
   <div class="view-container">
-    213
-    <!-- <router-view /> -->
+    <router-view />
   </div>
 </template>
 

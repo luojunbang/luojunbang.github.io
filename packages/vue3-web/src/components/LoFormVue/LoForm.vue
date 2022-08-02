@@ -24,7 +24,7 @@
         <el-radio v-for="opt in item.options" :key="optionsFmt(opt)" :label="optionsFmt(opt)" />
       </el-radio-group>
       <!-- date -->
-      <el-date-picker v-else-if="isValidDatePickType(item.type)" v-model="form[item.field]" :type="item.type" :value-format="item.valueFormat ?? 'x'" :default-value="item.value" v-bind="item" />
+      <el-date-picker v-else-if="item.type !== undefined && isValidDatePickType(item.type)" v-model="form[item.field]" :type="item.type" :value-format="item.valueFormat ?? 'x'" :default-value="item.value" v-bind="item" />
       <!-- time -->
       <el-time-picker v-else-if="item.type === 'time'" v-model="form[item.field]" :is-range="item.isRange ?? false" :default-value="item.value" format="HH:mm" v-bind="item" />
       <!-- input-number -->

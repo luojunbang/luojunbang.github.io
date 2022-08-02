@@ -3,11 +3,13 @@ const HTMLWebpackPlugin = require('html-webpack-plugin')
 const { DefinePlugin } = require('webpack')
 
 const { resolve } = require('path')
-console.log(resolve(__dirname, '../src/main.ts'))
+const { ProgressPlugin } = require('webpack')
+console.log(process.env.NODE_ENV, ':', resolve(__dirname, '../src/main.ts'))
 const config = {
+  mode: process.env.NODE_ENV,
   entry: { app: [resolve(__dirname, '../src/main.ts')] },
   output: {
-    path: resolve(__dirname + '../vue3-dist'),
+    path: resolve(__dirname + '../dist/'),
   },
   resolve: {
     alias: {
@@ -17,23 +19,20 @@ const config = {
   },
   devServer: {
     // port: 9988,
+    static: resolve(__dirname, '../dist/'),
+    hot: true,
   },
+  externals: {
+    echarts: 'echarts',
+    '@antv/g6': 'G6',
+  },
+  optimization: {},
   module: {
     noParse: /^(vue|vue-router|vuex|vuex-router-sync)$/,
     rules: [
       {
         test: /\.vue$/,
         loader: 'vue-loader',
-      },
-      // {
-      //   test: /\.vue$/,
-      //   resourceQuery:'type=style',
-      //   loader: 'vue-loader',
-      // },
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader',
       },
       {
         test: /\.scss$/,
@@ -51,6 +50,7 @@ const config = {
             loader: 'ts-loader',
             options: {
               appendTsSuffixTo: [/\.vue$/],
+              transpileOnly:true
             },
           },
         ],
@@ -62,6 +62,9 @@ const config = {
     new HTMLWebpackPlugin({
       BASE_URL: process.env.BASE_URL,
       template: resolve(__dirname, '../public/index.html'),
+    }),
+    new ProgressPlugin((percentage, message, ...args) => {
+      console.info(percentage, message, ...args)
     }),
     new DefinePlugin({
       'process.env': {

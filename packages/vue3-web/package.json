@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --config ./build/webpack.config.js --mode=development",
+    "serve": "cross-env NODE_ENV=development webpack-dev-server --config ./build/webpack.config.js --mode=development",
     "build":"cross-env NODE_ENV=production webpack --config ./build/webpack.config.js"
   },
   "author": "",

@@ -34,9 +34,8 @@ function debounce(fn, wait = 300) {
       result = fn.apply(ctx, args)
     }
   }
-  return function () {
+  return  () => {
     lastEmitTime = Date.now()
-    ctx = this
     args = arguments
     if (!timer) timer = setTimeout(handler, wait)
     return result
