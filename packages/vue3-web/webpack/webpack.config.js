@@ -6,6 +6,7 @@ const path = require('path')
 const { ProgressPlugin } = require('webpack')
 const d = Date.now()
 const chalk = require('chalk')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 const resolve = p => path.resolve(__dirname, p)
 
@@ -20,13 +21,16 @@ const config = {
   mode: process.env.NODE_ENV,
   entry: { app: [resolve('../src/main.ts')] },
   output: {
+    clean: true,
     path: resolve('../dist/'),
-    publicPath:'/',
+    publicPath: '/',
     filename: '[name]-[contenthash:8].js',
+    chunkFilename: 'js/[name]-[contenthash:8].js',
   },
   resolve: {
     alias: {
       '@': resolve('../src'),
+      vue$: "vue/dist/vue.runtime.esm-bundler.js",
     },
     extensions: ['.ts', '.tsx', '.vue', '.js'],
   },
@@ -36,12 +40,63 @@ const config = {
     hot: true,
   },
   externals: {
-    echarts: 'echarts',
-    '@antv/g6': 'G6',
+    // echarts: 'ECharts',
+    // '@antv/g6': 'G6',
   },
-  optimization: {},
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        vue: {
+          name: 'vue',
+          minSize: 10,
+          test: /[\\/]node_modules[\\/](@vue[\S]*|vue|vue-router|vuex)[\\/]/,
+          priority: 10,
+          chunks: 'initial',
+        },
+        elementUI: {
+          name: 'element-plus',
+          minSize: 10,
+          test: /[\\/]node_modules[\\/]element-plus[\\/]/,
+          priority: 10,
+          chunks: 'initial',
+        },
+        echarts: {
+          name: 'echarts',
+          minSize: 10,
+          test: /[\\/]node_modules[\\/]echarts[\\/]/,
+          priority: 10,
+          chunks: 'initial',
+        },
+        antv: {
+          name: 'antv',
+          minSize: 10,
+          test: /[\\/]node_modules[\\/]@antv[\\/]/,
+          priority: 10,
+          chunks: 'initial',
+        },
+        defaultVendors: {
+          name: 'chunk-vendors',
+          test: /[\\/]node_modules[\\/]/,
+          chunks: 'initial',
+          priority: -10,
+        },
+        common: {
+          name: 'chunk-common',
+          minChunks: 2,
+          priority: -20,
+          chunks: 'initial',
+          reuseExistingChunk: true,
+        },
+      },
+    },
+  },
   module: {
-    noParse: /^(vue|vue-router|vuex|vuex-router-sync)$/,
+    noParse: content => {
+      console.log('---content:', chalk.green.bold(content))
+      const ans = /^(vue|vue-router|vuex|vuex-router-sync)$/.test(content)
+      ans && console.log('---content:', chalk.red.bold(content))
+      return ans
+    },
     rules: [
       {
         test: /\.vue$/,
@@ -83,6 +138,9 @@ const config = {
         // console.log('\33[2J')
       }
     }),
+    require('unplugin-element-plus/webpack')({
+      // options
+    }),
     new DefinePlugin({
       __VUE_OPTIONS_API__: 'true',
       __VUE_PROD_DEVTOOLS__: 'false',
@@ -93,5 +151,15 @@ const config = {
     }),
   ],
 }
+
+const isDev = process.env.NODE_ENV === 'development'
+
+// BundleAnalyzerPlugin
+!isDev &&
+  config.plugins.push(
+    new BundleAnalyzerPlugin({
+      generateStatsFile: true,
+    })
+  )
 
 module.exports = config

@@ -21,7 +21,7 @@ const style = reactive({ left: '0px', top: '0px' })
 console.log(ball)
 
 onMounted(() => {
-  ball.value.addEventListener('transitionend', () => {})
+  ball.value?.addEventListener('transitionend', () => {})
 })
 
 async function start() {

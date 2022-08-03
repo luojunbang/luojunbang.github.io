@@ -3,7 +3,6 @@
 </template>
 
 <script lang="ts" setup>
-import { isNumber, isString } from 'lodash'
 import { defineProps, computed } from 'vue'
 const props = defineProps({
   icon: {

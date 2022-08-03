@@ -24,7 +24,7 @@
         <el-radio v-for="opt in item.options" :key="optionsFmt(opt)" :label="optionsFmt(opt)" />
       </el-radio-group>
       <!-- date -->
-      <el-date-picker v-else-if="item.type !== undefined && isValidDatePickType(item.type)" v-model="form[item.field]" :type="item.type" :value-format="item.valueFormat ?? 'x'" :default-value="item.value" v-bind="item" />
+      <el-date-picker v-else-if="isValidDatePickType(item.type)" v-model="form[item.field]" :type="isValidDatePickType(item.type) ? (item.type as DatePickType): 'date'" :value-format="item.valueFormat ?? 'x'" :default-value="item.value" v-bind="item" />
       <!-- time -->
       <el-time-picker v-else-if="item.type === 'time'" v-model="form[item.field]" :is-range="item.isRange ?? false" :default-value="item.value" format="HH:mm" v-bind="item" />
       <!-- input-number -->
@@ -37,18 +37,17 @@
 </template>
 
 <script lang="ts" setup>
-import { ElInput, ElForm, ElFormItem, ElCheckbox, datePickTypes } from 'element-plus'
+import { ElInput, ElForm, ElFormItem, ElCheckbox, datePickTypes, ElSelect, ElOption, ElDatePicker, ElTimePicker, ElInputNumber } from 'element-plus'
 import { computed, defineProps, defineEmits, toRefs, ref, reactive, defineExpose, watch, unref, onMounted, shallowRef } from 'vue'
-import { IDatePickerType, LoFormProps, FORM_CHANGE_EVENT, defaultValue, fromNormalList } from './LoForm'
+import { LoFormProps, FORM_CHANGE_EVENT, defaultValue, fromNormalList } from './LoForm'
 import type { LoFormOption } from './LoForm'
 import type { FormInstance, DatePickType } from 'element-plus'
 import { Arrayable } from 'element-plus/es/utils'
 import { throttle } from 'lo-utils'
-import { debounce } from 'lodash'
 const props = defineProps(LoFormProps)
 const emits = defineEmits([FORM_CHANGE_EVENT])
 
-const isValidDatePickType = (val: string): val is DatePickType => ([...datePickTypes] as string[]).includes(val)
+const isValidDatePickType = (val: string | undefined): val is DatePickType => val !== undefined && ([...datePickTypes] as string[]).includes(val)
 
 const FormRef = ref<FormInstance>()
 
@@ -56,12 +55,7 @@ function optionsFmt(opt, field = 'label') {
   return typeof opt == 'string' ? opt : opt[field]
 }
 
-const form = reactive(
-  props.list.reduce((rs, i) => {
-    rs[i.field] = i.value ?? defaultValue(i.type)
-    return rs
-  }, {}),
-)
+const form = reactive({})
 onMounted(() => {
   props.list.forEach(i => {
     i.isRelative && bindEmitWatch(i)
@@ -89,12 +83,14 @@ function bindEmitWatch(item) {
   if (watchList[item.field] && typeof watchList[item.field] === 'function') {
     watchList[item.field]()
   }
-  const stop = watch(
-    () => form[item.field],
-    debounce((val, oldVal) => {
-      emits(FORM_CHANGE_EVENT, item, val, oldVal)
-    }, item.throttle),
-  )
+  const watchFn = item.throttle
+    ? throttle((val, oldVal) => {
+        emits(FORM_CHANGE_EVENT, item, val, oldVal)
+      }, item.throttle)
+    : (val, oldVal) => {
+        emits(FORM_CHANGE_EVENT, item, val, oldVal)
+      }
+  const stop = watch(() => form[item.field], watchFn)
   watchList[item.field] = stop
 }
 
