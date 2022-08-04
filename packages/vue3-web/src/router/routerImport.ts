@@ -2,10 +2,13 @@ import { Component } from 'vue'
 
 import { RouteRecordRaw, RouteMeta, RouteRecordName, RouteComponent } from 'vue-router'
 
-interface navRouteConfig {
+export declare interface navRouteConfig {
   path: string
+  href: string
+  fullPath?: string
+  meta?: RouteMeta
   title: string
-  children: navRouteConfig[]
+  children?: navRouteConfig[]
 }
 
 interface routerConfig {
@@ -17,7 +20,7 @@ interface singleRouteConfig {
   component: string | Component
   name?: RouteRecordName
   meta?: RouteMeta
-  children?: singleRouteConfig[] | undefined
+  children?: singleRouteConfig[]
 }
 
 // 判断是否是index.vue或者 */DIR/DIR.vue 不区分大小写
@@ -32,75 +35,45 @@ const isIndex = (path: string): boolean => {
 }
 
 export function routeAutoLink(routePath: string[], layoutComponentLists: Component[], routeConfig: { [x: string]: routerConfig }) {
-  // console.log(routePath)
-
   if (!Array.isArray(layoutComponentLists)) throw Error('Should be Array fo LayoutComponents.')
 
-  const removePathParam = (path: string) => path.replace(/\/:[\S]+$/, '')
-
-  const getRoutePath = (val: string) => {
-    const _val = val.split('/')
-    if (_val.length > 1) {
-      return _val[_val.length - 2]
-    } else return val.replace(/\.vue$/, '')
-  }
-  const generatorRoute = (path: string, fullPath: string, config: routerConfig): singleRouteConfig => {
-    const route: singleRouteConfig = {
-      path: path,
-      component: fullPath,
-      name: fullPath
-        .split('/')
-        .join('_')
-        .replace(/\.vue$/, ''),
-      meta: {},
-    }
-    if (!config) return route
-    if (config.params) route.path += (route.path ? '/' : '') + config.params
-    return { ...config, ...route }
-  }
-  const routes: singleRouteConfig[] = []
-  routePath = routePath.map(i => i.replace(/^\.\//, '')).filter(i => isIndex(i.split('/').slice(-2).join('/')))
-  routePath.forEach(path => {
-    const path_ary = path.split('/')
-    let _routes = routes
-    const len = path_ary.length
-    while (path_ary.length) {
-      const _path = path_ary[0]
-      const rest_path = path_ary.join('/')
-      const foundRoute: singleRouteConfig | undefined = _routes.find(({ path }) => removePathParam(path) == `${_path}`)
-      if (foundRoute) {
-        if (Array.isArray(foundRoute.children)) {
-          if (isIndex(rest_path)) {
-            foundRoute.children.push(generatorRoute('', path, routeConfig[path]))
-            break
-          }
-        } else {
-          //   console.log(foundRoute)
-          const index_path = (foundRoute.name as string).split('_').join('/') + '.vue' //复原
-          foundRoute.children = [generatorRoute('', index_path, routeConfig[index_path])]
-          foundRoute.path = removePathParam(foundRoute.path)
-          if (!layoutComponentLists[len - path_ary.length]) throw new Error(`Level ${len - path_ary.length + 1} LayoutComponents is not definded`)
-          foundRoute.component = layoutComponentLists[len - path_ary.length]
-          delete foundRoute.name
-          if (isIndex(rest_path)) {
-            _routes.push(generatorRoute(getRoutePath(rest_path), path, routeConfig[path]))
-            break
-          }
-        }
-        _routes = foundRoute.children
-      } else {
-        if (isIndex(rest_path)) {
-          _routes.push(generatorRoute(getRoutePath(rest_path), path, routeConfig[path]))
-          break
-        } else {
-          if (!layoutComponentLists[len - path_ary.length]) throw new Error(`Level ${len - path_ary.length + 1} LayoutComponents is not definded`)
-          _routes.push({ path: `${_path}`, component: layoutComponentLists[len - path_ary.length], children: [] })
-          _routes = _routes[_routes.length - 1].children || []
-        }
+  const routerNest: navRouteConfig[] = filePathToNest(routePath, routeConfig).map(route => {
+    if (!route.children) {
+      return {
+        path: route.path,
+        title: route.title,
+        href: route.href,
+        children: [
+          {
+            path: '',
+            href: route.href,
+            fullPath: route.fullPath,
+            title: route.title,
+            meta: route.meta,
+          },
+        ],
       }
-      path_ary.shift()
     }
+    return route
   })
+  console.log('ans1:', routerNest)
+  const routes: singleRouteConfig[] = (function parseRouterRaw(routeAry: navRouteConfig[], deep) {
+    if (!Array.isArray(routeAry)) return []
+    return routeAry.map(i => {
+      if (!i.fullPath && !layoutComponentLists[deep]) throw Error(`LayoutComponents ${deep} is undefined`)
+      const routerRaw: singleRouteConfig = {
+        path: i.path,
+        component: i.fullPath ?? layoutComponentLists[deep],
+        name: i.fullPath?.replace(/(\/|\.)/g, '_'),
+        meta: i.meta,
+      }
+      if (i.children) routerRaw.children = parseRouterRaw(i.children, deep + 1)
+      return routerRaw
+    })
+  })(routerNest, 0)
+
+  console.log('ans:', routes)
+
   // routes = routes.map(i => ({ ...i, path: '/' + i.path }))
   return function toCompoennt(importFn: (someArg: string) => RouteComponent | (() => Promise<RouteComponent>), routeLists?: singleRouteConfig[]): RouteRecordRaw[] {
     if (!routeLists) routeLists = routes
@@ -113,42 +86,42 @@ export function routeAutoLink(routePath: string[], layoutComponentLists: Compone
 }
 
 export function filePathToNest(routePath: string[], config: { [x: string]: routerConfig }, prefix = ''): navRouteConfig[] {
-  const pathList: string[][] = routePath.filter(i => isIndex(i.split('/').slice(-2).join('/'))).map(i => i.replace(/^\.\//, '').split('/'))
-
-  const generator = (path: string[]): string[] => {
-    if (path.length == 1) return path.map(i => i.replace(/\.vue$/, ''))
-    return path[path.length - 1] === 'index.vue' || path[path.length - 1].toLowerCase() === path[path.length - 2].toLowerCase() + '.vue' ? path.slice(0, path.length - 1) : path
+  const pathList = routePath.filter(i => isIndex(i.split('/').slice(-2).join('/'))).map(i => i.replace(/^\.\//, '').split('/'))
+  const ans = {}
+  let idx = 0
+  while (pathList.some(i => i[idx] !== void 0)) {
+    pathList.forEach(path => {
+      if (!path[idx] || isIndex(path.slice(idx - 1, idx + 1).join('/'))) return // 筛选重复导入 xx/index.vue
+      const key = path.slice(0, idx + 1).join('/')
+      if (!ans[key]) {
+        const obj: navRouteConfig = {
+          path: path[idx],
+          title: path[idx],
+          href: prefix + key,
+        }
+        if (isIndex(path.slice(idx).join('/'))) {
+          obj.fullPath = prefix + path.join('/')
+          obj.meta = config[obj.fullPath]?.meta
+        }
+        obj.title = (obj.meta?.title as string) ?? path[idx]
+        ans[key] = obj
+      }
+    })
+    idx++
   }
-  let idx = -1
-  // console.log(pathList)
+  console.log(ans)
 
-  const navConfig2: Map<string, navRouteConfig> = new Map()
-  while (idx++ < pathList.length - 1) {
-    const realpath = pathList[idx].join('/')
-    const path = generator(pathList[idx])
-    if (path.length > 1) {
-      if (!navConfig2.get(path[0])) navConfig2.set(path[0], { path: prefix + path[0], title: config[prefix + realpath]?.meta?.title ?? path[0], children: [] })
-      const parent_key = path.slice(0, path.length - 1).join('/')
-      if (!navConfig2.get(parent_key)) navConfig2.set(parent_key, { path: prefix + parent_key, title: config[prefix + realpath]?.meta?.title ?? parent_key.replace('/', '_'), children: [] })
-    }
-    navConfig2.set(path.join('/'), { path: prefix + path.join('/'), title: config[prefix + realpath]?.meta?.title ?? path.join('_'), children: [] })
-  }
-  // console.log(navConfig2)
-
-  const ans: navRouteConfig[] = []
-  for (const pathString of navConfig2.keys()) {
-    const path: string[] = generator(pathString.split('/'))
-    if (path.length == 0) continue
-    const key = path.join('/')
-    const currRouter = navConfig2.get(key)
-    if (!currRouter) continue
-    if (path.length == 1) ans.push(currRouter)
+  const list: navRouteConfig[] = []
+  Object.keys(ans).forEach(item => {
+    const pathList = item.split('/')
+    if (pathList.length == 1) list.push(ans[item])
     else {
-      const _key = path.slice(0, path.length - 1).join('/')
-      const pid = navConfig2.get(_key)
-      if (pid !== undefined) pid.children.push(currRouter)
+      const prePath = pathList.slice(0, pathList.length - 1).join('/')
+      if (ans[prePath]) {
+        if (Array.isArray(ans[prePath].children)) ans[prePath].children.push(ans[item])
+        else ans[prePath].children = [ans[item]]
+      }
     }
-  }
-  // console.log(ans)
-  return ans
+  })
+  return list
 }

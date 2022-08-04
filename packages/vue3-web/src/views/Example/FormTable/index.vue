@@ -1,11 +1,18 @@
 <template>
-  <div>
-    <LoForm ref="LoFormRef" label-position="right" size="large" :list="list" :inline="true" @formChange="onFormChange">
-      <template v-slot:templatelabelSlot="{ item }">{{ item.label + '-labelslot' }}</template>
-      <template v-slot:="{ item }">{{ item.field + '-formslot' }}</template>
-    </LoForm>
+  <div class="clearfix">
+    <div class="w-70 fl">
+      <LoForm ref="LoFormRef" label-position="right" size="large" :list="list" :inline="true" @formChange="onFormChange">
+        <template v-slot:templatelabelSlot="{ item }">{{ item.label + '-labelslot' }}</template>
+        <template v-slot:="{ item }">{{ item.field + '-formslot' }}</template>
+      </LoForm>
+      <div>
+        <pre class="mg-t-lg" style="word-break: break-word; width: 500px">{{ JSON.stringify(form, null, 2) }}</pre>
+      </div>
+    </div>
+    <div class="w-30 fl">
+      <LoForm />
+    </div>
   </div>
-  <pre class="mg-t-lg" style="word-break: break-word; width: 500px">{{ JSON.stringify(form, null, 2) }}</pre>
 </template>
 
 <script lang="ts" setup>
@@ -13,11 +20,10 @@ import LoForm from '@/components/LoFormVue/LoForm.vue'
 import { LoFormInstance, LoFormConfig, LoFormItem, LoFormOption } from '@/components/LoFormVue/LoForm'
 import { computed, onMounted, reactive, ref, defineExpose } from 'vue'
 import { t } from 'lo-utils'
-import { datePickTypes } from 'element-plus'
 
 import { useAddressSelect, addressProps } from './useAddress'
 
-let list = reactive([
+let list = reactive<LoFormConfig>([
   { field: 'text', label: 'Text' },
   { field: 'textarea', label: 'Textarea', type: 'textarea', rows: 4 },
   { field: 'number', label: 'Number', type: 'number' },
@@ -117,3 +123,13 @@ function handleSubmit() {
     })
 }
 </script>
+
+<style lang="scss">
+.clearfix::after {
+  content: '';
+  visibility: hidden;
+  display: block;
+  height: 0;
+  clear: both;
+}
+</style>

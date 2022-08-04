@@ -1,0 +1,1 @@
+<template>GrandPage2</template>

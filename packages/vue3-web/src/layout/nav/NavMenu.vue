@@ -1,19 +1,18 @@
 <template>
-  <template v-for="item in menuList" :key="item.path">
-    <el-menu-item v-if="item.children.length == 0" :index="item.path">{{ item.title }}</el-menu-item>
-    <el-sub-menu v-else :index="item.path">
+  <template v-for="item in menuList" :key="item.href">
+    <el-menu-item v-if="!item.children" :index="item.href">{{ item.title }}</el-menu-item>
+    <el-sub-menu v-else :index="item.href">
       <template v-slot:title>{{ item.title }}</template>
-      <NavMenu :menuList="item.children" />
+      <NavMenu v-if="Array.isArray(item.children)" :menuList="item.children" />
     </el-sub-menu>
   </template>
 </template>
 
 <script lang="ts" setup>
-import { ElMenuItem,ElSubMenu } from 'element-plus';
-import type { routeConfig } from './nav'
-import { defineProps } from 'vue'
+import { ElMenuItem, ElSubMenu } from 'element-plus'
+import { navRouteConfig } from '@/router/routerImport'
 const props = defineProps<{
-  menuList: routeConfig[]
+  menuList: navRouteConfig[]
 }>()
 // console.log(props)
 </script>

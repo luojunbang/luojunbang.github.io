@@ -3,17 +3,18 @@ import main from '@/layout/main.vue'
 import sub from '@/layout/sub.vue'
 import Appmain from '@/layout/Appmain.vue'
 import dashboard from '@/views/Dashboard/dashboard.vue'
-import { routeAutoLink } from 'lo-utils'
+import { routeAutoLink } from './routerImport'
+// import { routeAutoLink } from 'lo-utils'
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     redirect: '/dashboard',
   },
-  {
-    path: '/dashboard',
-    component: dashboard,
-  },
+  // {
+  //   path: '/dashboard',
+  //   component: dashboard,
+  // },
   {
     path: '/demo',
     component: () => import('@/views/Example/demo/index.vue'),
@@ -30,15 +31,17 @@ export const config = {
   'Example/Page1/SubPage2/Page2/index.vue': { meta: {} },
 }
 
-const routePath = require.context('../views/', true, /\.vue$/).keys()
+const routePath = require
+  .context('../views/', true, /\.vue$/)
+  .keys()
 
 const routesAuto = routeAutoLink(routePath, [main, Appmain, sub], config)(path => () => import(/*webpackChunkName:"[request]"*/ `../views/${path.replace(/\.vue$/, '')}.vue`))
 
-// console.log(routesAuto)
+const finalroutes = [...routes, ...routesAuto.map(i => ({ ...i, path: '/' + i.path }))]
 
 const router = createRouter({
   history: createWebHashHistory(process.env.BASE_URL),
-  routes: [...routes, ...routesAuto.map(i => ({ ...i, path: '/' + i.path }))], //
+  routes: finalroutes, //
 })
 
 export default router

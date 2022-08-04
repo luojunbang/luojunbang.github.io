@@ -43,7 +43,7 @@ export type formType = FromNormalType | IDatePickerType
 
 type refable<T> = Ref<T> | T
 
-declare interface formBase {
+declare interface formBase extends Record<string, any> {
   type?: formType
   label: string
   field: string
@@ -59,7 +59,6 @@ declare interface formBase {
   labelSlot?: string
   formSlot?: string
   throttle?: number
-  rows: number
 }
 
 export function defaultValue(type) {

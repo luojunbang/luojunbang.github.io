@@ -35,21 +35,23 @@ const navRoutePath = require
 const routerNest = [
   {
     path: 'Dashboard',
+    href: 'Dashboard',
     title: 'Dashboard',
-    children: [],
   },
   {
     path: 'Carousel',
+    href: 'Carousel',
     title: 'Carousel',
-    children: [],
   },
   {
-    path: '/Example',
+    path: 'Example',
+    href: 'Example',
     title: '例子',
     children: filePathToNest(navRoutePath, config, 'Example/'),
   },
 ]
-console.log(routerNest)
+
+// console.log(routerNest)
 </script>
 
 <style lang="scss" scoped></style>
