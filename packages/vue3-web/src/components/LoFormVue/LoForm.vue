@@ -24,7 +24,7 @@
         <el-radio v-for="opt in item.options" :key="optionsFmt(opt)" :label="optionsFmt(opt)" />
       </el-radio-group>
       <!-- date -->
-      <el-date-picker v-else-if="isValidDatePickType(item.type)" v-model="form[item.field]" :type="isValidDatePickType(item.type) ? (item.type as DatePickType): 'date'" :value-format="item.valueFormat ?? 'x'" :default-value="item.value" v-bind="item" />
+      <el-date-picker v-else-if="isValidDatePickType(item.type)" v-model="form[item.field]" :type="item.type"  :value-format="item.valueFormat ?? 'x'" :default-value="item.value" />
       <!-- time -->
       <el-time-picker v-else-if="item.type === 'time'" v-model="form[item.field]" :is-range="item.isRange ?? false" :default-value="item.value" format="HH:mm" v-bind="item" />
       <!-- input-number -->
@@ -33,11 +33,10 @@
       <el-input v-else :type="item.type ?? 'text'" v-model="form[item.field]" v-bind="item" />
     </el-form-item>
   </el-form>
-  <button @click="handle">emit</button>
 </template>
 
 <script lang="ts" setup>
-import { ElInput, ElForm, ElFormItem, ElCheckbox, datePickTypes, ElSelect, ElOption, ElDatePicker, ElTimePicker, ElInputNumber } from 'element-plus'
+import { ElInput, ElSwitch, ElRadio, ElRadioGroup, ElForm, ElFormItem, ElCheckbox, ElCheckboxGroup, datePickTypes, ElSelect, ElOption, ElDatePicker, ElTimePicker, ElInputNumber } from 'element-plus'
 import { computed, defineProps, defineEmits, toRefs, ref, reactive, defineExpose, watch, unref, onMounted, shallowRef } from 'vue'
 import { LoFormProps, FORM_CHANGE_EVENT, defaultValue, fromNormalList } from './LoForm'
 import type { LoFormOption } from './LoForm'
@@ -71,7 +70,7 @@ watch(props.list, () => {
   })
   list.forEach(i => {
     if (form[i.field] == undefined) {
-      form[i.field] = i.value ?? ''
+      form[i.field] = i.value ?? defaultValue(i.type)
       i.isRelative && bindEmitWatch(i)
     }
   })

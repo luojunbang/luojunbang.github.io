@@ -1,11 +1,11 @@
 <template>
   <div>
-    <LoForm ref="LoFormRef" label-position="right" :list="list" :inline="true" @formChange="onFormChange">
-      <template v-slot:templatelabelSlot="{ item }">{{ item.label + '-slot' }}</template>
-      <template v-slot:templateformSlot="{ item }">{{ item.field + '-slot' }}</template>
+    <LoForm ref="LoFormRef" label-position="right" size="large" :list="list" :inline="true" @formChange="onFormChange">
+      <template v-slot:templatelabelSlot="{ item }">{{ item.label + '-labelslot' }}</template>
+      <template v-slot:="{ item }">{{ item.field + '-formslot' }}</template>
     </LoForm>
   </div>
-  <div class="mg-t-lg" style="word-break: break-word; width: 500px">{{ JSON.stringify(form) }}</div>
+  <pre class="mg-t-lg" style="word-break: break-word; width: 500px">{{ JSON.stringify(form, null, 2) }}</pre>
 </template>
 
 <script lang="ts" setup>
@@ -17,9 +17,9 @@ import { datePickTypes } from 'element-plus'
 
 import { useAddressSelect, addressProps } from './useAddress'
 
-let list = reactive<LoFormItem[]>([
+let list = reactive([
   { field: 'text', label: 'Text' },
-  { field: 'textarea', label: 'Textarea', type: 'textarea' },
+  { field: 'textarea', label: 'Textarea', type: 'textarea', rows: 4 },
   { field: 'number', label: 'Number', type: 'number' },
   { field: 'email', label: 'email', isRelative: true, placeholder: 'email input', throttle: 1 },
   { field: 'switch', label: 'Switch', type: 'switch' },
@@ -55,12 +55,13 @@ let list = reactive<LoFormItem[]>([
   // }),
   { field: 'time', label: 'Time', type: 'time' },
   { field: 'timerange', label: 'Timerange', isRange: true, type: 'time' },
-  { field: 'labelSlot', label: 'LabelSlot', labelSlot: 'templatelabelSlot', formSlot: 'templateformSlot' },
+  { field: 'labelSlot', label: 'LabelSlot', labelSlot: 'templatelabelSlot', formSlot: ' ' },
 ])
 
 const LoFormRef = ref<LoFormInstance>()
 onMounted(() => {
   console.log('LoFormRef.value:', LoFormRef.value?.form)
+  initOptions()
 })
 
 function onFormChange(item: LoFormItem, value, oldVal) {
@@ -70,7 +71,7 @@ function onFormChange(item: LoFormItem, value, oldVal) {
     const res = useAddressSelect(
       item.field,
       value,
-      list.find(i => i.field == addressProps[idx]),
+      list.find(i => i.field == addressProps[idx])
     )
     addressProps.slice(idx).forEach(field => LoFormRef.value?.setFormValue(field, res[field]))
   }
@@ -87,15 +88,18 @@ async function handleClick() {
   }, 3000)
 }
 
-async function handleReset() {
-  // LoFormRef.value?.resetFields(['email'])
+function initOptions() {
   const idx = addressProps.indexOf('') + 1
   const res = useAddressSelect(
     '',
     '',
-    list.find(i => i.field == addressProps[idx]),
+    list.find(i => i.field == addressProps[idx])
   )
   addressProps.slice(idx).forEach(field => LoFormRef.value?.setFormValue(field, res[field]))
+}
+
+async function handleReset() {
+  // LoFormRef.value?.resetFields(['email'])
 }
 
 const form = computed(() => {

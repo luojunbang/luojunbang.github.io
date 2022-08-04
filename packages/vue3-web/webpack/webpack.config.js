@@ -8,13 +8,15 @@ const d = Date.now()
 const chalk = require('chalk')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+
 const resolve = p => path.resolve(__dirname, p)
 
 console.warn('NODE_ENV:', process.env.NODE_ENV, ':', resolve('../src/main.ts'))
 console.info('Start Time:', fmtDateTime(d))
 
 const externals = {
-  echarts: '<script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.3.3/echarts.min.js"></script>',
+  // echarts: '<script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.3.3/echarts.min.js"></script>',
 }
 
 const config = {
@@ -23,20 +25,20 @@ const config = {
   output: {
     clean: true,
     path: resolve('../dist/'),
-    publicPath: '/',
-    filename: '[name]-[contenthash:8].js',
+    publicPath: process.env.BASE_URL,
+    filename: 'js/[name]-[contenthash:8].js',
     chunkFilename: 'js/[name]-[contenthash:8].js',
   },
   resolve: {
     alias: {
       '@': resolve('../src'),
-      vue$: "vue/dist/vue.runtime.esm-bundler.js",
+      vue$: 'vue/dist/vue.runtime.esm-bundler.js',
     },
     extensions: ['.ts', '.tsx', '.vue', '.js'],
   },
   devServer: {
     // port: 9988,
-    static: resolve('../dist/'),
+    // static: resolve('../dist/'),
     hot: true,
   },
   externals: {
@@ -45,6 +47,7 @@ const config = {
   },
   optimization: {
     splitChunks: {
+      minSize: 10,
       cacheGroups: {
         vue: {
           name: 'vue',
@@ -92,23 +95,43 @@ const config = {
   },
   module: {
     noParse: content => {
-      console.log('---content:', chalk.green.bold(content))
       const ans = /^(vue|vue-router|vuex|vuex-router-sync)$/.test(content)
       ans && console.log('---content:', chalk.red.bold(content))
       return ans
     },
     rules: [
       {
+        //?
+        test: /\.m?jsx?$/,
+        resolve: {
+          fullySpecified: false,
+        },
+      },
+      {
         test: /\.vue$/,
-        loader: 'vue-loader',
+        use: ['vue-loader'],
+      },
+      {
+        test: /\.vue$/,
+        resourceQuery: /type=style/,
+        sideEffects: true,
       },
       {
         test: /\.scss$/,
-        use: ['vue-style-loader', 'css-loader', 'sass-loader'],
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+            },
+          },
+          'sass-loader',
+        ],
       },
       {
         test: /\.css$/,
-        use: ['vue-style-loader', 'css-loader'],
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
       {
         test: /.tsx?$/,
@@ -127,28 +150,33 @@ const config = {
   },
   plugins: [
     new VueLoaderPlugin(),
-    new HTMLWebpackPlugin({
-      BASE_URL: process.env.BASE_URL,
-      externals: Object.values(externals).join(''),
-      template: resolve('../public/index.html'),
-    }),
-    new ProgressPlugin((percentage, message, ...args) => {
-      console.info(chalk.green((percentage * 100).toFixed(0) + '%'), message, ...args)
-      if (percentage === 1) {
-        // console.log('\33[2J')
-      }
-    }),
-    require('unplugin-element-plus/webpack')({
-      // options
-    }),
     new DefinePlugin({
       __VUE_OPTIONS_API__: 'true',
       __VUE_PROD_DEVTOOLS__: 'false',
       'process.env': {
         NODE_ENV: '"development"',
-        BASE_URL: '""',
+        BASE_URL: '"./"',
       },
     }),
+    new MiniCssExtractPlugin({
+      filename: 'css/[name].[contenthash:8].css',
+      chunkFilename: 'css/[name].[contenthash:8].css',
+    }),
+    new HTMLWebpackPlugin({
+      BASE_URL: process.env.BASE_URL,
+      externals: Object.values(externals).join('') || ' ',
+      template: resolve('../public/index.html'),
+    }),
+    new ProgressPlugin((percentage, message, ...args) => {
+      console.info(chalk.green((percentage * 100).toFixed(0) + '%'), message, ...args)
+      if (percentage === 1) {
+        console.log('\33[2J')
+      }
+    }),
+    require('unplugin-element-plus/webpack')({
+      // options
+    }),
+   
   ],
 }
 

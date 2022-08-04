@@ -59,6 +59,7 @@ declare interface formBase {
   labelSlot?: string
   formSlot?: string
   throttle?: number
+  rows: number
 }
 
 export function defaultValue(type) {
