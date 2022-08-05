@@ -1,11 +1,16 @@
 {
-  "name": "@lo/vue-components",
+  "name": "lo-vue-components",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./src/index.ts",
+  "types": "env.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "element-plus": "^2.2.12",
+    "vue": "^3.2.37"
+  }
 }

@@ -1,5 +1,9 @@
 {
-  "references": [{ "path": "../../tsconfig.vue.json" }],
+  "extends": "../../tsconfig.web.json",
   "include": ["src/**/*.ts", "src/**/*.vue"], //只编译的文件
-  "exclude": ["node_modules"] //排除之外不编译的文件
+  "exclude": ["node_modules"], //排除之外不编译的文件
+  "compilerOptions":{
+    "baseUrl": "."
+  }
+  // "references": [{ "path": "../../tsconfig.web.json" }]
 }

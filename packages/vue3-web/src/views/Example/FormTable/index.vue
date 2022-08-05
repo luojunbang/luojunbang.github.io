@@ -16,14 +16,15 @@
 </template>
 
 <script lang="ts" setup>
-import LoForm from '@/components/LoFormVue/LoForm.vue'
-import { LoFormInstance, LoFormConfig, LoFormItem, LoFormOption } from '@/components/LoFormVue/LoForm'
+import { LoForm } from 'lo-vue-components'
+import { LoFormInstance, LoFormConfig, LoFormItem, LoFormOption } from 'lo-vue-components'
 import { computed, onMounted, reactive, ref } from 'vue'
 import { t } from 'lo-utils'
+import { formConfig } from './config'
 
 import { useAddressSelect, addressProps } from './useAddress'
 
-  let list = reactive([])
+let list = reactive(formConfig)
 
 const LoFormRef = ref<LoFormInstance>()
 onMounted(() => {

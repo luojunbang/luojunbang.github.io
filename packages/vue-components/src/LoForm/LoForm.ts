@@ -1,8 +1,11 @@
 import type LoForm from './LoForm.vue'
 
-export type LoFormInstance = InstanceType<typeof LoForm>
 import type { PropType, Ref } from 'vue'
+
 import { FormItemRule, datePickTypes } from 'element-plus'
+
+export type LoFormInstance = InstanceType<typeof LoForm>
+
 export const LoFormProps = {
   list: {
     type: Array as PropType<LoFormConfig>,

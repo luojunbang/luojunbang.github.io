@@ -1,9 +1,11 @@
-import LoForm from './LoForm.vue'
+import loForm from './LoForm.vue'
 
-LoForm.install = app => {
-  app.component('LoForm', LoForm)
+loForm.install = app => {
+  app.component('LoForm', loForm)
 }
 
-export default LoForm
+export default loForm
+
+export const LoForm = loForm
 
 export * from './LoForm'
