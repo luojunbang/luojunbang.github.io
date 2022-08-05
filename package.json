@@ -23,6 +23,7 @@
     "babel-loader": "^8.2.5",
     "cross-env": "^7.0.3",
     "css-loader": "^6.7.1",
+    "fork-ts-checker-webpack-plugin": "^7.2.13",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.6.1",
     "sass": "^1.54.0",
@@ -37,7 +38,6 @@
     "webpack-visualizer-plugin": "^0.1.11"
   },
   "dependencies": {
-    "@lo/vue-components": "workspace:*",
     "@antv/g6": "^4.6.15",
     "axios": "^0.27.2",
     "echarts": "^5.3.3",

@@ -10,14 +10,13 @@
       </div>
     </div>
     <div class="w-30 fl">
-      <LoFormList />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { LoFormList } from 'lo-vue-components'
-import { LoFormInstance, LoFormConfig, LoFormItem, LoFormOption } from 'lo-vue-components'
+import { LoFormInstance } from 'lo-vue-components'
 import { computed, onMounted, reactive, ref } from 'vue'
 import { t } from 'lo-utils'
 import { formConfig } from './config'
@@ -32,7 +31,7 @@ onMounted(() => {
   initOptions()
 })
 
-function onFormChange(item: LoFormItem, value, oldVal) {
+function onFormChange(item, value, oldVal) {
   console.log('onFormChange:', item.field, value, oldVal)
   if (addressProps.includes(item.field)) {
     const idx = addressProps.indexOf(item.field) + 1
@@ -67,7 +66,7 @@ function initOptions() {
 }
 
 async function handleReset() {
-  // LoFormListRef.value?.resetFields(['email'])
+  LoFormListRef.value?.resetFields(['email'])
 }
 
 const form = computed(() => {

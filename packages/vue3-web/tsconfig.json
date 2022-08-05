@@ -1,12 +1,11 @@
 {
-  "extends": "../../tsconfig.web.json",
-  "include": ["src/**/*.ts", "src/**/*.vue"], //只编译的文件
-  "exclude": ["node_modules"], //排除之外不编译的文件
+  "extends": "../../tsconfig.vue.json",
   "compilerOptions": {
+    "baseUrl": "./",
     "paths": {
-      /* 指定一组将导入重新映射到其他查找位置的条目。 */
-      "@/*": ["./src/*"],
-    }
+      "@/*": ["./src/*"]
+    },
+    "types": ["webpack-env"]
   }
   // "references": [{ "path": "../../tsconfig.web.json" }]
 }

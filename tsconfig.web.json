@@ -1,6 +1,4 @@
 {
-  "include": ["packages"], //只编译的文件
-  "exclude": ["node_modules"], //排除之外不编译的文件
   "compilerOptions": {
     "composite": true, //引用的项目“/tsconfig.vue.json”必须拥有设置 "composite": true。
     "noImplicitAny": false /*为隐含`任何`类型的表达式和声明启用错误报告  */,
@@ -16,11 +14,11 @@
     "forceConsistentCasingInFileNames": true /* 强制区分大小写。默认为fals。 */,
     "useDefineForClassFields": true /* emit ECMAScript-符合标准的类字段。 */,
     "sourceMap": true,
-    "types": ["webpack-env", "element-plus/global"] /* 指定要在源文件中引用的类型包名。 */,
+    "types": [] /* 指定要在源文件中引用的类型包名。 */,
     "rootDir": ".",
     "lib": ["esnext", "dom", "dom.iterable", "scripthost"], //指定一组描述目标运行时环境的捆绑库声明文件
     "paths": {
       "@lo/*": ["packages/*"]
-    }
+    },
   }
 }

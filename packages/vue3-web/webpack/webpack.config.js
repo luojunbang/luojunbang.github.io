@@ -10,6 +10,12 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
+
+const AutoImport = require('unplugin-auto-import/webpack')
+const Components = require('unplugin-vue-components/webpack')
+const { ElementPlusResolver } = require('unplugin-vue-components/resolvers')
+
 const resolve = p => path.resolve(__dirname, p)
 
 console.warn('NODE_ENV:', process.env.NODE_ENV, ':', resolve('../src/main.ts'))
@@ -176,7 +182,20 @@ const config = {
     require('unplugin-element-plus/webpack')({
       // options
     }),
-   
+    new ForkTsCheckerWebpackPlugin({
+      typescript: {
+        extensions: {
+          vue: {
+            enabled: true,
+            compiler: resolve('../node_modules/vue/compiler-sfc'),
+          },
+        },
+        diagnosticOptions: {
+          semantic: true,
+          syntactic: false,
+        },
+      },
+    }),
   ],
 }
 

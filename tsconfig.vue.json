@@ -1,0 +1,5 @@
+{
+  "extend": "./tsconfig.web.json",
+  "exclude": ["node_modules"], //排除之外不编译的文件
+  "include": ["packages/**/src/**/*.ts", "packages/**/src/**/*.vue"]
+}

@@ -45,7 +45,7 @@ import { ElInput, ElSwitch, ElRadio, ElRadioButton, ElRadioGroup, ElForm, ElForm
 
 import { defineProps, defineEmits, ref, reactive, defineExpose, watch, unref, onMounted } from 'vue'
 
-import { LoFormProps, FORM_CHANGE_EVENT, defaultValue } from './formlist'
+import { LoFormProps, FORM_CHANGE_EVENT, defaultValue, LoFormItem } from './formlist'
 import type { FormInstance, DatePickType } from 'element-plus'
 import { Arrayable } from 'element-plus/es/utils'
 import { throttle } from 'lo-utils'
@@ -85,7 +85,7 @@ watch(props.list, () => {
 
 const watchList = {}
 
-function bindEmitWatch(item) {
+function bindEmitWatch(item: LoFormItem) {
   if (watchList[item.field] && typeof watchList[item.field] === 'function') {
     watchList[item.field]()
   }

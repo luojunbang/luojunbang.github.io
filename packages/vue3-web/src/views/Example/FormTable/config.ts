@@ -1,4 +1,4 @@
-import { LoFormInstance, LoFormConfig, LoFormItem, LoFormOption } from '@lo/vue-components'
+import { LoFormInstance, LoFormConfig, LoFormItem, LoFormOption } from 'lo-vue-components'
 
 export const formConfig:LoFormConfig = [
     { field: 'text', label: 'Text' },
