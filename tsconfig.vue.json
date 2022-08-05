@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "composite": true, //引用的项目“/tsconfig.vue.json”必须拥有设置 "composite": true。
+    "noImplicitAny": false /*为隐含`任何`类型的表达式和声明启用错误报告  */,
+    "target": "esnext", //为发出的JavaScript设置JavaScript语言版本，并包含兼容的库声明
+    "module": "esnext" /* 指定所生成的模块代码。 */,
+    "strict": true,
+    "jsx": "preserve" /* 指定生成的JSX代码 */,
+    "importHelpers": true /* 允许从每个项目的tslib中导入一次助手函数，而不是为每个文件包含它们。 */,
+    "moduleResolution": "node" /* 指定TypeScript如何从给定的模块指定符中查找文件。 */,
+    "skipLibCheck": true /* 跳过类型检查所有。d.ts文件。 */,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true /* 当模块没有默认导出时，允许“从y导入x”。 */,
+    "forceConsistentCasingInFileNames": true /* 强制区分大小写。默认为fals。 */,
+    "useDefineForClassFields": true /* emit ECMAScript-符合标准的类字段。 */,
+    "sourceMap": true,
+    "types": [] /* 指定要在源文件中引用的类型包名。 */,
+    "baseUrl": ".",
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"] //指定一组描述目标运行时环境的捆绑库声明文件
+  }
+}

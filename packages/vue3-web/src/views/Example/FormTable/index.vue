@@ -18,12 +18,12 @@
 <script lang="ts" setup>
 import LoForm from '@/components/LoFormVue/LoForm.vue'
 import { LoFormInstance, LoFormConfig, LoFormItem, LoFormOption } from '@/components/LoFormVue/LoForm'
-import { computed, onMounted, reactive, ref, defineExpose } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue'
 import { t } from 'lo-utils'
 
 import { useAddressSelect, addressProps } from './useAddress'
 
-let list = reactive<>()
+  let list = reactive([])
 
 const LoFormRef = ref<LoFormInstance>()
 onMounted(() => {
