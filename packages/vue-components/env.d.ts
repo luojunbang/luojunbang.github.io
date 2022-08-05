@@ -1,5 +1,7 @@
-declare module '@vue/runtime-core' {
-  export interface LoForm {
-    LoForm: typeof import('./src/LoForm')['default']
-  }
-}
+// import '@vue/runtime-core'
+
+// declare module '@vue/runtime-core' {
+//   export interface GlobalComponents {
+//     LoFormlist: typeof import('./src/formlist')['default']
+//   }
+// }

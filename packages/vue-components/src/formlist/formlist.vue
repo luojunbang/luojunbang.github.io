@@ -42,12 +42,12 @@
 
 <script lang="ts" setup>
 import { ElInput, ElSwitch, ElRadio, ElRadioButton, ElRadioGroup, ElForm, ElFormItem, ElCheckbox, ElCheckboxGroup, datePickTypes, ElSelect, ElOption, ElDatePicker, ElTimePicker, ElInputNumber } from 'element-plus'
-import { computed, defineProps, defineEmits, toRefs, ref, reactive, defineExpose, watch, unref, onMounted, shallowRef } from 'vue'
-import { LoFormProps, FORM_CHANGE_EVENT, defaultValue, fromNormalList } from './LoForm'
-import type { LoFormOption } from './LoForm'
+import { defineProps, defineEmits, ref, reactive, defineExpose, watch, unref, onMounted } from 'vue'
+import { LoFormProps, FORM_CHANGE_EVENT, defaultValue } from './formlist'
 import type { FormInstance, DatePickType } from 'element-plus'
 import { Arrayable } from 'element-plus/es/utils'
 import { throttle } from 'lo-utils'
+
 const props = defineProps(LoFormProps)
 const emits = defineEmits([FORM_CHANGE_EVENT])
 

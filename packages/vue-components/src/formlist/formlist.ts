@@ -1,10 +1,10 @@
-import type LoForm from './LoForm.vue'
+import type Formlist from './formlist.vue'
 
 import type { PropType, Ref } from 'vue'
 
 import { FormItemRule, datePickTypes } from 'element-plus'
 
-export type LoFormInstance = InstanceType<typeof LoForm>
+export type LoFormInstance = InstanceType<typeof Formlist>
 
 export const LoFormProps = {
   list: {
@@ -42,12 +42,12 @@ export const FORM_CHANGE_EVENT = 'formChange'
 export type IDatePickerType = typeof datePickTypes[number]
 export const fromNormalList = ['input', 'select', 'textarea', 'number', 'time', 'checkbox', 'checkbox-group', 'switch', 'radio-group']
 export type FromNormalType = typeof fromNormalList[number]
-export type formType = FromNormalType | IDatePickerType
+export type LoFormType = FromNormalType | IDatePickerType
 
 type refable<T> = Ref<T> | T
 
-declare interface formBase extends Record<string, any> {
-  type?: formType
+declare interface LoFormBase extends Record<string, any> {
+  type?: LoFormType
   label: string
   field: string
   value?: any
@@ -78,6 +78,6 @@ export type LoFormOption = {
   value: number | string
 }
 
-export type LoFormItem = formBase
+export type LoFormItem = LoFormBase
 
 export type LoFormConfig = LoFormItem[]
