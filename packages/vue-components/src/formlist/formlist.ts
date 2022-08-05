@@ -46,7 +46,7 @@ export type LoFormType = FromNormalType | IDatePickerType
 
 type refable<T> = Ref<T> | T
 
-declare interface LoFormBase extends Record<string, any> {
+export declare interface LoFormBase extends Record<string, any> {
   type?: LoFormType
   label: string
   field: string

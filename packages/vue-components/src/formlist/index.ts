@@ -1,7 +1,7 @@
 import Formlist from './formlist.vue'
 
 Formlist.install = app => {
-  app.component('Formlist', Formlist)
+  app.component('LoFormList', Formlist)
 }
 
 export const LoFormList = Formlist

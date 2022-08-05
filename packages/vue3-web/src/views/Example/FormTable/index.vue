@@ -1,22 +1,22 @@
 <template>
   <div class="clearfix">
     <div class="w-70 fl">
-      <LoForm ref="LoFormRef" label-position="right" size="large" :list="list" :inline="true" @formChange="onFormChange">
+      <LoFormList ref="LoFormListRef" label-position="right" size="large" :list="list" :inline="true" @formChange="onFormChange">
         <template v-slot:templatelabelSlot="{ item }">{{ item.label + '-labelslot' }}</template>
         <template v-slot:="{ item }">{{ item.field + '-formslot' }}</template>
-      </LoForm>
+      </LoFormList>
       <div>
         <pre class="mg-t-lg" style="word-break: break-word; width: 500px">{{ JSON.stringify(form, null, 2) }}</pre>
       </div>
     </div>
     <div class="w-30 fl">
-      <LoForm />
+      <LoFormList />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { LoForm } from 'lo-vue-components'
+import { LoFormList } from 'lo-vue-components'
 import { LoFormInstance, LoFormConfig, LoFormItem, LoFormOption } from 'lo-vue-components'
 import { computed, onMounted, reactive, ref } from 'vue'
 import { t } from 'lo-utils'
@@ -26,9 +26,9 @@ import { useAddressSelect, addressProps } from './useAddress'
 
 let list = reactive(formConfig)
 
-const LoFormRef = ref<LoFormInstance>()
+const LoFormListRef = ref<LoFormInstance>()
 onMounted(() => {
-  console.log('LoFormRef.value:', LoFormRef.value?.form)
+  console.log('LoFormListRef.value:', LoFormListRef.value?.form)
   initOptions()
 })
 
@@ -41,7 +41,7 @@ function onFormChange(item: LoFormItem, value, oldVal) {
       value,
       list.find(i => i.field == addressProps[idx])
     )
-    addressProps.slice(idx).forEach(field => LoFormRef.value?.setFormValue(field, res[field]))
+    addressProps.slice(idx).forEach(field => LoFormListRef.value?.setFormValue(field, res[field]))
   }
 }
 
@@ -52,7 +52,7 @@ async function handleClick() {
   list.push({ label: 'Select', field: field, type: 'select', options: [{ label: '--all', value: 'all' }], isRelative: true })
   setTimeout(() => {
     list[list.length - 1].options = [{ label: 'reveal', value: 'reveal' }]
-    if (LoFormRef.value) LoFormRef.value.form[field] = 'reveal'
+    if (LoFormListRef.value) LoFormListRef.value.form[field] = 'reveal'
   }, 3000)
 }
 
@@ -63,19 +63,19 @@ function initOptions() {
     '',
     list.find(i => i.field == addressProps[idx])
   )
-  addressProps.slice(idx).forEach(field => LoFormRef.value?.setFormValue(field, res[field]))
+  addressProps.slice(idx).forEach(field => LoFormListRef.value?.setFormValue(field, res[field]))
 }
 
 async function handleReset() {
-  // LoFormRef.value?.resetFields(['email'])
+  // LoFormListRef.value?.resetFields(['email'])
 }
 
 const form = computed(() => {
-  return LoFormRef.value?.form
+  return LoFormListRef.value?.form
 })
 
 function handleSubmit() {
-  LoFormRef.value
+  LoFormListRef.value
     ?.validate()
     .then(res => {
       console.log('pass')
