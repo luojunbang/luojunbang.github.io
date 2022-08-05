@@ -26,11 +26,6 @@ function handleSelect(e) {
 const navRoutePath = require
   .context('../../views/Example/', true, /\.vue$/)
   .keys()
-  .filter(route => {
-    const routeAry: string[] = route.split('/').slice(-2)
-    if (routeAry.length == 1) return true
-    return routeAry[1] === 'index.vue' || routeAry[0].toLocaleLowerCase() === routeAry[1].replace(/\.vue$/, '').toLocaleLowerCase()
-  })
 
 const routerNest = [
   {

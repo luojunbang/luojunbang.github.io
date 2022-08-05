@@ -12,7 +12,7 @@ export declare interface navRouteConfig {
 }
 
 interface routerConfig {
-  meta?: { title?: string }
+  meta?: RouteMeta
   params?: string
 }
 interface singleRouteConfig {
@@ -56,7 +56,6 @@ export function routeAutoLink(routePath: string[], layoutComponentLists: Compone
     }
     return route
   })
-  console.log('ans1:', routerNest)
   const routes: singleRouteConfig[] = (function parseRouterRaw(routeAry: navRouteConfig[], deep) {
     if (!Array.isArray(routeAry)) return []
     return routeAry.map(i => {
@@ -72,9 +71,6 @@ export function routeAutoLink(routePath: string[], layoutComponentLists: Compone
     })
   })(routerNest, 0)
 
-  console.log('ans:', routes)
-
-  // routes = routes.map(i => ({ ...i, path: '/' + i.path }))
   return function toCompoennt(importFn: (someArg: string) => RouteComponent | (() => Promise<RouteComponent>), routeLists?: singleRouteConfig[]): RouteRecordRaw[] {
     if (!routeLists) routeLists = routes
     return routeLists.map(i => {
@@ -109,7 +105,6 @@ export function filePathToNest(routePath: string[], config: { [x: string]: route
     })
     idx++
   }
-  console.log(ans)
 
   const list: navRouteConfig[] = []
   Object.keys(ans).forEach(item => {

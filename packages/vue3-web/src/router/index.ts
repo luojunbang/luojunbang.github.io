@@ -11,10 +11,10 @@ const routes: Array<RouteRecordRaw> = [
     path: '/',
     redirect: '/dashboard',
   },
-  // {
-  //   path: '/dashboard',
-  //   component: dashboard,
-  // },
+  {
+    path: '/dashboard',
+    component: dashboard,
+  },
   {
     path: '/demo',
     component: () => import('@/views/Example/demo/index.vue'),
@@ -34,6 +34,15 @@ export const config = {
 const routePath = require
   .context('../views/', true, /\.vue$/)
   .keys()
+  .filter(
+    i =>
+      // filter the static path
+      !routes.some(({ path }) => {
+        /\/[\S]+/.test(path) && i.includes(path)
+      })
+  )
+
+// console.log(routePath)
 
 const routesAuto = routeAutoLink(routePath, [main, Appmain, sub], config)(path => () => import(/*webpackChunkName:"[request]"*/ `../views/${path.replace(/\.vue$/, '')}.vue`))
 
