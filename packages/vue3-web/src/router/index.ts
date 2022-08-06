@@ -37,6 +37,7 @@ const routePath = require
   .filter(
     i =>
       // filter the static path
+      !i.includes('formTable') ||
       !routes.some(({ path }) => {
         /\/[\S]+/.test(path) && i.includes(path)
       })

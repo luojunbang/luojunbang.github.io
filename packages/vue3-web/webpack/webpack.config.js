@@ -164,6 +164,12 @@ const config = {
         BASE_URL: '"./"',
       },
     }),
+    AutoImport({
+      resolvers: [ElementPlusResolver()],
+    }),
+    Components({
+      resolvers: [ElementPlusResolver()],
+    }),
     new MiniCssExtractPlugin({
       filename: 'css/[name].[contenthash:8].css',
       chunkFilename: 'css/[name].[contenthash:8].css',
@@ -179,23 +185,24 @@ const config = {
         console.log('\33[2J')
       }
     }),
-    require('unplugin-element-plus/webpack')({
-      // options
-    }),
-    new ForkTsCheckerWebpackPlugin({
-      typescript: {
-        extensions: {
-          vue: {
-            enabled: true,
-            compiler: resolve('../node_modules/vue/compiler-sfc'),
-          },
-        },
-        diagnosticOptions: {
-          semantic: true,
-          syntactic: false,
-        },
-      },
-    }),
+    // require('unplugin-element-plus/webpack')({
+    //   // options
+    // }),
+   
+    // new ForkTsCheckerWebpackPlugin({
+    //   typescript: {
+    //     extensions: {
+    //       vue: {
+    //         enabled: true,
+    //         compiler: resolve('../node_modules/vue/compiler-sfc'),
+    //       },
+    //     },
+    //     diagnosticOptions: {
+    //       semantic: true,
+    //       syntactic: false,
+    //     },
+    //   },
+    // }),
   ],
 }
 
