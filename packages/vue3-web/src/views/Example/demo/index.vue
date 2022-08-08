@@ -1,5 +1,5 @@
 <template>
-  <div class="mg0auto mg-t-lg outerbox border-base" :style="bgc">word</div>
+  <div class="px-4" :style="bgc">word</div>
 </template>
 
 <script lang="ts" setup>
@@ -21,4 +21,8 @@ t(2).then(res => {
 </script>
 
 <style></style>
-<style lang="scss" scoped></style>
+<style lang="scss">
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+</style>

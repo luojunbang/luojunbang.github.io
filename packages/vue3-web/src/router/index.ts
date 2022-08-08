@@ -17,14 +17,9 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/demo',
-    component: () => import('@/views/Example/demo/index.vue'),
+    component: () => import(/* webpackChunkName: "demo" */ '@/views/Example/demo/index.vue'),
   },
 ]
-
-/**
- * 深度遍历
- * @param viewsRootPath
- */
 export const config = {
   'Example/Todos/index.vue': { meta: {}, params: ':userId?', props: true },
   'Example/Page1/SubPage2/SubPage2.vue': { meta: { title: '改名字' }, params: ':userId?' },
@@ -32,6 +27,7 @@ export const config = {
 }
 
 const routePath = require
+  // cause all route in one bundle
   .context('../views/', true, /\.vue$/)
   .keys()
   .filter(
@@ -39,19 +35,19 @@ const routePath = require
       // filter the static path
       !i.includes('formTable') ||
       !routes.some(({ path }) => {
-        /\/[\S]+/.test(path) && i.includes(path)
+        ;/\/[\S]+/.test(path) && i.includes(path)
       })
   )
 
 // console.log(routePath)
 
-const routesAuto = routeAutoLink(routePath, [main, Appmain, sub], config)(path => () => import(/*webpackChunkName:"[request]"*/ `../views/${path.replace(/\.vue$/, '')}.vue`))
+// const routesAuto = routeAutoLink(routePath, [main, Appmain, sub], config)(path => () => import(/*webpackChunkName:"[request]"*/ `../views/${path.replace(/\.vue$/, '')}.vue`))
 
-const finalroutes = [...routes, ...routesAuto.map(i => ({ ...i, path: '/' + i.path }))]
+// const finalroutes = [...routes, ...routesAuto.map(i => ({ ...i, path: '/' + i.path }))]
 
 const router = createRouter({
   history: createWebHashHistory(process.env.BASE_URL),
-  routes: finalroutes, //
+  routes: routes, //
 })
 
 export default router

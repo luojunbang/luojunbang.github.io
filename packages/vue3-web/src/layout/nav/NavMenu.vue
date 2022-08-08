@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ElMenuItem, ElSubMenu } from 'element-plus'
+// import { ElMenuItem, ElSubMenu } from 'element-plus'
 import { navRouteConfig } from '@/router/routerImport'
 const props = defineProps<{
   menuList: navRouteConfig[]

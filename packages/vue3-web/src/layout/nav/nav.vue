@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ElMenu } from 'element-plus'
+// import { ElMenu } from 'element-plus'
 import { config } from '@/router'
 import { Ref, ref } from 'vue'
 import { useRouter } from 'vue-router'

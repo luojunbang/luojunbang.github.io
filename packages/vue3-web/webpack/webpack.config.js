@@ -29,6 +29,7 @@ const config = {
   mode: process.env.NODE_ENV,
   entry: { app: [resolve('../src/main.ts')] },
   output: {
+    hashFunction: 'xxhash64',
     clean: true,
     path: resolve('../dist/'),
     publicPath: process.env.BASE_URL,
@@ -54,6 +55,11 @@ const config = {
   optimization: {
     splitChunks: {
       minSize: 10,
+      chunks(chunk) {
+        // exclude `my-excluded-chunk`
+        console.log(chalk.red(chunk.name))
+        return chunk.name !== 'my-excluded-chunk'
+      },
       cacheGroups: {
         vue: {
           name: 'vue',
@@ -137,7 +143,20 @@ const config = {
       },
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              postcssOptions: {
+                plugins: [require('tailwindcss'), require('autoprefixer')],
+              },
+            },
+          },
+        ],
       },
       {
         test: /.tsx?$/,
@@ -160,7 +179,7 @@ const config = {
       __VUE_OPTIONS_API__: 'true',
       __VUE_PROD_DEVTOOLS__: 'false',
       'process.env': {
-        NODE_ENV: '"development"',
+        // NODE_ENV: '"development"',
         BASE_URL: '"./"',
       },
     }),
@@ -188,7 +207,7 @@ const config = {
     // require('unplugin-element-plus/webpack')({
     //   // options
     // }),
-   
+
     // new ForkTsCheckerWebpackPlugin({
     //   typescript: {
     //     extensions: {

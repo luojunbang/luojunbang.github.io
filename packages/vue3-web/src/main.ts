@@ -3,10 +3,12 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
+import "tailwindcss/tailwind.css"
+
 // import ElementPlus from 'element-plus'
 // import 'element-plus/dist/index.css'
 
-import 'lo-utils/style/index.scss'
+// import 'lo-utils/style/index.scss'
 
 import ContentBox from '@/components/ContentBox.vue'
 import Icon from '@/components/Icon/index.vue'
