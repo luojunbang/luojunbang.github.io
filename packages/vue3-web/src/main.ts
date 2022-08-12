@@ -10,8 +10,8 @@ import "tailwindcss/tailwind.css"
 
 // import 'lo-utils/style/index.scss'
 
-import ContentBox from '@/components/ContentBox.vue'
-import Icon from '@/components/Icon/index.vue'
+// import ContentBox from '@/components/ContentBox.vue'
+// import Icon from '@/components/Icon/index.vue'
 
 // const observer = new PerformanceObserver(function (list, obj) {
 //   const entries = list.getEntries()
@@ -35,5 +35,5 @@ app
   // .use(ElementPlus)
   .use(router)
   .mount('#app')
-app.component('content-box', ContentBox)
-app.component('icon', Icon)
+// app.component('content-box', ContentBox)
+// app.component('icon', Icon)

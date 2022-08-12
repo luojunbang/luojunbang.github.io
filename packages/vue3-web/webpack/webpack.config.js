@@ -1,4 +1,3 @@
-const { VueLoaderPlugin } = require('vue-loader')
 const HTMLWebpackPlugin = require('html-webpack-plugin')
 const { DefinePlugin } = require('webpack')
 const { fmtDateTime } = require('lo-utils')
@@ -7,6 +6,8 @@ const { ProgressPlugin } = require('webpack')
 const d = Date.now()
 const chalk = require('chalk')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+
+const TerserPlugin = require('terser-webpack-plugin')
 
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
@@ -17,7 +18,7 @@ const Components = require('unplugin-vue-components/webpack')
 const { ElementPlusResolver } = require('unplugin-vue-components/resolvers')
 
 const resolve = p => path.resolve(__dirname, p)
-
+const { VueLoaderPlugin } = require('vue-loader')
 console.warn('NODE_ENV:', process.env.NODE_ENV, ':', resolve('../src/main.ts'))
 console.info('Start Time:', fmtDateTime(d))
 
@@ -53,62 +54,72 @@ const config = {
     // '@antv/g6': 'G6',
   },
   optimization: {
-    splitChunks: {
-      minSize: 10,
-      chunks(chunk) {
-        // exclude `my-excluded-chunk`
-        console.log(chalk.red(chunk.name))
-        return chunk.name !== 'my-excluded-chunk'
-      },
-      cacheGroups: {
-        vue: {
-          name: 'vue',
-          minSize: 10,
-          test: /[\\/]node_modules[\\/](@vue[\S]*|vue|vue-router|vuex)[\\/]/,
-          priority: 10,
-          chunks: 'initial',
-        },
-        elementUI: {
-          name: 'element-plus',
-          minSize: 10,
-          test: /[\\/]node_modules[\\/]element-plus[\\/]/,
-          priority: 10,
-          chunks: 'initial',
-        },
-        echarts: {
-          name: 'echarts',
-          minSize: 10,
-          test: /[\\/]node_modules[\\/]echarts[\\/]/,
-          priority: 10,
-          chunks: 'initial',
-        },
-        antv: {
-          name: 'antv',
-          minSize: 10,
-          test: /[\\/]node_modules[\\/]@antv[\\/]/,
-          priority: 10,
-          chunks: 'initial',
-        },
-        defaultVendors: {
-          name: 'chunk-vendors',
-          test: /[\\/]node_modules[\\/]/,
-          chunks: 'initial',
-          priority: -10,
-        },
-        common: {
-          name: 'chunk-common',
-          minChunks: 2,
-          priority: -20,
-          chunks: 'initial',
-          reuseExistingChunk: true,
-        },
-      },
-    },
+    // minimizer: [
+    //   new TerserPlugin({
+    //     terserOptions: {
+    //       compress: {
+    //         defaults: false,
+    //         unused: true,
+    //         dead_code: true,
+    //         keep_fnames: true,
+    //       },
+    //       mangle: false,
+    //     },
+    //     // minify: file => file,
+    //     parallel: true,
+    //     extractComments: false,
+    //   }),
+    // ],
+    // splitChunks: {
+    //   minSize: 10,
+    //   cacheGroups: {
+    //     vue: {
+    //       name: 'vue',
+    //       minSize: 10,
+    //       test: /[\\/]node_modules[\\/](@vue[\S]*|vue|vue-router|vuex)[\\/]/,
+    //       priority: 10,
+    //       chunks: 'initial',
+    //     },
+    //     elementUI: {
+    //       name: 'element-plus',
+    //       minSize: 10,
+    //       test: /[\\/]node_modules[\\/]element-plus[\\/]/,
+    //       priority: 10,
+    //       chunks: 'initial',
+    //     },
+    //     echarts: {
+    //       name: 'echarts',
+    //       minSize: 10,
+    //       test: /[\\/]node_modules[\\/]echarts[\\/]/,
+    //       priority: 10,
+    //       chunks: 'initial',
+    //     },
+    //     antv: {
+    //       name: 'antv',
+    //       minSize: 10,
+    //       test: /[\\/]node_modules[\\/]@antv[\\/]/,
+    //       priority: 10,
+    //       chunks: 'initial',
+    //     },
+    //     defaultVendors: {
+    //       name: 'chunk-vendors',
+    //       test: /[\\/]node_modules[\\/]/,
+    //       chunks: 'initial',
+    //       priority: -10,
+    //     },
+    //     common: {
+    //       name: 'chunk-common',
+    //       minChunks: 2,
+    //       priority: -20,
+    //       chunks: 'initial',
+    //       reuseExistingChunk: true,
+    //     },
+    //   },
+    // },
   },
   module: {
     noParse: content => {
       const ans = /^(vue|vue-router|vuex|vuex-router-sync)$/.test(content)
-      ans && console.log('---content:', chalk.red.bold(content))
       return ans
     },
     rules: [
@@ -121,7 +132,12 @@ const config = {
       },
       {
         test: /\.vue$/,
-        use: ['vue-loader'],
+        use: [
+          'vue-loader',
+          {
+            loader: 'loclass-style-loader'
+          },
+        ],
       },
       {
         test: /\.vue$/,
@@ -131,7 +147,8 @@ const config = {
       {
         test: /\.scss$/,
         use: [
-          MiniCssExtractPlugin.loader,
+          // MiniCssExtractPlugin.loader,
+          {loader:'vue-style-loader'},
           {
             loader: 'css-loader',
             options: {
@@ -144,7 +161,8 @@ const config = {
       {
         test: /\.css$/,
         use: [
-          MiniCssExtractPlugin.loader,
+          // MiniCssExtractPlugin.loader,
+          {loader:'vue-style-loader'},
           {
             loader: 'css-loader',
           },
@@ -160,7 +178,7 @@ const config = {
       },
       {
         test: /.tsx?$/,
-        // exclude: /node_modules/,
+        exclude: /node_modules/,
         use: [
           {
             loader: 'ts-loader',
@@ -189,19 +207,19 @@ const config = {
     Components({
       resolvers: [ElementPlusResolver()],
     }),
-    new MiniCssExtractPlugin({
-      filename: 'css/[name].[contenthash:8].css',
-      chunkFilename: 'css/[name].[contenthash:8].css',
-    }),
+    // new MiniCssExtractPlugin({
+    //   filename: 'css/[name].[contenthash:8].css',
+    //   chunkFilename: 'css/[name].[contenthash:8].css',
+    // }),
     new HTMLWebpackPlugin({
       BASE_URL: process.env.BASE_URL,
       externals: Object.values(externals).join('') || ' ',
       template: resolve('../public/index.html'),
     }),
     new ProgressPlugin((percentage, message, ...args) => {
-      console.info(chalk.green((percentage * 100).toFixed(0) + '%'), message, ...args)
+      // console.info(chalk.green((percentage * 100).toFixed(0) + '%'), message, ...args)
       if (percentage === 1) {
-        console.log('\33[2J')
+        // console.log('\33[2J')
       }
     }),
     // require('unplugin-element-plus/webpack')({
@@ -228,11 +246,11 @@ const config = {
 const isDev = process.env.NODE_ENV === 'development'
 
 // BundleAnalyzerPlugin
-!isDev &&
-  config.plugins.push(
-    new BundleAnalyzerPlugin({
-      generateStatsFile: true,
-    })
-  )
+// !isDev &&
+//   config.plugins.push(
+//     new BundleAnalyzerPlugin({
+//       generateStatsFile: true,
+//     })
+//   )
 
 module.exports = config

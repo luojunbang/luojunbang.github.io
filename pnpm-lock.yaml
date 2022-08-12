@@ -18,6 +18,7 @@ importers:
       fork-ts-checker-webpack-plugin: ^7.2.13
       html-webpack-plugin: ^5.5.0
       lo-utils: ^1.2.18
+      loclass-style-loader: ^0.0.2
       lodash: ^4.17.21
       mini-css-extract-plugin: ^2.6.1
       postcss: ^8.4.16
@@ -29,6 +30,7 @@ importers:
       ts-loader: ^9.3.1
       typescript: ^4.7.4
       vue: ^3.2.37
+      vue-loader: ^17.0.0
       webpack: ^5.74.0
       webpack-bundle-analyzer: ^4.5.0
       webpack-cli: ^4.10.0
@@ -52,6 +54,7 @@ importers:
       css-loader: 6.7.1_webpack@5.74.0
       fork-ts-checker-webpack-plugin: 7.2.13_xnp4kzegbjokq62cajex2ovgkm
       html-webpack-plugin: 5.5.0_webpack@5.74.0
+      loclass-style-loader: 0.0.2
       mini-css-extract-plugin: 2.6.1_webpack@5.74.0
       postcss: 8.4.16
       postcss-loader: 7.0.1_qjv4cptcpse3y5hrjkrbb7drda
@@ -61,6 +64,7 @@ importers:
       tailwindcss: 3.1.8
       ts-loader: 9.3.1_xnp4kzegbjokq62cajex2ovgkm
       typescript: 4.7.4
+      vue-loader: 17.0.0_webpack@5.74.0
       webpack: 5.74.0_webpack-cli@4.10.0
       webpack-bundle-analyzer: 4.5.0
       webpack-cli: 4.10.0_3lewgxathpayo2pqi2m465vtiu
@@ -1478,6 +1482,11 @@ packages:
       supports-color: 7.2.0
     dev: true
 
+  /chalk/5.0.1:
+    resolution: {integrity: sha512-Fo07WOYGqMfCWHOzSXOt2CxDbC6skS/jO9ynEcmpANMoPrD+W1r1K6Vx7iNm+AQmETU1Xr2t+n8nzkV9t6xh3w==}
+    engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
+    dev: true
+
   /chokidar/3.5.3:
     resolution: {integrity: sha512-Dr3sfKRP6oTcjf2JmUmFJfeVMvXBdegxB0iVQ5eb2V10uFJUCAS8OByZdVAyVb8xXNz3GjjTgj9kLWsZTqE6kw==}
     engines: {node: '>= 8.10.0'}
@@ -2851,6 +2860,10 @@ packages:
     resolution: {integrity: sha512-zmXnsaLM8WnMn6JP+SrJkTLAFmm8pbtrreIbLSKAfP6DRSwXluS/C3b5cF82IbPAXaPCCVA8oUlRzsr9py1+mA==}
     dev: false
 
+  /lo-utils/1.2.19:
+    resolution: {integrity: sha512-mO9AWkTfeLFemCGvCyzbSAacV9U0wpwNmL+jWQVam2dWlNLY92/qU2uXKGwGMJXpl4FEBU5QE0Svg4+xu0YiBg==}
+    dev: true
+
   /loader-runner/4.3.0:
     resolution: {integrity: sha512-3R/1M+yS3j5ou80Me59j7F9IMs4PXs3VqRrm0TU3AbKPxlmpoY1TNscJV/oGJXo8qCatFGTfDbY6W6ipGOYXfg==}
     engines: {node: '>=6.11.5'}
@@ -2884,6 +2897,14 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       p-locate: 4.1.0
+    dev: true
+
+  /loclass-style-loader/0.0.2:
+    resolution: {integrity: sha512-XHcwXsf+7U4OHBCs5TBysqPy74PReClJ/N960FpT1e7cDrIDvQMTD3NzwsLV7zvU59+6Mknyig6eJj1Cs/hwWA==}
+    dependencies:
+      chalk: 5.0.1
+      lo-utils: 1.2.19
+      loader-utils: 2.0.2
     dev: true
 
   /lodash-es/4.17.21:
@@ -4441,6 +4462,17 @@ packages:
       chalk: 4.1.2
       hash-sum: 2.0.0
       loader-utils: 2.0.2
+    dev: true
+
+  /vue-loader/17.0.0_webpack@5.74.0:
+    resolution: {integrity: sha512-OWSXjrzIvbF2LtOUmxT3HYgwwubbfFelN8PAP9R9dwpIkj48TVioHhWWSx7W7fk+iF5cgg3CBJRxwTdtLU4Ecg==}
+    peerDependencies:
+      webpack: ^4.1.0 || ^5.0.0-0
+    dependencies:
+      chalk: 4.1.2
+      hash-sum: 2.0.0
+      loader-utils: 2.0.2
+      webpack: 5.74.0_webpack-cli@4.10.0
     dev: true
 
   /vue-router/4.1.3_vue@3.2.37:

@@ -7,17 +7,17 @@ import { routeAutoLink } from './routerImport'
 // import { routeAutoLink } from 'lo-utils'
 
 const routes: Array<RouteRecordRaw> = [
-  {
-    path: '/',
-    redirect: '/dashboard',
-  },
-  {
-    path: '/dashboard',
-    component: dashboard,
-  },
+  // {
+  //   path: '/',
+  //   redirect: '/dashboard',
+  // },
+  // {
+  //   path: '/dashboard',
+  //   component: dashboard,
+  // },
   {
     path: '/demo',
-    component: () => import(/* webpackChunkName: "demo" */ '@/views/Example/demo/index.vue'),
+    component: () => import(/* webpackChunkName: "demo" */ '@/views/Example/demo/demo.vue'),
   },
 ]
 export const config = {
@@ -26,18 +26,18 @@ export const config = {
   'Example/Page1/SubPage2/Page2/index.vue': { meta: {} },
 }
 
-const routePath = require
-  // cause all route in one bundle
-  .context('../views/', true, /\.vue$/)
-  .keys()
-  .filter(
-    i =>
-      // filter the static path
-      !i.includes('formTable') ||
-      !routes.some(({ path }) => {
-        ;/\/[\S]+/.test(path) && i.includes(path)
-      })
-  )
+// const routePath = require
+//   // cause all route in one bundle
+//   .context('../views/', true, /\.vue$/)
+//   .keys()
+//   .filter(
+//     i =>
+//       // filter the static path
+//       !i.includes('formTable') ||
+//       !routes.some(({ path }) => {
+//         ;/\/[\S]+/.test(path) && i.includes(path)
+//       })
+//   )
 
 // console.log(routePath)
 
