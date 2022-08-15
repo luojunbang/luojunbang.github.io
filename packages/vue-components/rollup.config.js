@@ -24,39 +24,21 @@ const tsPlugin = ts({
 const plugins = [
   tsPlugin,
   vuePlugin(),
-  ElementPlus({
-    // options
-  }),
+  ElementPlus({}),
   postcss({
     extensions: ['.css', '.scss'],
   }),
 ]
 
-const formlistConfig = {
-  input: './src/formlist/index.ts',
-  output: {
-    file: 'dist/formlist/index.js',
-    format: 'esm',
-  },
-  plugins,
-}
-
-const swiperConfig = {
-  input: './src/swiper/index.ts',
-  output: {
-    file: 'dist/swiper/index.js',
-    format: 'esm',
-  },
-  plugins,
-}
-
 const entryConfig = {
-  input: './src/index.ts',
-  output: {
-    file: 'dist/index.js',
-    format: 'esm',
-  },
+  input: ['./src/index.ts'],
+  output: [
+    {
+      file: 'dist/index.mjs',
+      format: 'esm',
+    },
+  ],
   plugins,
 }
 
-export default [entryConfig, formlistConfig, swiperConfig]
+export default [entryConfig]

@@ -1,2 +1,2 @@
 export * from './formlist'
-export * from './swiper'
+// export * from './swiper'
