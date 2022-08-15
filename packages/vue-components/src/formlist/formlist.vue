@@ -42,6 +42,7 @@
 
 <script lang="ts" setup>
 import { ElInput, ElSwitch, ElRadio, ElRadioButton, ElRadioGroup, ElForm, ElFormItem, ElCheckbox, ElCheckboxGroup, ElSelect, ElOption, ElDatePicker, ElTimePicker, ElInputNumber } from 'element-plus'
+
 import { datePickTypes } from 'element-plus'
 import { ref, reactive, watch, unref, onMounted } from 'vue'
 
@@ -68,7 +69,6 @@ onMounted(() => {
   })
 })
 
-const handle = throttle(() => console.log(Date.now() % 10000))
 
 watch(props.list, () => {
   const list = unref(props.list)
