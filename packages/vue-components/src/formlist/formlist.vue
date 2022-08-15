@@ -41,9 +41,9 @@
 </template>
 
 <script lang="ts" setup>
-import { ElInput, ElSwitch, ElRadio, ElRadioButton, ElRadioGroup, ElForm, ElFormItem, ElCheckbox, ElCheckboxGroup, datePickTypes, ElSelect, ElOption, ElDatePicker, ElTimePicker, ElInputNumber } from 'element-plus'
-
-import { defineProps, defineEmits, ref, reactive, defineExpose, watch, unref, onMounted } from 'vue'
+import { ElInput, ElSwitch, ElRadio, ElRadioButton, ElRadioGroup, ElForm, ElFormItem, ElCheckbox, ElCheckboxGroup, ElSelect, ElOption, ElDatePicker, ElTimePicker, ElInputNumber } from 'element-plus'
+import { datePickTypes } from 'element-plus'
+import { ref, reactive, watch, unref, onMounted } from 'vue'
 
 import { LoFormProps, FORM_CHANGE_EVENT, defaultValue, LoFormItem } from './formlist'
 import type { FormInstance, DatePickType } from 'element-plus'

@@ -7,14 +7,14 @@ import { routeAutoLink } from './routerImport'
 // import { routeAutoLink } from 'lo-utils'
 
 const routes: Array<RouteRecordRaw> = [
-  // {
-  //   path: '/',
-  //   redirect: '/dashboard',
-  // },
-  // {
-  //   path: '/dashboard',
-  //   component: dashboard,
-  // },
+  {
+    path: '/',
+    redirect: '/dashboard',
+  },
+  {
+    path: '/dashboard',
+    component: dashboard,
+  },
   {
     path: '/demo',
     component: () => import(/* webpackChunkName: "demo" */ '@/views/Example/demo/demo.vue'),
@@ -26,28 +26,28 @@ export const config = {
   'Example/Page1/SubPage2/Page2/index.vue': { meta: {} },
 }
 
-// const routePath = require
-//   // cause all route in one bundle
-//   .context('../views/', true, /\.vue$/)
-//   .keys()
-//   .filter(
-//     i =>
-//       // filter the static path
-//       !i.includes('formTable') ||
-//       !routes.some(({ path }) => {
-//         ;/\/[\S]+/.test(path) && i.includes(path)
-//       })
-//   )
+const routePath = require
+  // cause all route in one bundle
+  .context('../views/', true, /\.vue$/)
+  .keys()
+  .filter(
+    i =>
+      // filter the static path
+      !i.includes('formTable') ||
+      !routes.some(({ path }) => {
+        ;/\/[\S]+/.test(path) && i.includes(path)
+      })
+  )
 
-// console.log(routePath)
+console.log(routePath)
 
-// const routesAuto = routeAutoLink(routePath, [main, Appmain, sub], config)(path => () => import(/*webpackChunkName:"[request]"*/ `../views/${path.replace(/\.vue$/, '')}.vue`))
+const routesAuto = routeAutoLink(routePath, [main, Appmain, sub], config)(path => () => import(/*webpackChunkName:"[request]"*/ `../views/${path.replace(/\.vue$/, '')}.vue`))
 
-// const finalroutes = [...routes, ...routesAuto.map(i => ({ ...i, path: '/' + i.path }))]
+const finalroutes = [...routes, ...routesAuto.map(i => ({ ...i, path: '/' + i.path }))]
 
 const router = createRouter({
   history: createWebHashHistory(process.env.BASE_URL),
-  routes: routes, //
+  routes: finalroutes, //
 })
 
 export default router

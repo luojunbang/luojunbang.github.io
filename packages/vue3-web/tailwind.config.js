@@ -6,3 +6,13 @@ module.exports = {
   },
   plugins: [],
 }
+
+// d7000f
+// f1f2e5
+// 000010
+// ff770f
+// 91b822
+// ffe76f
+// 002ea6
+// ffe78f
+// 225222295

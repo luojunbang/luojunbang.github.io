@@ -3,14 +3,13 @@
   "version": "0.1.0",
   "packageManager": "pnpm@7.0.0",
   "private": true,
-  "sideEffects": false,
   "workspaces": [
     "packages/*"
   ],
   "scripts": {
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "serve:vue": "pnpm run -C ./packages/vue3-web serve",
+    "serve": "pnpm run -C ./packages/vue3-web serve",
     "build:vue": "pnpm run -C ./packages/vue3-web build",
     "webpack:build": "webpack --config  --mode=producticon ./webpack.config.js",
     "vite": "vite",
@@ -27,10 +26,13 @@
     "css-loader": "^6.7.1",
     "fork-ts-checker-webpack-plugin": "^7.2.13",
     "html-webpack-plugin": "^5.5.0",
-    "loclass-style-loader": "^0.0.2",
+    "loclass-style-loader": "^0.0.4",
     "mini-css-extract-plugin": "^2.6.1",
     "postcss": "^8.4.16",
     "postcss-loader": "^7.0.1",
+    "rollup": "^2.77.3",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-typescript2": "^0.32.1",
     "sass": "^1.54.0",
     "sass-loader": "^13.0.2",
     "style-loader": "^3.3.1",
@@ -49,7 +51,7 @@
     "axios": "^0.27.2",
     "echarts": "^5.3.3",
     "element-plus": "^2.2.12",
-    "lo-utils": "^1.2.18",
+    "lo-utils": "^1.2.20",
     "lodash": "^4.17.21",
     "vue": "^3.2.37"
   }

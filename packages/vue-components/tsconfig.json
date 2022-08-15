@@ -1,4 +1,27 @@
 {
-  "extends": "../../tsconfig.vue.json",
-  // "references": [{ "path": "../../tsconfig.web.json" }]
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "target": "esnext",
+    "module": "esnext",
+    "strict": true,
+    "jsx": "preserve",
+    "importHelpers": true,
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "types": [
+      // "vite/client"
+      "webpack-env",
+      "element-plus/global"
+    ],
+    "paths": {
+      /* 指定一组将导入重新映射到其他查找位置的条目。 */
+      "@/*": ["./src/*"]
+    },
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
+  },
+  "include": ["src/**/*.ts", "src/**/*.vue"],
+  "exclude": ["node_modules"]
 }

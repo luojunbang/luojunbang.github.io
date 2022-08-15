@@ -1,4 +1,7 @@
 {
   "extend": "./tsconfig.web.json",
   "exclude": ["node_modules"], //排除之外不编译的文件
+  "compilerOptions": {
+    "types": ["element-plus/global"]
+  }
 }
