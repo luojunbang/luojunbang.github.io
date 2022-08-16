@@ -6,6 +6,7 @@ const { ProgressPlugin } = require('webpack')
 const d = Date.now()
 const chalk = require('chalk')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 const { merge } = require('webpack-merge')
 
@@ -58,22 +59,22 @@ const config = {
     // '@antv/g6': 'G6',
   },
   optimization: {
-    // minimizer: [
-    //   new TerserPlugin({
-    //     terserOptions: {
-    //       compress: {
-    //         defaults: false,
-    //         unused: true,
-    //         dead_code: true,
-    //         keep_fnames: true,
-    //       },
-    //       mangle: false,
-    //     },
-    //     // minify: file => file,
-    //     parallel: true,
-    //     extractComments: false,
-    //   }),
-    // ],
+    minimizer: [
+      new CssMinimizerPlugin(),
+      new TerserPlugin({
+        terserOptions: {
+          compress: {
+            defaults: false,
+            unused: true,
+            dead_code: true,
+            keep_fnames: true,
+          },
+          mangle: false,
+        },
+        parallel: true,
+        extractComments: false,
+      }),
+    ],
     // splitChunks: {
     //   minSize: 10,
     //   cacheGroups: {
@@ -182,7 +183,8 @@ const config = {
       template: resolve('./public/index.html'),
     }),
     new ProgressPlugin((percentage, message, ...args) => {
-      // console.info(chalk.green((percentage * 100).toFixed(0) + '%'), message, ...args)
+      console.log('\33[2J')
+      console.info(chalk.green((percentage * 100).toFixed(0) + '%'), message, ...args)
       if (percentage === 1) {
         // console.log('\33[2J')
       }
@@ -191,20 +193,20 @@ const config = {
     //   // options
     // }),
 
-    // new ForkTsCheckerWebpackPlugin({
-    //   typescript: {
-    //     extensions: {
-    //       vue: {
-    //         enabled: true,
-    //         compiler: resolve('../node_modules/vue/compiler-sfc'),
-    //       },
-    //     },
-    //     diagnosticOptions: {
-    //       semantic: true,
-    //       syntactic: false,
-    //     },
-    //   },
-    // }),
+    new ForkTsCheckerWebpackPlugin({
+      typescript: {
+        extensions: {
+          vue: {
+            enabled: true,
+            compiler: resolve('./node_modules/vue/compiler-sfc'),
+          },
+        },
+        diagnosticOptions: {
+          semantic: true,
+          syntactic: false,
+        },
+      },
+    }),
   ],
 }
 
