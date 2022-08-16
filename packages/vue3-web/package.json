@@ -4,10 +4,8 @@
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "serve": "cross-env NODE_ENV=development webpack-dev-server --config ./webpack/webpack.config.js --mode=development",
-    "build": "cross-env NODE_ENV=production webpack --config ./webpack/webpack.config.js",
-    "json": "webpack --profile --json > stats.json",
-    "detail": "webpack-bundle-analyzer --port 8888 ./stats.json"
+    "serve": "cross-env NODE_ENV=development webpack-dev-server --config ./webpack.config.js",
+    "build": "cross-env NODE_ENV=production webpack --config ./webpack.config.js"
   },
   "author": "",
   "license": "ISC",

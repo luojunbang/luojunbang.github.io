@@ -7,11 +7,15 @@ const d = Date.now()
 const chalk = require('chalk')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
+const { merge } = require('webpack-merge')
+
 const TerserPlugin = require('terser-webpack-plugin')
 
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
+
+const { prod_config, dev_config } = require('@lo/common/webpack/index.js')
 
 const AutoImport = require('unplugin-auto-import/webpack')
 const Components = require('unplugin-vue-components/webpack')
@@ -19,7 +23,7 @@ const { ElementPlusResolver } = require('unplugin-vue-components/resolvers')
 
 const resolve = p => path.resolve(__dirname, p)
 const { VueLoaderPlugin } = require('vue-loader')
-console.warn('NODE_ENV:', process.env.NODE_ENV, ':', resolve('../src/main.ts'))
+console.warn('NODE_ENV:', process.env.NODE_ENV)
 console.info('Start Time:', fmtDateTime(d))
 
 const externals = {
@@ -28,18 +32,18 @@ const externals = {
 
 const config = {
   mode: process.env.NODE_ENV,
-  entry: { app: [resolve('../src/main.ts')] },
+  entry: { app: [resolve('./src/main.ts')] },
   output: {
     hashFunction: 'xxhash64',
     clean: true,
-    path: resolve('../dist/'),
+    path: resolve('./dist'),
     publicPath: process.env.BASE_URL,
     filename: 'js/[name]-[contenthash:8].js',
     chunkFilename: 'js/[name]-[contenthash:8].js',
   },
   resolve: {
     alias: {
-      '@': resolve('../src'),
+      '@': resolve('./src'),
       vue$: 'vue/dist/vue.runtime.esm-bundler.js',
     },
     extensions: ['.ts', '.tsx', '.vue', '.js'],
@@ -118,10 +122,7 @@ const config = {
     // },
   },
   module: {
-    noParse: content => {
-      const ans = /^(vue|vue-router|vuex|vuex-router-sync)$/.test(content)
-      return ans
-    },
+    noParse: /^(vue|vue-router|vuex|vuex-router-sync)$/,
     rules: [
       {
         //?
@@ -135,7 +136,7 @@ const config = {
         use: [
           'vue-loader',
           {
-            loader: 'loclass-style-loader'
+            loader: 'loclass-style-loader',
           },
         ],
       },
@@ -143,38 +144,6 @@ const config = {
         test: /\.vue$/,
         resourceQuery: /type=style/,
         sideEffects: true,
-      },
-      {
-        test: /\.scss$/,
-        use: [
-          // MiniCssExtractPlugin.loader,
-          {loader:'vue-style-loader'},
-          {
-            loader: 'css-loader',
-            options: {
-              importLoaders: 1,
-            },
-          },
-          'sass-loader',
-        ],
-      },
-      {
-        test: /\.css$/,
-        use: [
-          // MiniCssExtractPlugin.loader,
-          {loader:'vue-style-loader'},
-          {
-            loader: 'css-loader',
-          },
-          {
-            loader: 'postcss-loader',
-            options: {
-              postcssOptions: {
-                plugins: [require('tailwindcss'), require('autoprefixer')],
-              },
-            },
-          },
-        ],
       },
       {
         test: /.tsx?$/,
@@ -207,14 +176,10 @@ const config = {
     Components({
       resolvers: [ElementPlusResolver()],
     }),
-    // new MiniCssExtractPlugin({
-    //   filename: 'css/[name].[contenthash:8].css',
-    //   chunkFilename: 'css/[name].[contenthash:8].css',
-    // }),
     new HTMLWebpackPlugin({
       BASE_URL: process.env.BASE_URL,
       externals: Object.values(externals).join('') || ' ',
-      template: resolve('../public/index.html'),
+      template: resolve('./public/index.html'),
     }),
     new ProgressPlugin((percentage, message, ...args) => {
       // console.info(chalk.green((percentage * 100).toFixed(0) + '%'), message, ...args)
@@ -245,12 +210,4 @@ const config = {
 
 const isDev = process.env.NODE_ENV === 'development'
 
-// BundleAnalyzerPlugin
-// !isDev &&
-//   config.plugins.push(
-//     new BundleAnalyzerPlugin({
-//       generateStatsFile: true,
-//     })
-//   )
-
-module.exports = config
+module.exports = merge(config, isDev ? dev_config : prod_config)
