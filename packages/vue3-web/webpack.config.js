@@ -6,7 +6,7 @@ const { ProgressPlugin } = require('webpack')
 const d = Date.now()
 const chalk = require('chalk')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 
 const { merge } = require('webpack-merge')
 
@@ -30,6 +30,8 @@ console.info('Start Time:', fmtDateTime(d))
 const externals = {
   // echarts: '<script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.3.3/echarts.min.js"></script>',
 }
+
+const title = 'luojunbang.github.io'
 
 const config = {
   mode: process.env.NODE_ENV,
@@ -176,6 +178,7 @@ const config = {
     }),
     new HTMLWebpackPlugin({
       BASE_URL: process.env.BASE_URL,
+      title: title,
       externals: Object.values(externals).join('') || ' ',
       template: resolve('./public/index.html'),
     }),

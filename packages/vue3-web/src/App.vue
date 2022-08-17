@@ -11,6 +11,7 @@ body {
 }
 #app {
   height: 100%;
+  @apply font-serif;
 }
 .view-container {
   height: 100%;

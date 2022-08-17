@@ -1,32 +1,32 @@
 <template>
-  <div class="container relative">
-    <div class="left h-100 fl">
+  <div class="dashboard">
+    <div class="left h-full float-left">
       <div class="left-top relative">
-        <div class="datetime left-m">
+        <div class="datetime xl-ym">
           <div class="time relative">
             <span class="time__content">{{ time }}</span>
-            <span class="time__ms right-b">{{ ms }}</span>
+            <span class="time__ms right-0 bottom-0 absolute">{{ ms }}</span>
           </div>
           <div class="date">{{ date }}</div>
         </div>
       </div>
       <div class="left-bottom">
         <transition name="slide-fade">
-          <div v-if="isWeatherReady" class="weather-container left-m">
-            <div class="">
-              <div class="mg-r mg-b-sm">
-                <span class="mg-r"><icon class="color-primary mg-r-xs" :icon="todayInfo.skycon.icon"></icon>{{ todayInfo.skycon.label }}</span>
-                <span class="mg-r"><icon class="color-primary mg-r-xs" icon="wenduji"></icon>{{ todayInfo.temperature }} <i class="iconfont icon-sheshidu01"></i></span>
-                <span><icon class="color-primary mg-r-xs" icon="shidu"></icon>{{ todayInfo.humidity }}</span>
+          <div v-if="isWeatherReady" class="weather-container xl-ym">
+            <div class="mb-sm">
+              <div class="mr mb-sm">
+                <span class="mr"><icon class="color-primary mr-xs" :icon="todayInfo.skycon.icon"></icon>{{ todayInfo.skycon.label }}</span>
+                <span class="mr"><icon class="color-primary mr-xs" icon="wenduji"></icon>{{ todayInfo.temperature }} <i class="iconfont icon-sheshidu01"></i></span>
+                <span><icon class="color-primary mr-xs" icon="shidu"></icon>{{ todayInfo.humidity }}</span>
               </div>
-              <div v-if="todayInfo.precipitation_1h.some(i => !!i)" class="flex-row-nowrap align-end precipitation-container">
+              <div v-if="todayInfo.precipitation_1h.some(i => !!i)" class="flex-row-nowrap items-end precipitation-container">
                 <div class="precipitation" v-for="(item, index) in todayInfo.precipitation_1h" :key="index" :style="{ height: 100 * item + '%' }"></div>
               </div>
             </div>
-            <div class="flex-row-nowrap mg-b-sm">
-              <div class="daily-item mg-r" v-for="item in dailyTemperatureList" :key="item.date">
-                <div class="flex-row-nowrap">
-                  <icon size="28" class="color-primary mg-r-xs" :icon="item.skycon.icon"></icon>
+            <div class="flex-row-nowrap mb-sm">
+              <div class="daily-item mr" v-for="item in dailyTemperatureList" :key="item.date">
+                <div class="flex-row-nowrap ">
+                  <icon size="28" class="color-primary mr-xs" :icon="item.skycon.icon"></icon>
                   <div class="daily-item__temperature">
                     <div>{{ item.max }}</div>
                     <div>{{ item.min }}</div>
@@ -35,16 +35,16 @@
                 <div class="text-sm">{{ item.week }}</div>
               </div>
             </div>
-            <div class="nowrap">{{ todayInfo.forecast_keypoint }}</div>
+            <div class="whitespace-normal">{{ todayInfo.forecast_keypoint }}</div>
           </div>
         </transition>
       </div>
     </div>
-    <div class="right h-100 fl">
+    <div class="right h-full float-left">
       <div class="right-top relative">
-        <div class="search middle-b mg-b-lg w-100">
+        <div class="search xm-yb mb-lg w-full">
           <div class="search-input flex-row-nowrap">
-            <icon class="mg-r-sm" icon="sousuo"></icon>
+            <icon class="mr-sm" icon="sousuo"></icon>
             <input autofocus class="search-input__content flex1" v-model="inputText" @change="onChange" @keyup.enter="onKeyup" @input="onInput" />
           </div>
           <div class="search-button text-center">
@@ -126,7 +126,7 @@ $PRIMARY: #f0713a;
 $BG: #1b1f25;
 $TEXT: #e7d7c2;
 
-.container {
+.dashboard {
   width: 100vw;
   height: 100vh;
   overflow: hidden;

@@ -20,6 +20,10 @@ module.exports = {
         lg: '30px',
         xl: '50px',
       },
+      fontFamily: {
+        serif: ['Avenir', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'Noto Sans', 'sans-serif', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'],
+        monospace: ['SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'monospace'],
+      },
       colors: {
         white: parseColorOpacity([241, 242, 229]),
         black: parseColorOpacity([0, 0, 16]),

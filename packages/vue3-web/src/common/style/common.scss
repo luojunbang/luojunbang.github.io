@@ -1,0 +1,40 @@
+@use 'sass:map';
+
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+$horizon-directions: [ 'l', 'm', 'r' ];
+$vertical-directions: [ 't', 'm', 'b' ];
+$count: (
+  'l': '0%',
+  'm': '50%',
+  'r': '100%',
+  'y': '0%',
+  'b': '100%',
+);
+@layer components {
+  .flex-col-nowrap {
+    @apply flex flex-row flex-nowrap items-center;
+  }
+  .flex-row-nowrap {
+    @apply flex flex-row flex-nowrap items-center;
+  }
+  // .xl-yl {left:0,top:0}
+  @each $horizon in $horizon-directions {
+    @each $vertical in $vertical-directions {
+      .x#{$horizon}-y#{$vertical} {
+        position: absolute;
+        left: #{map.get($count, $horizon)};
+        top: #{map.get($count, $vertical)};
+        @if $horizon == m and $vertical == m {
+          transform: translate(-50%, -50%);
+        } @else if $horizon == m {
+          transform: translate(-50%, 0%);
+        } @else if $vertical == m {
+          transform: translate(0%, -50%);
+        }
+      }
+    }
+  }
+}
