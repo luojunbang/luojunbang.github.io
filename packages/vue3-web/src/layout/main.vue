@@ -1,7 +1,7 @@
 <template>
   <div class="h-100 flex-column">
     <div class=""><navbar /></div>
-    <div class="pd border flex1 overflow-a scroll-container">
+    <div class="pd flex1 overflow-a scroll-container">
       <router-view />
     </div>
   </div>

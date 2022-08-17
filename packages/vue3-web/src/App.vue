@@ -1,5 +1,5 @@
 <template>
-  <div class="view-container px-4">
+  <div class="view-container">
     <router-view />
   </div>
 </template>

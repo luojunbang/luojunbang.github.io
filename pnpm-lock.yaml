@@ -19,7 +19,7 @@ importers:
       element-plus: ^2.2.12
       fork-ts-checker-webpack-plugin: ^7.2.13
       html-webpack-plugin: ^5.5.0
-      lo-utils: ^1.2.20
+      lo-utils: ^1.2.21
       loclass-style-loader: ^0.0.4
       lodash: ^4.17.21
       mini-css-extract-plugin: ^2.6.1
@@ -47,7 +47,7 @@ importers:
       axios: 0.27.2
       echarts: 5.3.3
       element-plus: 2.2.12_vue@3.2.37
-      lo-utils: 1.2.20
+      lo-utils: 1.2.21
       lodash: 4.17.21
       vue: 3.2.37
     devDependencies:
@@ -3371,8 +3371,8 @@ packages:
     resolution: {integrity: sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==}
     dev: true
 
-  /lo-utils/1.2.20:
-    resolution: {integrity: sha512-txQV2B54T5yk7okTPVVj5whZ9QZW7gS0uDPtgEKYSbM3lVrqXqqedu15fnWMQgZIq2s79cn76XD917K9GGyUeA==}
+  /lo-utils/1.2.21:
+    resolution: {integrity: sha512-WC+AQbzekDOpUggzn6b9fpo1KrVfBLHU6JJ3nNqUTJsT7LRbzD9sDAwGxYvv8rrGoTy+Ok1uTsdIAgY2Bukjuw==}
 
   /loader-runner/4.3.0:
     resolution: {integrity: sha512-3R/1M+yS3j5ou80Me59j7F9IMs4PXs3VqRrm0TU3AbKPxlmpoY1TNscJV/oGJXo8qCatFGTfDbY6W6ipGOYXfg==}
@@ -3418,7 +3418,7 @@ packages:
     resolution: {integrity: sha512-7XJSghWq2n3U3fjW5lL+l+ZQxlkLbHjDejB3cvYZbpEY99LpdzUXmenYLgUPRPZS8fOl+b4kKEeaZHDIhHoaUw==}
     dependencies:
       chalk: 5.0.1
-      lo-utils: 1.2.20
+      lo-utils: 1.2.21
       loader-utils: 2.0.2
     dev: true
 
