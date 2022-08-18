@@ -1,7 +1,7 @@
 <template>
   <div class="clearfix" style="margin-right: -20px">
     <content-box title="倒影">
-      <div class="reflections h-100 pd-t-lg">
+      <div class="reflections h-full pt-lg">
         <div>HARRYPOTTER</div>
         <div>HARRYPOTTER</div>
       </div>
@@ -19,13 +19,13 @@
     </content-box>
     <content-box title="文字展开" title-color="white">
       <div class="h-100">
-        <div class="text-expand pd-t-lg">
+        <div class="text-expand pt-lg">
           <div>HARRYPOTTER</div>
         </div>
       </div>
     </content-box>
     <content-box title="融合">
-      <div class="circle-container h-100 pd-t-lg pd">
+      <div class="circle-container h-full pt-lg p-md">
         <div class="ball"></div>
         <div class="ball"></div>
         <div class="ball"></div>
@@ -33,10 +33,10 @@
       </div>
     </content-box>
     <content-box title="等边三角形">
-      <div class="h-100 w-100 pd relative">
-        <div class="border-item ab-center"></div>
-        <div class="border-item ab-center"></div>
-        <div class="border-item ab-center"></div>
+      <div class="h-full w-full p relative">
+        <div class="border-item xm-ym"></div>
+        <div class="border-item xm-ym"></div>
+        <div class="border-item xm-ym"></div>
       </div>
     </content-box>
   </div>

@@ -14,6 +14,14 @@ $count: (
   'b': '100%',
 );
 @layer components {
+  .clearfix::after {
+    content: '';
+    display: block;
+    visibility: hidden;
+    height: 0;
+    clear: both;
+  }
+  //flex
   .flex-col-nowrap {
     @apply flex flex-row flex-nowrap items-center;
   }
