@@ -235,7 +235,7 @@ const config = {
         extensions: {
           vue: {
             enabled: true,
-            compiler: resolve('./node_modules/vue/compiler-sfc'),
+            compiler: resolve("./node_modules/vue/compiler-sfc"),
           },
         },
         diagnosticOptions: {

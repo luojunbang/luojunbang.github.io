@@ -63,6 +63,7 @@ const dev_config = {
               importLoaders: 1,
             },
           },
+          'postcss-loader',
           'sass-loader',
         ],
       },
