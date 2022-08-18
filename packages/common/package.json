@@ -4,13 +4,12 @@
   "description": "",
   "main": "index.js",
   "exports": {
-    "./*": "./*"
+    "./eslint-vue": "./eslint.vue.config.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-  }
+  "devDependencies": {}
 }
