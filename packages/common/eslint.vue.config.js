@@ -1,11 +1,10 @@
 const { defineConfig } = require('eslint-define-config')
 
 module.exports = defineConfig({
-  root: true,
   env: {
     node: true,
   },
-  extends: ['plugin:vue/vue3-essential', 'eslint:recommended', '@vue/typescript/recommended', '@vue/prettier/@typescript-eslint', '@vue/prettier'],
+  extends: ['plugin:vue/vue3-essential', 'eslint:recommended', '@vue/typescript/recommended', 'plugin:prettier/recommended'],
   parserOptions: {
     ecmaVersion: 2020,
     parser: '@typescript-eslint/parser',
@@ -15,20 +14,20 @@ module.exports = defineConfig({
     'no-debugger': 'off',
     '@typescript-eslint/no-unused-vars': ['off'],
     'no-empty': 'off',
-    '@typescript-eslint/explicit-module-boundary-types': 'off',
     'vue/multi-word-component-names': 'off',
-    // 'vue/html-self-closing': [
-    //   'error',
-    //   {
-    //     html: {
-    //       void: 'always',
-    //       normal: 'never',
-    //       component: 'always',
-    //     },
-    //     svg: 'always',
-    //     math: 'always',
-    //   },
-    // ],
+    'vue/html-self-closing': [
+      'error',
+      {
+        html: {
+          void: 'always',
+          normal: 'never',
+          component: 'always',
+        },
+        svg: 'always',
+        math: 'always',
+      },
+    ],
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-empty-function': 'off',
     '@typescript-eslint/no-this-alias': 'off',
     'prettier/prettier': [

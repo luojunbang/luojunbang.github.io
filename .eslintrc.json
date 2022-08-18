@@ -1,8 +1,0 @@
-// const vue_config = require('@lo/common/eslint_vue')
-
-// console.log(vue_config);
-
-{
-  "root": true,
-  "extends": ["@lo/common/eslint-vue"]
-}

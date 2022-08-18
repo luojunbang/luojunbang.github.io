@@ -31,9 +31,9 @@ import 'lo-utils/style/index.scss'
 
 const app = createApp(App)
 app
-	.use(store)
-// .use(ElementPlus)
-	.use(router)
-	.mount('#app')
+  .use(store)
+  // .use(ElementPlus)
+  .use(router)
+  .mount('#app')
 // app.component('content-box', ContentBox)
 // app.component('icon', Icon)
