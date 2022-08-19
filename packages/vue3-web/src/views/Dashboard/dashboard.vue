@@ -15,9 +15,9 @@
           <div v-if="isWeatherReady" class="weather-container xl-ym">
             <div class="mb-sm">
               <div class="mr mb-sm">
-                <span class="mr"><icon class="color-primary mr-xs" :icon="todayInfo.skycon.icon"></icon>{{ todayInfo.skycon.label }}</span>
-                <span class="mr"><icon class="color-primary mr-xs" icon="wenduji"></icon>{{ todayInfo.temperature }} <i class="iconfont icon-sheshidu01"></i></span>
-                <span><icon class="color-primary mr-xs" icon="shidu"></icon>{{ todayInfo.humidity }}</span>
+                <span class="mr"><icon class="color-primary mr-xs" :icon="todayInfo.skycon.icon" />{{ todayInfo.skycon.label }}</span>
+                <span class="mr"><icon class="color-primary mr-xs" icon="wenduji" />{{ todayInfo.temperature }} <i class="iconfont icon-sheshidu01"></i></span>
+                <span><icon class="color-primary mr-xs" icon="shidu" />{{ todayInfo.humidity }}</span>
               </div>
               <div v-if="todayInfo.precipitation_1h.some(i => !!i)" class="flex-row-nowrap items-end precipitation-container">
                 <div class="precipitation" v-for="(item, index) in todayInfo.precipitation_1h" :key="index" :style="{ height: 100 * item + '%' }"></div>
@@ -25,8 +25,8 @@
             </div>
             <div class="flex-row-nowrap mb-sm">
               <div class="daily-item mr" v-for="item in dailyTemperatureList" :key="item.date">
-                <div class="flex-row-nowrap ">
-                  <icon size="28" class="color-primary mr-xs" :icon="item.skycon.icon"></icon>
+                <div class="flex-row-nowrap">
+                  <icon size="28" class="color-primary mr-xs" :icon="item.skycon.icon" />
                   <div class="daily-item__temperature">
                     <div>{{ item.max }}</div>
                     <div>{{ item.min }}</div>
@@ -44,7 +44,7 @@
       <div class="right-top relative">
         <div class="search xm-yb mb-lg w-full">
           <div class="search-input flex-row-nowrap">
-            <icon class="mr-sm" icon="sousuo"></icon>
+            <icon class="mr-sm" icon="sousuo" />
             <input autofocus class="search-input__content flex1" v-model="inputText" @change="onChange" @keyup.enter="onKeyup" @input="onInput" />
           </div>
           <div class="search-button text-center">
@@ -69,7 +69,7 @@ const { date, time, ms } = (() => {
   const date = ref<string>('')
   const time = ref<string>()
   const ms = ref<string>('')
-  let timer = ref<ReturnType<typeof setInterval>>()
+  const timer = ref<ReturnType<typeof setInterval>>()
   function updateDateTime() {
     const currTime = Date.now()
     date.value = generatorDate(currTime, 'y - m - d  星期a')

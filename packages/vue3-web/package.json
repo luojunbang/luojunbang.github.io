@@ -10,13 +10,19 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@antv/g6": "^4.6.18",
     "element-plus": "^2.2.12",
     "lo-utils": "^1.2.21",
-    "vue": "^3.2.37"
+    "lo-vue-components": "workspace:^1.0.0",
+    "vue": "^3.2.37",
+    "vue-router": "^4.1.3",
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
+    "tailwindcss": "^3.1.8",
     "unplugin-auto-import": "^0.11.1",
     "unplugin-vue-components": "^0.22.4",
-    "vue-loader": "^17.0.0"
+    "vue-loader": "^17.0.0",
+    "vue-style-loader": "^4.1.3"
   }
 }

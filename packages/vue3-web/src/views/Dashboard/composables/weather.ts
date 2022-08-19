@@ -5,10 +5,10 @@ import { token } from '@/common/config'
 function getweatherInfo(position: string): string {
   // https://api.caiyunapp.com/v2.5/UnVaX9RcoCKpAsGa/121.6544,25.1552/weather.json
   // return http.get(`/v2.5/${token}/${position}/weather.json`)
-  return `https://api.caiyunapp.com/v2.5/${token}/${position}/weather.jsonp`
+  return `https://api.caiyunapp.com/v2.5/${token}/${position}/weather.jsonp?callback=`
 }
 
-import { jsonp } from 'vue-jsonp'
+import { jsonp } from '@/common/config'
 
 const weather_config = {
   CLEAR_DAY: { label: '晴', value: 'CLEAR_DAY', icon: 'qing' },
@@ -82,9 +82,11 @@ export default function useWeather(position: string): any {
   const dailyPrecipitationList = ref<dailyPrecipitation[]>([])
   const isWeatherReady = ref<boolean>(false)
   const askWeather = async () => {
-    const { result } = await jsonp<{ result: any }>(getweatherInfo(position))
+    const { data } = await jsonp<Record<string, any>>(getweatherInfo(position))
     isWeatherReady.value = true
-    const { realtime, minutely, daily, forecast_keypoint } = result
+    const { realtime, minutely, daily, forecast_keypoint } = data.result
+    console.log(data)
+
     const { apparent_temperature, temperature, humidity, skycon, precipitation } = realtime
     todayInfo.apparent_temperature = apparent_temperature
     todayInfo.skycon = getSkyconDecription(skycon)
