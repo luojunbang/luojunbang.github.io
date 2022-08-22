@@ -1,11 +1,11 @@
-import { r } from 'lo-utils'
+import { r, t } from 'lo-utils'
 import { isReactive, isRef } from 'vue'
 
 export const addressProps = ['province', 'city', 'country', 'town', 'street']
 
 type AddressProps = typeof addressProps[number]
 
-export function useAddressSelect(step: AddressProps, values: string | undefined, optionsRef, optionsKey = 'options') {
+export function useAddressSelect(step: AddressProps, values: string | undefined, optionsRef: Record<string, any>, optionsKey = 'options') {
   const idx = addressProps.indexOf(step)
   queryOptions(addressProps[idx + 1], values)
     .then(res => {
@@ -21,10 +21,6 @@ export function useAddressSelect(step: AddressProps, values: string | undefined,
     return rs
   }, initObj)
   return ans
-}
-
-function t(wait, ...args) {
-  return new Promise(rs => setTimeout(rs, wait * 1000, ...args))
 }
 
 export async function queryOptions(step: AddressProps, value = '') {

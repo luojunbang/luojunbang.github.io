@@ -1,19 +1,20 @@
 import ts from 'rollup-plugin-typescript2'
-import vue from '@vitejs/plugin-vue'
+// import vue from '@vitejs/plugin-vue'
 import path from 'path'
 import vuePlugin from 'rollup-plugin-vue'
 import postcss from 'rollup-plugin-postcss'
 
-import AutoImport from 'unplugin-auto-import/rollup'
-import Components from 'unplugin-vue-components/rollup'
-import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+// import AutoImport from 'unplugin-auto-import/rollup'
+// import Components from 'unplugin-vue-components/rollup'
+// import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import ElementPlus from 'unplugin-element-plus/rollup'
 const tsPlugin = ts({
   check: false,
-  // tsconfig: path.resolve(__dirname, 'tsconfig.json'),
+  tsconfig: path.resolve(__dirname, 'tsconfig.json'),
   // cacheRoot: path.resolve(__dirname, 'node_modules/.rts2_cache'),
   tsconfigOverride: {
     compilerOptions: {
+      rootDir: __dirname,
       declaration: true,
       declarationMap: true,
     },

@@ -1,15 +1,11 @@
 {
+  "extends": "../../tsconfig.vue.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "types": [
-      "webpack-env",
-      "element-plus/global"
-    ],
     "paths": {
       /* 指定一组将导入重新映射到其他查找位置的条目。 */
       "@/*": ["./src/*"]
     },
-    "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },
   "include": ["src/**/*.ts", "src/**/*.vue"],
   "exclude": ["node_modules"]

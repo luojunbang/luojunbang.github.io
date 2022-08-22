@@ -9,8 +9,7 @@
         <pre class="mg-t-lg" style="word-break: break-word; width: 500px">{{ JSON.stringify(form, null, 2) }}</pre>
       </div>
     </div>
-    <div class="w-30 fl">
-    </div>
+    <div class="w-30 fl"></div>
   </div>
 </template>
 
@@ -23,7 +22,7 @@ import { formConfig } from './config'
 
 import { useAddressSelect, addressProps } from './useAddress'
 
-let list = reactive(formConfig)
+const list = reactive(formConfig)
 
 const LoFormListRef = ref<LoFormInstance>()
 onMounted(() => {
@@ -31,15 +30,13 @@ onMounted(() => {
   initOptions()
 })
 
-function onFormChange(item, value, oldVal) {
+function onFormChange(item: { field: string }, value: string | undefined, oldVal: any) {
   console.log('onFormChange:', item.field, value, oldVal)
   if (addressProps.includes(item.field)) {
     const idx = addressProps.indexOf(item.field) + 1
-    const res = useAddressSelect(
-      item.field,
-      value,
-      list.find(i => i.field == addressProps[idx])
-    )
+    const _field = list.find(i => i.field == addressProps[idx])
+    if (!_field) return
+    const res = useAddressSelect(item.field, value, _field)
     addressProps.slice(idx).forEach(field => LoFormListRef.value?.setFormValue(field, res[field]))
   }
 }
@@ -57,11 +54,9 @@ async function handleClick() {
 
 function initOptions() {
   const idx = addressProps.indexOf('') + 1
-  const res = useAddressSelect(
-    '',
-    '',
-    list.find(i => i.field == addressProps[idx])
-  )
+  const _field = list.find(i => i.field == addressProps[idx])
+  if (!_field) return
+  const res = useAddressSelect('', '', _field)
   addressProps.slice(idx).forEach(field => LoFormListRef.value?.setFormValue(field, res[field]))
 }
 
@@ -76,10 +71,10 @@ const form = computed(() => {
 function handleSubmit() {
   LoFormListRef.value
     ?.validate()
-    .then(res => {
+    .then((res: any) => {
       console.log('pass')
     })
-    .catch(err => {
+    .catch((err: any) => {
       console.log(err)
     })
 }

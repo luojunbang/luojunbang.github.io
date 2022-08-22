@@ -27,9 +27,7 @@ module.exports = defineConfig({
         math: 'always',
       },
     ],
-    '@typescript-eslint/explicit-module-boundary-types': 'off',
-    '@typescript-eslint/no-empty-function': 'off',
-    '@typescript-eslint/no-this-alias': 'off',
+
     'prettier/prettier': [
       'error',
       {
@@ -52,6 +50,9 @@ module.exports = defineConfig({
       // enable the rule specifically for TypeScript files
       files: ['*.ts', '*.tsx'],
       rules: {
+        '@typescript-eslint/no-explicit-any': 'off',
+        '@typescript-eslint/no-empty-function': 'off',
+        '@typescript-eslint/no-this-alias': 'off',
         '@typescript-eslint/explicit-module-boundary-types': 'off',
       },
     },

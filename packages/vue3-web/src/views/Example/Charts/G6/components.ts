@@ -34,7 +34,7 @@ export default defineComponent({
       }, 3000)
       // render(root.value)
     })
-    function render(el) {
+    function render(el: HTMLElement) {
       const graph = new G6.Graph({
         container: el, // String | HTMLElement，必须，在 Step 1 中创建的容器 id 或容器本身
         width: 800, // Number，必须，图的宽度

@@ -83,7 +83,7 @@ export function routeAutoLink(routePath: string[], layoutComponentLists: Compone
 
 export function filePathToNest(routePath: string[], config: { [x: string]: routerConfig }, prefix = ''): navRouteConfig[] {
   const pathList = routePath.filter(i => isIndex(i.split('/').slice(-2).join('/'))).map(i => i.replace(/^\.\//, '').split('/'))
-  const ans = {}
+  const ans: Record<string, navRouteConfig> = {}
   let idx = 0
   while (pathList.some(i => i[idx] !== void 0)) {
     pathList.forEach(path => {
@@ -113,7 +113,7 @@ export function filePathToNest(routePath: string[], config: { [x: string]: route
     else {
       const prePath = pathList.slice(0, pathList.length - 1).join('/')
       if (ans[prePath]) {
-        if (Array.isArray(ans[prePath].children)) ans[prePath].children.push(ans[item])
+        if (Array.isArray(ans[prePath].children)) ans[prePath].children?.push(ans[item])
         else ans[prePath].children = [ans[item]]
       }
     }

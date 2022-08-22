@@ -10,7 +10,17 @@ function getweatherInfo(position: string): string {
 
 import { jsonp } from '@/common/config'
 
-const weather_config = {
+type skycon = {
+  label: string
+  value: string
+  icon: string
+}
+
+export function defineConfig<K extends string>(config: Record<K, skycon>) {
+  return config
+}
+
+const weather_config = defineConfig({
   CLEAR_DAY: { label: '晴', value: 'CLEAR_DAY', icon: 'qing' },
   CLEAR_NIGHT: { label: '晴', value: 'CLEAR_NIGHT', icon: 'qing' },
   PARTLY_CLOUDY_DAY: { label: '多云', value: 'PARTLY_CLOUDY_DAY', icon: 'duoyun' },
@@ -31,9 +41,11 @@ const weather_config = {
   DUST: { label: '浮尘', value: 'DUST', icon: 'shachen' },
   SAND: { label: '沙尘', value: 'SAND', icon: 'shachen' },
   WIND: { label: '大风', value: 'WIND', icon: 'feng' },
-}
+})
 
-const getSkyconDecription = skycon => {
+type weatherType = keyof typeof weather_config
+
+const getSkyconDecription = (skycon: weatherType) => {
   return weather_config[skycon] ?? { label: '-', value: '-', icon: '-' }
 }
 
@@ -97,7 +109,7 @@ export default function useWeather(position: string): any {
     todayInfo.precipitation_1h = minutely.precipitation
 
     dailyPrecipitationList.value = daily.precipitation
-    dailyTemperatureList.value = daily.temperature.map((i, index) => {
+    dailyTemperatureList.value = daily.temperature.map((i: { max: number; min: number; date: string }, index: string | number) => {
       return {
         max: ~~i.max,
         min: ~~i.min,
@@ -105,7 +117,7 @@ export default function useWeather(position: string): any {
         week: generatorDate(i.date.replace('T', ' ').replace('+08', ''), '周a'),
       }
     })
-    dailySkyconList.value = daily.skycon.map(i => getSkyconDecription(i.value))
+    dailySkyconList.value = daily.skycon.map((i: { value: any }) => getSkyconDecription(i.value))
   }
   onMounted(() => {
     askWeather()

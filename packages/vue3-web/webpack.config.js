@@ -196,6 +196,14 @@ const config = {
               importLoaders: 1,
             },
           },
+          {
+            loader: 'postcss-loader',
+            options: {
+              postcssOptions: {
+                plugins: [require('tailwindcss'), require('autoprefixer')],
+              },
+            },
+          },
           'sass-loader',
         ],
       },
@@ -246,7 +254,12 @@ const config = {
         BASE_URL: '"./"',
       },
     }),
-    ...ElementPlus,
+    AutoImport({
+      resolvers: [ElementPlusResolver()],
+    }),
+    Components({
+      resolvers: [ElementPlusResolver()],
+    }),
     new HTMLWebpackPlugin({
       BASE_URL: process.env.BASE_URL,
       title: title,

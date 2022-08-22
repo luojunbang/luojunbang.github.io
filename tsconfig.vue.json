@@ -1,7 +1,14 @@
 {
-  "extend": "./tsconfig.web.json",
-  "exclude": ["node_modules"], //排除之外不编译的文件
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "types": ["element-plus/global"]
-  }
+    "composite": true,
+    "jsx": "preserve",
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "types": [
+      "webpack-env",
+      "element-plus/global"
+    ],
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
+  },
 }

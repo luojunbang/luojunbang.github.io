@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts" setup>
-// import { ElMenu } from 'element-plus'
+import { ElMenu } from 'element-plus'
 import { routes } from '@/router'
 import { Ref, ref } from 'vue'
 import { useRouter } from 'vue-router'
@@ -17,8 +17,7 @@ const activeIndex: Ref = ref('dashboard')
 
 const router = useRouter()
 
-function handleSelect(e) {
-  console.log(e)
+function handleSelect(e: string) {
   activeIndex.value = e
   router.push('/' + e)
 }

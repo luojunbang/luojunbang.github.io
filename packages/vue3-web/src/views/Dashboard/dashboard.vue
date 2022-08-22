@@ -24,7 +24,7 @@
               </div>
             </div>
             <div class="flex-row-nowrap mb-sm">
-              <div class="daily-item mr" v-for="item in dailyTemperatureList" :key="item.date">
+              <div class="daily-item mr-sm" v-for="item in dailyTemperatureList" :key="item.date">
                 <div class="flex-row-nowrap">
                   <icon size="28" class="color-primary mr-xs" :icon="item.skycon.icon" />
                   <div class="daily-item__temperature">
