@@ -3,11 +3,11 @@
     <el-form-item v-for="item in list" :key="item.field" :label="item.label + ':'" :prop="item.field" :required="item.required" :rules="item.rules">
       <!-- label slot -->
       <template v-if="item.labelSlot" v-slot:label>
-        <slot :name="item.labelSlot" :item="item" />
+        <slot :name="item.labelSlot" :item="item"></slot>
       </template>
       <!-- form item slot -->
       <template v-if="item.formSlot">
-        <slot :name="item.formSlot" :item="item" />
+        <slot :name="item.formSlot" :item="item"></slot>
       </template>
       <!-- select -->
       <el-select v-else-if="item.type === 'select'" v-model="form[item.field]" v-bind="item">
@@ -41,49 +41,70 @@
 </template>
 
 <script lang="ts" setup>
-import { ElInput, ElSwitch, ElRadio, ElRadioButton, ElRadioGroup, ElForm, ElFormItem, ElCheckbox, ElCheckboxGroup, ElSelect, ElOption, ElDatePicker, ElTimePicker, ElInputNumber } from 'element-plus'
+import {
+  ElInput,
+  ElSwitch,
+  ElRadio,
+  ElRadioButton,
+  ElRadioGroup,
+  ElForm,
+  ElFormItem,
+  ElCheckbox,
+  ElCheckboxGroup,
+  ElSelect,
+  ElOption,
+  ElDatePicker,
+  ElTimePicker,
+  ElInputNumber,
+  FormItemProp,
+} from 'element-plus'
 
 import { datePickTypes } from 'element-plus'
+import type { WatchStopHandle } from 'vue'
 import { ref, reactive, watch, unref, onMounted } from 'vue'
 
-import { LoFormProps, FORM_CHANGE_EVENT, defaultValue, LoFormItem } from './formlist'
+import type { LoFormItem, LoSelectOption, LoFormContext } from './formlist'
+import { loFormProps, FORM_CHANGE_EVENT, defaultValue } from './formlist'
 import type { FormInstance, DatePickType } from 'element-plus'
-import { Arrayable } from 'element-plus/es/utils'
-import { throttle } from 'lo-utils'
+import type { Arrayable } from 'element-plus/es/utils'
+import { isJSType, throttle } from 'lo-utils'
 
-const props = defineProps(LoFormProps)
-const emits = defineEmits([FORM_CHANGE_EVENT])
+const props = defineProps(loFormProps)
+const emits = defineEmits({
+  [FORM_CHANGE_EVENT]: (item: LoFormItem, val: any, oldVal: any) => void 0,
+})
 
 const isValidDatePickType = (val: string | undefined): val is DatePickType => val !== undefined && ([...datePickTypes] as string[]).includes(val)
 
 const FormRef = ref<FormInstance>()
 
-function optionsFmt(opt, field = 'label') {
-  return typeof opt == 'string' ? opt : opt[field]
+function optionsFmt(opt: unknown, field: 'label' | 'value' = 'label') {
+  if (isJSType(opt, 'object') && Reflect.has(opt as LoSelectOption, field)) return (opt as LoSelectOption)[field]
+  else return opt as string
 }
 
-const form = reactive({})
+const form = reactive<Record<string, any>>({})
+
 onMounted(() => {
   props.list.forEach(i => {
     i.isRelative && bindEmitWatch(i)
   })
 })
 
-
 watch(props.list, () => {
   const list = unref(props.list)
   Reflect.ownKeys(form).forEach(i => {
-    if (list.findIndex(({ field }) => i == field) == -1) delete form[i]
+    if (list.findIndex(({ field }) => i == field) == -1) Reflect.deleteProperty(form, i)
   })
   list.forEach(i => {
-    if (form[i.field] == undefined) {
-      form[i.field] = i.value ?? defaultValue(i.type)
+    if (!Reflect.get(form, i.field)) {
+      Reflect.set(form, i.field, i.value ?? defaultValue(i.type))
       i.isRelative && bindEmitWatch(i)
     }
   })
 })
 
-const watchList = {}
+const watchList: Record<string, WatchStopHandle> = {}
 
 function bindEmitWatch(item: LoFormItem) {
   if (watchList[item.field] && typeof watchList[item.field] === 'function') {
@@ -93,7 +114,7 @@ function bindEmitWatch(item: LoFormItem) {
     ? throttle((val, oldVal) => {
         emits(FORM_CHANGE_EVENT, item, val, oldVal)
       }, item.throttle)
-    : (val, oldVal) => {
+    : (val: any, oldVal: any) => {
         emits(FORM_CHANGE_EVENT, item, val, oldVal)
       }
   const stop = watch(() => form[item.field], watchFn)
@@ -108,7 +129,8 @@ function validate() {
     })
   })
 }
-function setFormValue(field: string, val: Exclude<any, undefined>): void {
+
+const setFormValue: LoFormContext['setFormValue'] = (field: string, val: Exclude<any, undefined>): void => {
   form[field] = val
 }
 function resetFields(fields?: Arrayable<string>) {

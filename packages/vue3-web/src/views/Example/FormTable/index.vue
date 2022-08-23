@@ -1,34 +1,41 @@
 <template>
   <div class="clearfix">
-    <div class="w-70 fl">
+    <div class="w-full float-left">
       <LoFormList ref="LoFormListRef" label-position="right" size="large" :list="list" :inline="true" @formChange="onFormChange">
         <template v-slot:templatelabelSlot="{ item }">{{ item.label + '-labelslot' }}</template>
         <template v-slot:="{ item }">{{ item.field + '-formslot' }}</template>
       </LoFormList>
       <div>
-        <pre class="mg-t-lg" style="word-break: break-word; width: 500px">{{ JSON.stringify(form, null, 2) }}</pre>
+        <pre class="mt-lg" style="word-break: break-word; width: 500px">{{ JSON.stringify(form, null, 2) }}</pre>
       </div>
     </div>
-    <div class="w-30 fl"></div>
+    <div class="w-full">
+      <el-table :data="tableData" @row-click="handleTableRowClick">
+        <el-table-column label="Test" prop="test" />
+      </el-table>
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
+// ../../../../../vue-components/src/formlist/formlist
+import type { LoFormItem } from 'lo-vue-components'
 import { LoFormList } from 'lo-vue-components'
-import { LoFormInstance } from 'lo-vue-components'
 import { computed, onMounted, reactive, ref } from 'vue'
-import { t } from 'lo-utils'
+import { r, t } from 'lo-utils'
 import { formConfig } from './config'
 
 import { useAddressSelect, addressProps } from './useAddress'
 
-const list = reactive(formConfig)
+const list = reactive<LoFormItem[]>(formConfig)
 
-const LoFormListRef = ref<LoFormInstance>()
+const LoFormListRef = ref<InstanceType<typeof LoFormList> | null>(null)
 onMounted(() => {
   console.log('LoFormListRef.value:', LoFormListRef.value?.form)
   initOptions()
 })
+
+const tableData = ref([{ test: r() }])
 
 function onFormChange(item: { field: string }, value: string | undefined, oldVal: any) {
   console.log('onFormChange:', item.field, value, oldVal)
@@ -39,6 +46,14 @@ function onFormChange(item: { field: string }, value: string | undefined, oldVal
     const res = useAddressSelect(item.field, value, _field)
     addressProps.slice(idx).forEach(field => LoFormListRef.value?.setFormValue(field, res[field]))
   }
+}
+
+function onSome(a: string) {}
+
+const activeName = ref('User')
+
+const handleTableRowClick = (row: string, col: any, event: any) => {
+  console.log(row.includes('123'))
 }
 
 async function handleClick() {

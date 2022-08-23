@@ -1,5 +1,5 @@
 <template>
-  <div :class="bgc" class="px-4 LborderTopLeftRadius-30px Ltransition-all-2s h-400px Lfont-24px Lbd-1px-solid-red Lpdx-20px">2word1</div>
+  <!-- <div :class="bgc" class="px-4 LborderTopLeftRadius-30px Ltransition-all-2s h-400px Lfont-24px Lbd-1px-solid-red Lpdx-20px">2word1</div>
 
   <div class="flex items-center">
     <div class="box p-xs bg-black"></div>
@@ -15,11 +15,14 @@
     <div class="box m-md bg-normal"></div>
     <div class="box m-lg bg-warn"></div>
     <div class="box m-xl bg-danger"></div>
-  </div>
+  </div> -->
+  <LoSwiper :direction="true" />
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { ElButton } from 'element-plus'
+import { LoSwiper } from '../../../../../vue-components/src/swiper'
 defineComponent({
   name: 'demo',
 })

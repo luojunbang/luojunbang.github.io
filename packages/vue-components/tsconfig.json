@@ -1,6 +1,7 @@
 {
   "extends": "../../tsconfig.vue.json",
   "compilerOptions": {
+    "rootDir": ".",
     "baseUrl": ".",
     "paths": {
       /* 指定一组将导入重新映射到其他查找位置的条目。 */

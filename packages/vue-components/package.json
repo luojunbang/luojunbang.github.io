@@ -2,11 +2,14 @@
   "name": "lo-vue-components",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/index.mjs",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
   "types": "dist/src/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rollup --config  ./rollup.config.js"
+    "clean": "rimraf dist",
+    "build": "pnpm run clean && rollup --config  ./rollup.config.js",
+    "build:dts": "tsc  --emitDeclarationOnly --declaration --project tsconfig.json --outDir dist"
   },
   "author": "",
   "license": "ISC",
@@ -14,5 +17,10 @@
     "element-plus": "^2.2.12",
     "vue": "^3.2.37"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@vitejs/plugin-vue-jsx": "^2.0.0",
+    "esbuild": "^0.15.5",
+    "fast-glob": "^3.2.11",
+    "rollup-plugin-esbuild": "^4.9.3"
+  }
 }

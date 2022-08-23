@@ -7,7 +7,7 @@ import 'tailwindcss/tailwind.css'
 import '@/common/style/common.scss'
 
 // import ElementPlus from 'element-plus'
-// import 'element-plus/dist/index.css'
+import 'element-plus/dist/index.css'
 
 // import 'lo-utils/style/index.scss'
 

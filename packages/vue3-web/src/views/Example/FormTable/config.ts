@@ -1,6 +1,6 @@
-import { LoFormConfig } from 'lo-vue-components'
+// import type { LoFormConfig } from 'lo-vue-components/dist'
 
-export const formConfig: LoFormConfig = [
+export const formConfig = [
   { field: 'text', label: 'Text' },
   { field: 'textarea', label: 'Textarea', type: 'textarea', rows: 4 },
   { field: 'number', label: 'Number', type: 'number' },

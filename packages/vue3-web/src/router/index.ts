@@ -1,4 +1,5 @@
-import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
+import type { RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import main from '@/layout/main.vue'
 import sub from '@/layout/sub.vue'
 import Appmain from '@/layout/Appmain.vue'
@@ -11,7 +12,11 @@ export const routes: Array<RouteRecordRaw> = [
   },
   { path: '/Dashboard', name: 'Dashboard_dashboard_vue', component: dashboard },
   { path: '/Carousel', component: main, children: [{ path: '', component: () => import(/*webpackChunkName:"Carousel"*/ '../views/Carousel/index.vue'), name: 'Carousel_index_vue', children: [] }] },
-  { path: '/CssDisplay', component: main, children: [{ path: '', component: () => import(/*webpackChunkName:"CssDisplay"*/ '../views/CssDisplay/index.vue'), name: 'CssDisplay_index_vue', children: [] }] },
+  {
+    path: '/CssDisplay',
+    component: main,
+    children: [{ path: '', component: () => import(/*webpackChunkName:"CssDisplay"*/ '../views/CssDisplay/index.vue'), name: 'CssDisplay_index_vue', children: [] }],
+  },
   {
     path: '/Example',
     component: main,
@@ -24,7 +29,7 @@ export const routes: Array<RouteRecordRaw> = [
           { path: 'G6', component: () => import(/*webpackChunkName:"G6"*/ '../views/Example/Charts/G6/index.vue'), name: 'Example_Charts_G6_index_vue', children: [] },
         ],
       },
-      { path: 'FormTable', component: () => import(/*webpackChunkName:"FormTable"*/ '../views/Example/FormTable/index.vue'), name: 'Example_FormTable_index_vue', children: [] },
+      // { path: 'FormTable', component: () => import(/*webpackChunkName:"FormTable"*/ '../views/Example/FormTable/index.vue'), name: 'Example_FormTable_index_vue', children: [] },
       { path: 'Image', component: () => import(/*webpackChunkName:"Image"*/ '../views/Example/Image/index.vue'), name: 'Example_Image_index_vue', children: [] },
       { path: 'Lifecycle', component: () => import(/*webpackChunkName:"Lifecycle"*/ '../views/Example/Lifecycle/index.vue'), name: 'Example_Lifecycle_index_vue', children: [] },
       { path: 'Monitor', component: () => import(/*webpackChunkName:"Monitor"*/ '../views/Example/Monitor/index.vue'), name: 'Example_Monitor_index_vue', children: [] },
@@ -37,8 +42,18 @@ export const routes: Array<RouteRecordRaw> = [
             path: 'SubPage2',
             component: sub,
             children: [
-              { path: 'GrandPage1', component: () => import(/*webpackChunkName:"GrandPage1"*/ '../views/Example/Page1/SubPage2/GrandPage1/GrandPage1.vue'), name: 'Example_Page1_SubPage2_GrandPage1_GrandPage1_vue', children: [] },
-              { path: 'GrandPage2', component: () => import(/*webpackChunkName:"GrandPage2"*/ '../views/Example/Page1/SubPage2/GrandPage2/GrandPage2.vue'), name: 'Example_Page1_SubPage2_GrandPage2_GrandPage2_vue', children: [] },
+              {
+                path: 'GrandPage1',
+                component: () => import(/*webpackChunkName:"GrandPage1"*/ '../views/Example/Page1/SubPage2/GrandPage1/GrandPage1.vue'),
+                name: 'Example_Page1_SubPage2_GrandPage1_GrandPage1_vue',
+                children: [],
+              },
+              {
+                path: 'GrandPage2',
+                component: () => import(/*webpackChunkName:"GrandPage2"*/ '../views/Example/Page1/SubPage2/GrandPage2/GrandPage2.vue'),
+                name: 'Example_Page1_SubPage2_GrandPage2_GrandPage2_vue',
+                children: [],
+              },
             ],
           },
         ],

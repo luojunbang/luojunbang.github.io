@@ -1,2 +1,3 @@
+export * from './swiper'
 export * from './formlist'
-// export * from './swiper'
+export * from './table-enhance'

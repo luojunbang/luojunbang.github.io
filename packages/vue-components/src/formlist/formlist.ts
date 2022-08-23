@@ -1,18 +1,16 @@
-import type Formlist from './formlist.vue'
+import Formlist from './formlist.vue'
 
-import type { PropType, Ref } from 'vue'
+import type { PropType, Ref, ExtractPropTypes } from 'vue'
 
-import { FormItemRule, datePickTypes } from 'element-plus'
+import type { FormItemRule, datePickTypes } from 'element-plus'
 
-export type LoFormInstance = InstanceType<typeof Formlist>
-
-export const LoFormProps = {
+export const loFormProps = {
   list: {
     type: Array as PropType<LoFormConfig>,
     default: (): LoFormConfig => [],
-    validator(val) {
+    validator(val: LoFormConfig) {
       return !val.some(i => {
-        ;['select', 'checkbox-group', 'radio-group'].includes(i.type) && !i.options
+        i.type && ['select', 'checkbox-group', 'radio-group'].includes(i.type) && !i.options
       })
     },
   },
@@ -51,7 +49,7 @@ export declare interface LoFormBase extends Record<string, any> {
   label: string
   field: string
   value?: any
-  options?: refable<LoFormOption[] | string[]>
+  options?: LoFormOption
   rules?: FormItemRule | FormItemRule[]
   required?: boolean
   isRelative?: boolean
@@ -64,8 +62,9 @@ export declare interface LoFormBase extends Record<string, any> {
   throttle?: number
 }
 
-export function defaultValue(type) {
-  const typeConfig = {
+export function defaultValue(type?: LoFormType) {
+  if (!type) return ''
+  const typeConfig: Record<LoFormType, any> = {
     number: 0,
     'checkbox-group': [],
     switch: false,
@@ -73,11 +72,19 @@ export function defaultValue(type) {
   return typeConfig[type] ?? ''
 }
 
-export type LoFormOption = {
+export interface LoSelectOption extends Record<string, any> {
   label: string
   value: number | string
 }
 
+export type LoFormOption = refable<LoSelectOption[] | string[]>
 export type LoFormItem = LoFormBase
 
 export type LoFormConfig = LoFormItem[]
+
+export type LoFormProps = ExtractPropTypes<typeof loFormProps>
+
+export type LoFormContext = LoFormProps & {
+  form: Record<string, any>
+  setFormValue: (field: string, val: Exclude<any, undefined>) => void
+}

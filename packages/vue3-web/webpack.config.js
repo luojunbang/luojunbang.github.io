@@ -254,12 +254,7 @@ const config = {
         BASE_URL: '"./"',
       },
     }),
-    AutoImport({
-      resolvers: [ElementPlusResolver()],
-    }),
-    Components({
-      resolvers: [ElementPlusResolver()],
-    }),
+    ...ElementPlus,
     new HTMLWebpackPlugin({
       BASE_URL: process.env.BASE_URL,
       title: title,
