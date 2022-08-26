@@ -18,7 +18,6 @@
 </template>
 
 <script lang="ts" setup>
-// ../../../../../vue-components/src/formlist/formlist
 import type { LoFormItem } from 'lo-vue-components'
 import { LoFormList } from 'lo-vue-components'
 import { computed, onMounted, reactive, ref } from 'vue'

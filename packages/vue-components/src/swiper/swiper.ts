@@ -5,7 +5,7 @@ export type Direction = 'vertical' | 'horizon'
 
 export const swiperProps = {
   direction: {
-    type: String as PropType<Direction>,
+    type: String as PropType<'vertical' | 'horizon'>,
     default: 'vertical',
   },
 }

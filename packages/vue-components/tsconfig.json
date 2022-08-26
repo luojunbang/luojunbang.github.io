@@ -1,6 +1,7 @@
 {
   "extends": "../../tsconfig.vue.json",
   "compilerOptions": {
+    "emitDeclarationOnly":true,
     "rootDir": ".",
     "baseUrl": ".",
     "paths": {

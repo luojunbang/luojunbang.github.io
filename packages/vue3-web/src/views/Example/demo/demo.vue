@@ -16,13 +16,14 @@
     <div class="box m-lg bg-warn"></div>
     <div class="box m-xl bg-danger"></div>
   </div> -->
-  <LoSwiper :direction="true" />
+  <LoSwiper direction="horizon" />
+  <el-button icon="123">Button</el-button>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { ElButton } from 'element-plus'
-import { LoSwiper } from '../../../../../vue-components/src/swiper'
+import { LoSwiper } from 'lo-vue-components'
 defineComponent({
   name: 'demo',
 })
