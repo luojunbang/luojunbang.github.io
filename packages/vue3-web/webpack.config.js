@@ -35,10 +35,21 @@ const resolve = p => path.resolve(__dirname, p)
 console.warn('NODE_ENV:', process.env.NODE_ENV)
 console.info('Start Time:', fmtDateTime(d))
 
-const DEV = process.env.NODE_ENV === 'development'
+const PROD = process.env.NODE_ENV === 'production'
 
 const externals = {
-  // echarts: '<script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.3.3/echarts.min.js"></script>',
+  // echarts: {
+  //   alias: 'ECharts',
+  //   url: 'https://cdn.bootcdn.net/ajax/libs/echarts/5.3.3/echarts.min.js',
+  // },
+  '@antv/g6': {
+    alias: 'G6',
+    url: 'https://gw.alipayobjects.com/os/lib/antv/g6/3.7.1/dist/g6.min.js',
+  },
+  vue: {
+    alias: 'Vue',
+    url: 'https://unpkg.com/vue@3.2.7/dist/vue.runtime.global.prod.js',
+  },
 }
 
 const title = 'luojunbang.github.io'
@@ -57,7 +68,7 @@ const config = {
   resolve: {
     alias: {
       '@': resolve('./src'),
-      vue$: 'vue/dist/vue.runtime.esm-bundler.js',
+      // vue$: 'vue/dist/vue.runtime.esm-bundler.js',
     },
     extensions: ['.ts', '.tsx', '.vue', '.js'],
   },
@@ -103,26 +114,14 @@ const config = {
       return middlewares
     },
   },
-  externals: {
-    // echarts: 'ECharts',
-    // '@antv/g6': 'G6',
-  },
+  externals: PROD
+    ? Object.entries(externals).reduce((rs, [key, { alias }]) => {
+        rs[key] = alias
+        return rs
+      }, {})
+    : {},
   optimization: {
-    minimizer: [
-      // new TerserPlugin({
-      //   terserOptions: {
-      //     compress: {
-      //       defaults: false,
-      //       unused: true,
-      //       dead_code: true,
-      //       keep_fnames: true,
-      //     },
-      //     mangle: false,
-      //   },
-      //   parallel: true,
-      //   extractComments: false,
-      // }),
-    ],
+    minimizer: [],
     splitChunks: {
       // minSize: 10,
       cacheGroups: {
@@ -139,18 +138,6 @@ const config = {
         //   priority: 10,
         //   chunks: 'initial',
         // },
-        echarts: {
-          name: 'echarts',
-          test: /[\\/]node_modules[\\/]echarts[\\/]/,
-          priority: 10,
-          chunks: 'initial',
-        },
-        antv: {
-          name: 'antv',
-          test: /[\\/]node_modules[\\/]@antv[\\/]/,
-          priority: 10,
-          chunks: 'initial',
-        },
         defaultVendors: {
           name: 'chunk-vendors',
           test: /[\\/]node_modules[\\/]/,
@@ -189,7 +176,7 @@ const config = {
       {
         test: /\.scss$/,
         use: [
-          DEV ? 'vue-style-loader' : MiniCssExtractPlugin.loader,
+          PROD ? MiniCssExtractPlugin.loader : 'vue-style-loader',
           {
             loader: 'css-loader',
             options: {
@@ -210,7 +197,7 @@ const config = {
       {
         test: /\.css$/,
         use: [
-          DEV ? 'vue-style-loader' : MiniCssExtractPlugin.loader,
+          PROD ? MiniCssExtractPlugin.loader : 'vue-style-loader',
           {
             loader: 'css-loader',
           },
@@ -258,7 +245,11 @@ const config = {
     new HTMLWebpackPlugin({
       BASE_URL: process.env.BASE_URL,
       title: title,
-      externals: Object.values(externals).join('') || '',
+      externals: PROD
+        ? Object.values(externals)
+            .map(({ url }) => `<script src="${url}"></script>`)
+            .join('')
+        : '',
       template: resolve('./public/index.html'),
     }),
     new ProgressPlugin((percentage, message, ...args) => {
@@ -282,10 +273,32 @@ const config = {
     }),
   ],
 }
+const FileManagerPlugin = require('filemanager-webpack-plugin')
 
-if (!DEV) {
+if (PROD) {
   config.plugins.push(...prodPlugins)
   config.optimization.minimizer.push(new CssMinimizerPlugin())
+  config.plugins.push(
+    new FileManagerPlugin({
+      events: {
+        //初始化 filemanager-webpack-plugin 插件实例
+        onEnd: {
+          move: [
+            //然后我们选择dist文件夹将之打包成dist.zip并放在根目录
+            { source: resolve('./dist'), destination: resolve('../../dist') },
+          ],
+        },
+      },
+    }),
+  )
+} else {
+  // config.plugins.push(
+  //   new ProgressPlugin((percentage, message, ...args) => {
+  //     console.info(chalk.green((percentage * 100).toFixed(0) + '%'), message, ...args)
+  //     if (percentage === 1) {
+  //     }
+  //   }),
+  // )
 }
 
 module.exports = config

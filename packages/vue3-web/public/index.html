@@ -9,6 +9,7 @@
   <title>
     <%= htmlWebpackPlugin.options.title %>
   </title>
+    <%= htmlWebpackPlugin.options.externals %>
 </head>
 
 <body>
@@ -17,8 +18,7 @@
         Please enable it to continue.</strong>
   </noscript>
   <div id="app"></div>
-  <%= htmlWebpackPlugin.options.externals %>
-    <!-- built files will be auto injected -->
+  <!-- built files will be auto injected -->
 </body>
 <!-- eslint-disable-next-line vue/comment-directive -->
 

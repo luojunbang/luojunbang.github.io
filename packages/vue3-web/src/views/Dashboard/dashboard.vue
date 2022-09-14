@@ -19,7 +19,7 @@
                 <span class="mr"><icon class="color-primary mr-xs" icon="wenduji" />{{ todayInfo.temperature }} <i class="iconfont icon-sheshidu01"></i></span>
                 <span><icon class="color-primary mr-xs" icon="shidu" />{{ todayInfo.humidity }}</span>
               </div>
-              <div v-if="todayInfo.precipitation_1h.some(i => !!i)" class="flex-row-nowrap items-end precipitation-container">
+              <div v-if="todayInfo.precipitation_1h.some((i: any) => !!i)" class="flex-row-nowrap items-end precipitation-container">
                 <div class="precipitation" v-for="(item, index) in todayInfo.precipitation_1h" :key="index" :style="{ height: 100 * item + '%' }"></div>
               </div>
             </div>
@@ -51,6 +51,7 @@
             <button @click="handleSearchClick('google')">Google</button>
             <button @click="handleSearchClick('baidu')">Baidu</button>
             <button @click="handleSearchClick('mdn')">MDN Web Docs</button>
+            <button @click="handleSearchClick('npmjs')">NPM</button>
           </div>
         </div>
       </div>
@@ -64,7 +65,6 @@
 import { Ref, ref, onMounted, onUnmounted } from 'vue'
 import useWeatherInfo from './composables/weather'
 import { generatorDate, fmtTime } from 'lo-utils'
-import axios from 'axios'
 import FriendlyLink from './components/FriendlyLink.vue'
 const position = '113.459749,23.106402'
 
@@ -83,9 +83,6 @@ const { date, time, ms } = (() => {
     timer.value = setInterval(() => {
       updateDateTime()
     }, 100)
-    axios.get('/setup-middleware/some/path').then(res => {
-      console.log(res)
-    })
   })
   onUnmounted(() => {
     clearInterval(timer.value)
@@ -97,7 +94,7 @@ const { date, time, ms } = (() => {
   }
 })()
 
-type searchType = 'baidu' | 'google' | 'mdn'
+type searchType = 'baidu' | 'google' | 'mdn' | 'npmjs'
 
 const { onInput, inputText, handleSearchClick, onKeyup, onChange } = (() => {
   const inputText = ref<string>('')
@@ -108,6 +105,7 @@ const { onInput, inputText, handleSearchClick, onKeyup, onChange } = (() => {
       baidu: 'https://www.baidu.com/s?wd=',
       google: 'https://www.google.com.hk/search?q=',
       mdn: 'https://developer.mozilla.org/zh-CN/search?q=',
+      npmjs: 'https://www.npmjs.com/package/',
     }
     const url = config[type] + encodeURIComponent(inputText.value)
     window.location.href = url

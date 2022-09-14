@@ -3,20 +3,18 @@
 </template>
 
 <script lang="ts" setup>
-import G6Components from '../G6/components'
 import { onMounted, ref } from 'vue'
 import * as echarts from 'echarts/core'
-import {
-  BarChart,
+import type {
   // 系列类型的定义后缀都为 SeriesOption
   BarSeriesOption,
 } from 'echarts/charts'
+import { BarChart } from 'echarts/charts'
+import type { GridComponentOption, DatasetComponentOption } from 'echarts/components'
 import {
   GridComponent,
-  GridComponentOption,
   // 数据集组件
   DatasetComponent,
-  DatasetComponentOption,
 } from 'echarts/components'
 import { LabelLayout, UniversalTransition } from 'echarts/features'
 import { CanvasRenderer } from 'echarts/renderers'
@@ -29,9 +27,9 @@ echarts.use([GridComponent, DatasetComponent, BarChart, LabelLayout, UniversalTr
 
 echarts.use([BarChart])
 
-const root = ref(null)
-function initChart(el) {
-  const echartsInstance = echarts.init(el.value)
+const root = ref()
+function initChart(el: HTMLElement) {
+  const echartsInstance = echarts.init(el)
   const xAixs = new Array(10).fill(0).map((i, idx) => idx.toString())
   const options: ECOption = {
     xAxis: { data: xAixs },
@@ -46,7 +44,7 @@ function initChart(el) {
   echartsInstance.setOption(options)
 }
 onMounted(() => {
-  initChart(root)
+  initChart(root.value)
 })
 </script>
 

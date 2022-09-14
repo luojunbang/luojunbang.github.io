@@ -1,4 +1,5 @@
-import { h, ref, Ref, defineComponent, onMounted } from 'vue'
+import type { Ref } from 'vue'
+import { h, ref, defineComponent, onMounted } from 'vue'
 import G6 from '@antv/g6'
 
 const data = {
@@ -26,13 +27,13 @@ const data = {
 
 export default defineComponent({
   setup() {
-    const root = ref(null)
+    const root = ref()
     onMounted(() => {
       console.log(root.value)
       setTimeout(() => {
         name.value = 'luojunbang'
       }, 3000)
-      // render(root.value)
+      render(root.value)
     })
     function render(el: HTMLElement) {
       const graph = new G6.Graph({

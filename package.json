@@ -10,7 +10,7 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "serve": "pnpm run -C ./packages/vue3-web serve",
-    "build:vue": "pnpm run -C ./packages/vue3-web build",
+    "build:vue": "rimraf ./dist &&  pnpm run -C ./packages/vue3-web build",
     "webpack:build": "webpack --config  --mode=producticon ./webpack.config.js",
     "vite": "vite",
     "vite:build": "vite build",
@@ -28,6 +28,7 @@
     "css-loader": "^6.7.1",
     "css-minimizer-webpack-plugin": "^4.0.0",
     "eslint": "^8.22.0",
+    "filemanager-webpack-plugin": "^7.0.0",
     "fork-ts-checker-webpack-plugin": "^7.2.13",
     "html-webpack-plugin": "^5.5.0",
     "loclass-style-loader": "^0.0.4",
@@ -48,6 +49,7 @@
     "unplugin-element-plus": "^0.4.1",
     "vite": "^3.0.9",
     "webpack": "^5.74.0",
+    "webpack-bundle-analyzer": "^4.6.1",
     "webpack-cli": "^4.10.0"
   },
   "dependencies": {
