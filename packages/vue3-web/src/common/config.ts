@@ -7,8 +7,14 @@ export function jsonp<T>(url: string, params: Record<string, any> = {}): Promise
 
   return new Promise((rs, rj) => {
     const _id: string = 'jsonp_' + r()
-    Reflect.defineProperty(window, _id, function (res: T) {
-      rs({ data: res })
+    Reflect.defineProperty(window, _id, {
+      writable: false,
+      configurable: true,
+      enumerable: false,
+      value: function (res: T) {
+        rs({ data: res })
+        Reflect.deleteProperty(window, _id)
+      },
     })
     const script = document.createElement('script')
     const _params = parseParams(params)

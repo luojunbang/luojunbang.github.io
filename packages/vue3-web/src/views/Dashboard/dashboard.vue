@@ -62,6 +62,7 @@
 import { Ref, ref, onMounted, onUnmounted } from 'vue'
 import useWeatherInfo from './composables/weather'
 import { generatorDate, fmtTime } from 'lo-utils'
+import axios from 'axios'
 
 const position = '113.459749,23.106402'
 
@@ -80,6 +81,9 @@ const { date, time, ms } = (() => {
     timer.value = setInterval(() => {
       updateDateTime()
     }, 100)
+    axios.get('/setup-middleware/some/path').then(res => {
+      console.log(res)
+    })
   })
   onUnmounted(() => {
     clearInterval(timer.value)

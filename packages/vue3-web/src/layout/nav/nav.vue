@@ -9,7 +9,8 @@
 <script lang="ts" setup>
 import { ElMenu } from 'element-plus'
 import { routes } from '@/router'
-import { Ref, ref } from 'vue'
+import type { Ref } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import NavMenu from './NavMenu.vue'
 import { filePathToNest } from '@/router/routerImport'
@@ -22,10 +23,6 @@ function handleSelect(e: string) {
   router.push('/' + e)
 }
 
-// const navRoutePath = require
-//   .context('../../views/Example/', true, /\.vue$/)
-//   .keys()
-// routes
 const routerNest = [
   { path: 'Dashboard', title: 'Dashboard', href: 'Dashboard', fullPath: 'Dashboard/dashboard.vue' },
   { path: 'CssDisplay', title: 'CssDisplay', href: 'CssDisplay', fullPath: 'CssDisplay/index.vue' },
@@ -73,8 +70,6 @@ const routerNest = [
     ],
   },
 ]
-
-// console.log(routerNest)
 </script>
 
 <style lang="scss" scoped></style>

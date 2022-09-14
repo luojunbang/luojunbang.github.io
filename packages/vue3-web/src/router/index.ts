@@ -29,7 +29,7 @@ export const routes: Array<RouteRecordRaw> = [
           { path: 'G6', component: () => import(/*webpackChunkName:"G6"*/ '../views/Example/Charts/G6/index.vue'), name: 'Example_Charts_G6_index_vue', children: [] },
         ],
       },
-      // { path: 'FormTable', component: () => import(/*webpackChunkName:"FormTable"*/ '../views/Example/FormTable/index.vue'), name: 'Example_FormTable_index_vue', children: [] },
+      { path: 'FormTable', component: () => import(/*webpackChunkName:"FormTable"*/ '../views/Example/FormTable/index.vue'), name: 'Example_FormTable_index_vue', children: [] },
       { path: 'Image', component: () => import(/*webpackChunkName:"Image"*/ '../views/Example/Image/index.vue'), name: 'Example_Image_index_vue', children: [] },
       { path: 'Lifecycle', component: () => import(/*webpackChunkName:"Lifecycle"*/ '../views/Example/Lifecycle/index.vue'), name: 'Example_Lifecycle_index_vue', children: [] },
       { path: 'Monitor', component: () => import(/*webpackChunkName:"Monitor"*/ '../views/Example/Monitor/index.vue'), name: 'Example_Monitor_index_vue', children: [] },
@@ -65,11 +65,6 @@ export const routes: Array<RouteRecordRaw> = [
     ],
   },
 ]
-export const config = {
-  'Example/Todos/index.vue': { meta: {}, params: ':userId?', props: true },
-  'Example/Page1/SubPage2/SubPage2.vue': { meta: { title: '改名字' }, params: ':userId?' },
-  'Example/Page1/SubPage2/Page2/index.vue': { meta: {} },
-}
 
 const router = createRouter({
   history: createWebHashHistory(process.env.BASE_URL),
