@@ -7,11 +7,21 @@
 $horizon-directions: [ 'l', 'm', 'r' ];
 $vertical-directions: [ 't', 'm', 'b' ];
 $count: (
-  'l': '0%',
+  'l': '0',
   'm': '50%',
-  'r': '100%',
-  'y': '0%',
-  'b': '100%',
+  'r': '0',
+  't': '0',
+  'b': '0',
+);
+$horizon-position: (
+  'l': 'left',
+  'r': 'right',
+  'm': 'left',
+);
+$vertical-position: (
+  'm': 'top',
+  't': 'top',
+  'b': 'bottom',
 );
 @layer components {
   .clearfix::after {
@@ -28,13 +38,13 @@ $count: (
   .flex-row-nowrap {
     @apply flex flex-row flex-nowrap items-center;
   }
-  // .xl-yl {left:0,top:0}
+  // .xl-yl {left:0,top:0} .xr-yb {right:0,bottom:0}
   @each $horizon in $horizon-directions {
     @each $vertical in $vertical-directions {
       .x#{$horizon}-y#{$vertical} {
         position: absolute;
-        left: #{map.get($count, $horizon)};
-        top: #{map.get($count, $vertical)};
+        #{map.get($horizon-position,$horizon)}: #{map.get($count, $horizon)};
+        #{map.get($vertical-position,$vertical)}: #{map.get($count, $vertical)};
         @if $horizon == m and $vertical == m {
           transform: translate(-50%, -50%);
         } @else if $horizon == m {

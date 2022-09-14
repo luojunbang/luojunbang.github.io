@@ -2,7 +2,8 @@
  * axios封装
  * 请求拦截、响应拦截、错误统一处理
  */
-import axios, { AxiosInstance } from 'axios'
+import type { AxiosInstance } from 'axios'
+import axios from 'axios'
 
 function showFullScreenLoading() {
   console.log('loading')
@@ -82,4 +83,4 @@ instance.interceptors.response.use(
   },
 )
 
-export default (instance as AxiosInstance)
+export default instance as AxiosInstance

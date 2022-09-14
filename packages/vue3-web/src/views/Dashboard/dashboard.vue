@@ -54,6 +54,8 @@
           </div>
         </div>
       </div>
+
+      <friendly-link />
     </div>
   </div>
 </template>
@@ -63,7 +65,7 @@ import { Ref, ref, onMounted, onUnmounted } from 'vue'
 import useWeatherInfo from './composables/weather'
 import { generatorDate, fmtTime } from 'lo-utils'
 import axios from 'axios'
-
+import FriendlyLink from './components/FriendlyLink.vue'
 const position = '113.459749,23.106402'
 
 const { date, time, ms } = (() => {

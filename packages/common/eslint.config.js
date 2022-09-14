@@ -27,6 +27,7 @@ module.exports = defineConfig({
         math: 'always',
       },
     ],
+    'vue/no-unused-vars': 'off',
     // ts
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-empty-function': 'off',

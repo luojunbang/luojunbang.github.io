@@ -1,4 +1,4 @@
-type storageType = 'sessionStorage' | 'localStorage' | 'cookies'
+export type storageType = 'sessionStorage' | 'localStorage' | 'cookies'
 
 class LoStorage {
   appName: string
@@ -14,6 +14,7 @@ class LoStorage {
   get(key: string) {
     const { type } = this
     const ans = (window as any)[type].getItem(this.generateKey(key))
+    if (!ans) return undefined
     const { value, expired, createTime } = JSON.parse(ans)
     if (expired?.toString() !== '0' && Date.now() - createTime > expired) {
       this.remove(key)
