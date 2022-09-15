@@ -33,7 +33,7 @@ jobs:
       run:  pnpm i --frozen-lockfile
 
     - name: Build
-      run:  pnpm build:vue
+      run:  pnpm build:gh-page
 
     - name: Upload-source
       uses: JamesIves/github-pages-deploy-action@v4.3.3

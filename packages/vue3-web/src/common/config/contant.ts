@@ -1,0 +1,1 @@
+export const FRIENDILY_LINK = 'FRIENDILY_LINK'

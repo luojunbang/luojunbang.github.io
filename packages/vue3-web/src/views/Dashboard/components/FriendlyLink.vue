@@ -18,13 +18,13 @@
 
 <script setup lang="ts">
 import { onMounted, ref, unref } from 'vue'
-import LoStorage from '@/views/Example/Monitor/useStorage'
+import { storage, FRIENDILY_LINK } from '@/common'
 import { useList } from '../composables/useList'
 import type { LinkItem } from './friendlyLink'
 import defaultList from '../common/config'
-const storage = new LoStorage('lo', 'localStorage')
 
-const local_list = storage.get('friendly_link') ?? defaultList
+if (!storage.get(FRIENDILY_LINK)) storage.set(FRIENDILY_LINK, defaultList)
+const local_list = storage.get(FRIENDILY_LINK) ?? defaultList
 const { value: linkList, add, remove } = useList<LinkItem>(local_list)
 
 const handleHrefClick = (item: { href: string }) => {

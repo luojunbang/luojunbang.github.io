@@ -1,6 +1,6 @@
 import { onMounted, reactive, Ref, ref, watch } from 'vue'
 import { generatorDate } from 'lo-utils'
-import { token } from '@/common/config'
+import { token } from '@/common'
 
 function getweatherInfo(position: string): string {
   // https://api.caiyunapp.com/v2.5/UnVaX9RcoCKpAsGa/121.6544,25.1552/weather.json
@@ -8,7 +8,7 @@ function getweatherInfo(position: string): string {
   return `https://api.caiyunapp.com/v2.5/${token}/${position}/weather.jsonp?callback=`
 }
 
-import { jsonp } from '@/common/config'
+import { jsonp } from '@/common'
 
 type skycon = {
   label: string

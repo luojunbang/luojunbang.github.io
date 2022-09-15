@@ -11,6 +11,7 @@ export const routes: Array<RouteRecordRaw> = [
     redirect: '/dashboard',
   },
   { path: '/Dashboard', name: 'Dashboard_dashboard_vue', component: dashboard },
+  { path: '/setting', name: 'setting', component: () => import(/*webpackChunkName:"Setting"*/ '../views/Setting/index.vue') },
   { path: '/Carousel', component: main, children: [{ path: '', component: () => import(/*webpackChunkName:"Carousel"*/ '../views/Carousel/index.vue'), name: 'Carousel_index_vue', children: [] }] },
   {
     path: '/CssDisplay',
@@ -25,6 +26,7 @@ export const routes: Array<RouteRecordRaw> = [
         path: 'Charts',
         component: Appmain,
         children: [
+          { path: 'ECharts2', component: () => import(/*webpackChunkName:"ECharts2"*/ '../views/Example/Charts/ECharts/index2.vue'), name: 'Example_Charts_ECharts_index2_vue', children: [] },
           { path: 'ECharts', component: () => import(/*webpackChunkName:"ECharts"*/ '../views/Example/Charts/ECharts/index.vue'), name: 'Example_Charts_ECharts_index_vue', children: [] },
           { path: 'G6', component: () => import(/*webpackChunkName:"G6"*/ '../views/Example/Charts/G6/index.vue'), name: 'Example_Charts_G6_index_vue', children: [] },
         ],

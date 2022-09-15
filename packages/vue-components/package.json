@@ -11,11 +11,13 @@
     "build": "pnpm run clean && rollup --config  ./rollup.config.js",
     "build:dts": "tsc  --emitDeclarationOnly --declaration --project tsconfig.json --outDir dist"
   },
-  "files": ["dist","package.json"],
+  "files": [
+    "dist",
+    "package.json"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "element-plus": "^2.2.12",
     "vue": "^3.2.37"
   },
   "devDependencies": {

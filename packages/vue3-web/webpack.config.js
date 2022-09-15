@@ -7,9 +7,8 @@ const d = Date.now()
 const chalk = require('chalk')
 
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
-
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const TerserPlugin = require('terser-webpack-plugin')
-
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
@@ -38,18 +37,18 @@ console.info('Start Time:', fmtDateTime(d))
 const PROD = process.env.NODE_ENV === 'production'
 
 const externals = {
-  // echarts: {
-  //   alias: 'ECharts',
-  //   url: 'https://cdn.bootcdn.net/ajax/libs/echarts/5.3.3/echarts.min.js',
-  // },
+  echarts: {
+    alias: 'echarts',
+    url: 'https://cdn.bootcdn.net/ajax/libs/echarts/5.3.3/echarts.min.js',
+  },
   '@antv/g6': {
     alias: 'G6',
     url: 'https://gw.alipayobjects.com/os/lib/antv/g6/3.7.1/dist/g6.min.js',
   },
-  vue: {
-    alias: 'Vue',
-    url: 'https://unpkg.com/vue@3.2.7/dist/vue.runtime.global.prod.js',
-  },
+  // vue: {
+  //   alias: 'Vue',
+  //   url: 'https://unpkg.com/vue@3.2.7/dist/vue.runtime.global.prod.js',
+  // },
 }
 
 const title = 'luojunbang.github.io'
@@ -68,7 +67,7 @@ const config = {
   resolve: {
     alias: {
       '@': resolve('./src'),
-      // vue$: 'vue/dist/vue.runtime.esm-bundler.js',
+      vue$: 'vue/dist/vue.runtime.esm-bundler.js',
     },
     extensions: ['.ts', '.tsx', '.vue', '.js'],
   },
@@ -114,14 +113,50 @@ const config = {
       return middlewares
     },
   },
+  externalsType: 'script',
   externals: PROD
-    ? Object.entries(externals).reduce((rs, [key, { alias }]) => {
-        rs[key] = alias
+    ? Object.entries(externals).reduce((rs, [key, { url, alias }]) => {
+        rs[key] = [url, alias]
         return rs
       }, {})
     : {},
   optimization: {
-    minimizer: [],
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          compress: {
+            arrows: false,
+            collapse_vars: false,
+            comparisons: false,
+            computed_props: false,
+            hoist_funs: false,
+            hoist_props: false,
+            hoist_vars: false,
+            inline: false,
+            loops: false,
+            negate_iife: false,
+            properties: false,
+            reduce_funcs: false,
+            reduce_vars: false,
+            switches: false,
+            toplevel: false,
+            typeofs: false,
+            booleans: true,
+            if_return: true,
+            sequences: true,
+            unused: true,
+            conditionals: true,
+            dead_code: true,
+            evaluate: true,
+          },
+          mangle: {
+            safari10: true,
+          },
+        },
+        parallel: true,
+        extractComments: false,
+      }),
+    ],
     splitChunks: {
       // minSize: 10,
       cacheGroups: {
@@ -132,11 +167,11 @@ const config = {
         //   priority: 10,
         //   chunks: 'initial',
         // },
-        // elementUI: {
+        // elementPlus: {
         //   name: 'element-plus',
         //   test: /[\\/]node_modules[\\/]element-plus[\\/]/,
         //   priority: 10,
-        //   chunks: 'initial',
+        //   chunks: 'all',
         // },
         defaultVendors: {
           name: 'chunk-vendors',
@@ -274,16 +309,18 @@ const config = {
   ],
 }
 const FileManagerPlugin = require('filemanager-webpack-plugin')
+const { log } = require('console')
 
 if (PROD) {
   config.plugins.push(...prodPlugins)
+  config.plugins.push(new BundleAnalyzerPlugin())
   config.optimization.minimizer.push(new CssMinimizerPlugin())
   config.plugins.push(
     new FileManagerPlugin({
       events: {
         //初始化 filemanager-webpack-plugin 插件实例
         onEnd: {
-          move: [
+          copy: [
             //然后我们选择dist文件夹将之打包成dist.zip并放在根目录
             { source: resolve('./dist'), destination: resolve('../../dist') },
           ],

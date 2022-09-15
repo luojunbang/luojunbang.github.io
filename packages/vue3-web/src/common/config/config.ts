@@ -1,5 +1,5 @@
 export const token = 'UnVaX9RcoCKpAsGa'
-
+import LoStorage from '@/views/Example/Monitor/useStorage'
 import { r, parseParams } from 'lo-utils'
 
 export function jsonp<T>(url: string, params: Record<string, any> = {}): Promise<{ data: T }> {
@@ -22,3 +22,5 @@ export function jsonp<T>(url: string, params: Record<string, any> = {}): Promise
     document.head.append(script)
   })
 }
+
+export const storage = new LoStorage('lo', 'localStorage')

@@ -4,14 +4,14 @@
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "clean":"rimraf ./dist",
     "serve": "cross-env NODE_ENV=development webpack-dev-server --config ./webpack.config.js",
-    "build": "cross-env NODE_ENV=production webpack --config ./webpack.config.js"
+    "build": "pnpm run clean && cross-env NODE_ENV=production webpack --config ./webpack.config.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@antv/g6": "^4.6.18",
-    "element-plus": "^2.2.12",
     "lo-utils": "^1.2.21",
     "lo-vue-components": "workspace:^1.0.0",
     "vue": "^3.2.37",
