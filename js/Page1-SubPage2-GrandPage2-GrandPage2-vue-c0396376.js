@@ -1,0 +1,1 @@
+"use strict";(self["webpackChunk_lo_vue3_web"]=self["webpackChunk_lo_vue3_web"]||[]).push([[366],{895:(e,u,n)=>{function r(e,u){return"GrandPage2"}n.r(u),n.d(u,{default:()=>_});var a=n(9956);const s={},t=(0,a.Z)(s,[["render",r]]),_=t}}]);
