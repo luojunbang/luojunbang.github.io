@@ -1,6 +1,6 @@
-import { Component } from 'vue'
+import type { Component } from 'vue'
 
-import { RouteRecordRaw, RouteMeta, RouteRecordName, RouteComponent } from 'vue-router'
+import type { RouteRecordRaw, RouteMeta, RouteRecordName, RouteComponent } from 'vue-router'
 
 export declare interface navRouteConfig {
   path: string
@@ -34,7 +34,7 @@ const isIndex = (path: string): boolean => {
   } else return false
 }
 
-export function routeAutoLink(routePath: string[], layoutComponentLists: Component[], routeConfig: { [x: string]: routerConfig }) {
+export function routeAutoLink(routePath: string[], layoutComponentLists: Component[], routeConfig: { [x: string]: routerConfig } = {}) {
   if (!Array.isArray(layoutComponentLists)) throw Error('Should be Array fo LayoutComponents.')
 
   const routerNest: navRouteConfig[] = filePathToNest(routePath, routeConfig).map(route => {

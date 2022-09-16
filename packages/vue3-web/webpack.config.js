@@ -7,7 +7,6 @@ const d = Date.now()
 const chalk = require('chalk')
 
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const TerserPlugin = require('terser-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
@@ -16,6 +15,8 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 const AutoImport = require('unplugin-auto-import/webpack')
 const Components = require('unplugin-vue-components/webpack')
 const { ElementPlusResolver } = require('unplugin-vue-components/resolvers')
+
+console.log('process.env.detail:', process.env)
 
 const ElementPlus = [
   AutoImport({
@@ -309,11 +310,9 @@ const config = {
   ],
 }
 const FileManagerPlugin = require('filemanager-webpack-plugin')
-const { log } = require('console')
 
 if (PROD) {
   config.plugins.push(...prodPlugins)
-  config.plugins.push(new BundleAnalyzerPlugin())
   config.optimization.minimizer.push(new CssMinimizerPlugin())
   config.plugins.push(
     new FileManagerPlugin({
