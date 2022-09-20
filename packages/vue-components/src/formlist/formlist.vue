@@ -9,6 +9,8 @@
       <template v-if="item.formSlot">
         <slot :name="item.formSlot" :item="item"></slot>
       </template>
+      <!-- progress -->
+      <el-slider v-else-if="item.type === 'slider'" v-bind="item" v-model="form[item.field]" />
       <!-- select -->
       <el-select v-else-if="item.type === 'select'" v-model="form[item.field]" v-bind="item">
         <el-option v-for="opt in item.options" :value="optionsFmt(opt, 'value')" :key="optionsFmt(opt, 'value')" :label="optionsFmt(opt)" />
@@ -33,7 +35,7 @@
       <!-- time -->
       <el-time-picker v-else-if="item.type === 'time'" v-model="form[item.field]" :is-range="item.isRange ?? false" :default-value="item.value" format="HH:mm" v-bind="item" />
       <!-- input-number -->
-      <el-input-number v-else-if="item.type === 'number'" :type="item.type ?? 'text'" v-model="form[item.field]" :controls="item.controls ?? false" />
+      <el-input-number v-else-if="item.type === 'number'" v-model="form[item.field]" :controls="item.controls ?? false" />
       <!-- input -->
       <el-input v-else :type="item.type ?? 'text'" v-model="form[item.field]" v-bind="item" />
     </el-form-item>
@@ -41,7 +43,23 @@
 </template>
 
 <script lang="ts" setup>
-import { ElInput, ElSwitch, ElRadio, ElRadioButton, ElRadioGroup, ElForm, ElFormItem, ElCheckbox, ElCheckboxGroup, ElSelect, ElOption, ElDatePicker, ElTimePicker, ElInputNumber } from 'element-plus'
+import {
+  ElInput,
+  ElSwitch,
+  ElRadio,
+  ElRadioButton,
+  ElRadioGroup,
+  ElForm,
+  ElFormItem,
+  ElCheckbox,
+  ElCheckboxGroup,
+  ElSelect,
+  ElOption,
+  ElDatePicker,
+  ElTimePicker,
+  ElInputNumber,
+  ElSlider,
+} from 'element-plus'
 
 import { datePickTypes } from 'element-plus'
 import type { WatchStopHandle } from 'vue'
@@ -53,44 +71,37 @@ import type { FormInstance, DatePickType } from 'element-plus'
 import type { Arrayable } from 'element-plus/es/utils'
 import { isJSType, throttle } from 'lo-utils'
 
+// props
 const props = defineProps(loFormProps)
+
+// emits
 const emits = defineEmits({
-  [FORM_CHANGE_EVENT]: (item: LoFormItem, val: any, oldVal: any) => void 0,
+  [FORM_CHANGE_EVENT]: (item: LoFormItem, val: any, oldVal: any) => true,
 })
 
 const isValidDatePickType = (val: string | undefined): val is DatePickType => val !== undefined && ([...datePickTypes] as string[]).includes(val)
 
+// refs
 const FormRef = ref<FormInstance>()
+const form = reactive<Record<string, any>>({})
+const watchList: Record<string, WatchStopHandle> = {}
 
 function optionsFmt(opt: unknown, field: 'label' | 'value' = 'label') {
   if (isJSType(opt, 'object') && Reflect.has(opt as LoSelectOption, field)) return (opt as LoSelectOption)[field]
   else return opt as string
 }
 
-const form = reactive<Record<string, any>>({})
-
-onMounted(() => {
+// methods
+const initFormValue = () => {
   props.list.forEach(i => {
-    i.isRelative && bindEmitWatch(i)
-  })
-})
-
-watch(props.list, () => {
-  const list = unref(props.list)
-  Reflect.ownKeys(form).forEach(i => {
-    if (list.findIndex(({ field }) => i == field) == -1) Reflect.deleteProperty(form, i)
-  })
-  list.forEach(i => {
     if (!Reflect.get(form, i.field)) {
       Reflect.set(form, i.field, i.value ?? defaultValue(i.type))
       i.isRelative && bindEmitWatch(i)
     }
   })
-})
+}
 
-const watchList: Record<string, WatchStopHandle> = {}
-
-function bindEmitWatch(item: LoFormItem) {
+const bindEmitWatch = (item: LoFormItem) => {
   if (watchList[item.field] && typeof watchList[item.field] === 'function') {
     watchList[item.field]()
   }
@@ -105,7 +116,7 @@ function bindEmitWatch(item: LoFormItem) {
   watchList[item.field] = stop
 }
 
-function validate() {
+const validate = () => {
   return new Promise((rs, rj) => {
     FormRef.value?.validate((valid, obj) => {
       if (valid) rs(void 0)
@@ -117,9 +128,24 @@ function validate() {
 const setFormValue: LoFormContext['setFormValue'] = (field: string, val: Exclude<any, undefined>): void => {
   form[field] = val
 }
-function resetFields(fields?: Arrayable<string>) {
+
+const resetFields = (fields?: Arrayable<string>) => {
   FormRef.value?.resetFields(fields)
 }
+
+// watch
+watch(props.list, () => {
+  const list = unref(props.list)
+  Reflect.ownKeys(form).forEach(i => {
+    if (list.findIndex(({ field }) => i == field) == -1) Reflect.deleteProperty(form, i)
+  })
+  initFormValue()
+})
+
+// lifecycle
+onMounted(() => {
+  initFormValue()
+})
 
 defineExpose({
   form,
@@ -130,13 +156,16 @@ defineExpose({
 </script>
 
 <style lang="scss">
-.lo-form.el-form--inline {
-  margin-right: -32px;
-  .el-form-item {
-    width: calc((100% / v-bind(rowCount)) - 32px);
-  }
-  .el-form-item__content {
-    width: calc(100% - v-bind(labelWidth));
+.lo-form {
+  overflow: hidden;
+  &.el-form--inline {
+    margin-right: -32px;
+    .el-form-item {
+      width: calc((100% / v-bind(rowCount)) - 32px);
+    }
+    .el-form-item__content {
+      width: calc(100% - v-bind(labelWidth));
+    }
   }
 }
 </style>

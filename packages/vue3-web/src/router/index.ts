@@ -25,6 +25,7 @@ routeRequire.keys().forEach(path => {
   const { default: _default } = routeRequire(path)
   routes.push(_default)
 })
+console.log(routes)
 
 const router = createRouter({
   history: createWebHashHistory(process.env.BASE_URL),

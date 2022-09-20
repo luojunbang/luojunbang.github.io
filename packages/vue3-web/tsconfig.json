@@ -6,6 +6,7 @@
       /* 指定一组将导入重新映射到其他查找位置的条目。 */
       "@/*": ["./src/*"]
     },
+    // "types": ["src/typings/env.d.ts"]
   },
   "include": ["src/**/**.ts", "src/**/**.vue"],
   "exclude": ["node_modules"]

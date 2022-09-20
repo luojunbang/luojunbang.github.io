@@ -1,26 +1,15 @@
 import { r, t } from 'lo-utils'
 import { isReactive, isRef } from 'vue'
 
-export const addressProps = ['province', 'city', 'country', 'town', 'street']
+export const addressProps = ['province', 'city', 'country', 'town']
 
 type AddressProps = typeof addressProps[number]
 
-export function useAddressSelect(step: AddressProps, values: string | undefined, optionsRef: Record<string, any>, optionsKey = 'options') {
+export async function useAddressSelect(step: AddressProps, value: string | undefined, optionsRef: Record<string, any>, optionsKey = 'options') {
   const idx = addressProps.indexOf(step)
-  queryOptions(addressProps[idx + 1], values)
-    .then(res => {
-      if (isRef(optionsRef)) optionsRef.value = res
-      else if (isReactive(optionsRef)) optionsRef[optionsKey] = res
-    })
-    .catch(err => {
-      console.log('err:', err)
-    })
-  const initObj = idx == -1 ? {} : { [step]: values }
-  const ans = addressProps.slice(idx + 1).reduce((rs, key, i) => {
-    rs[key] = ''
-    return rs
-  }, initObj)
-  return ans
+  const res = await queryOptions(addressProps[idx + 1], value)
+  if (isRef(optionsRef)) optionsRef.value = res
+  else if (isReactive(optionsRef)) optionsRef[optionsKey] = res
 }
 
 export async function queryOptions(step: AddressProps, value = '') {

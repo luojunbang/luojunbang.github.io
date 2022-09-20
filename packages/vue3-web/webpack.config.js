@@ -1,11 +1,9 @@
 const { DefinePlugin, ProgressPlugin } = require('webpack')
-
 const HTMLWebpackPlugin = require('html-webpack-plugin')
 const { fmtDateTime } = require('lo-utils')
 const path = require('path')
 const d = Date.now()
 const chalk = require('chalk')
-
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
@@ -15,8 +13,17 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 const AutoImport = require('unplugin-auto-import/webpack')
 const Components = require('unplugin-vue-components/webpack')
 const { ElementPlusResolver } = require('unplugin-vue-components/resolvers')
+const resolve = p => path.resolve(__dirname, p)
 
-console.log('process.env.detail:', process.env)
+const ExamplePath = resolve('./src/views/example')
+
+const glob = require('fast-glob')
+const autoImportList = glob
+  .sync(ExamplePath + '/**/*.vue', {
+    onlyFiles: true,
+    absolute: false,
+  })
+  .map(p => p.replace(ExamplePath, '.'))
 
 const ElementPlus = [
   AutoImport({
@@ -31,7 +38,6 @@ const { VueLoaderPlugin } = require('vue-loader')
 
 const { prodPlugins } = require('@lo/common/webpack-config')
 
-const resolve = p => path.resolve(__dirname, p)
 console.warn('NODE_ENV:', process.env.NODE_ENV)
 console.info('Start Time:', fmtDateTime(d))
 
@@ -274,6 +280,7 @@ const config = {
       __VUE_PROD_DEVTOOLS__: 'false',
       'process.env': {
         // NODE_ENV: '"development"',
+        EXAMPLE_LIST: JSON.stringify(autoImportList),
         BASE_URL: '"./"',
       },
     }),
@@ -281,11 +288,6 @@ const config = {
     new HTMLWebpackPlugin({
       BASE_URL: process.env.BASE_URL,
       title: title,
-      externals: PROD
-        ? Object.values(externals)
-            .map(({ url }) => `<script src="${url}"></script>`)
-            .join('')
-        : '',
       template: resolve('./public/index.html'),
     }),
     new ProgressPlugin((percentage, message, ...args) => {

@@ -1,6 +1,5 @@
 import path from 'path'
 import { copyFile, mkdir, readFile, writeFile } from 'fs/promises'
-import ts from 'rollup-plugin-typescript2'
 import vuePlugin from 'rollup-plugin-vue'
 import postcss from 'rollup-plugin-postcss'
 import vueJsx from '@vitejs/plugin-vue-jsx'

@@ -8,10 +8,9 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     ContentBox: typeof import('./src/components/ContentBox.vue')['default']
+    ElButton: typeof import('element-plus/es')['ElButton']
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
-    ElTable: typeof import('element-plus/es')['ElTable']
-    ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     Icon: typeof import('./src/components/Icon/index.vue')['default']
     Iphone: typeof import('./src/components/iphone.vue')['default']

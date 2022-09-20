@@ -2,67 +2,44 @@
   <div class="pd-t">
     <div class="carousel">
       <swiper>
-        <!-- <swiper-item v-for="(item, index) in list" :key="index">item:{{ index }}</swiper-item> -->
+        <SwiperItem v-for="(item, index) in list" :key="index">item:{{ index }}</SwiperItem>
       </swiper>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import Swiper from './components/Swiper.vue'
-import SwiperItem from './components/SwiperItem.vue'
+import Swiper from './components/swiper.vue'
+import SwiperItem from './components/swiper-item.vue'
 import { r } from 'lo-utils'
 import { computed, reactive, ref, nextTick, watchPostEffect, watchSyncEffect, onMounted } from 'vue'
 const list = reactive(new Array(20).fill(0).map((i, idx) => ({ id: r() })))
-const reset = ref(false)
-const real = ref(false)
-const ball = ref()
-const style = reactive({ left: '0px', top: '0px' })
-console.log(ball)
-
-onMounted(() => {
-  ball.value?.addEventListener('transitionend', () => {})
-})
-
-async function start() {
-  style.left = '100px'
-  style.top = '0px'
-  reset.value = false
-  await nextTick()
-  reset.value = true
-  real.value = true
-  style.top = '100px'
-}
-watchPostEffect(() => {
-  console.log('reset watchPostEffect:', reset.value)
-})
-
-watchSyncEffect(() => {
-  console.log('reset watchSyncEffect:', reset.value)
-})
 </script>
 
 <style lang="scss" scoped>
+div.rolling {
+  float: left;
+  margin-left: 100px;
+  border: 1px solid #efefef;
+  margin-top: 200px;
+  height: 600px;
+  width: 400px;
+}
+
 div.carousel {
+  float: left;
   border: 1px solid #efefef;
   padding: 10px;
   width: 600px;
-  margin: 0 auto;
+  margin-left: 50px;
   margin-top: 200px;
   height: 500px;
-  overflow: hidden;
+  overflow: visible;
 }
 .animating {
   transition: all 0.3s linear;
 }
 .ball-green {
   background-color: green !important;
-}
-.ball {
-  width: 10px;
-  height: 10px;
-  border: 1px solid black;
-  background-color: red;
-  position: absolute;
 }
 </style>

@@ -35,15 +35,7 @@ export const formConfig: LoFormConfig = [
   { field: 'city', label: 'City', isRelative: true, type: 'select', options: [] },
   { field: 'country', label: 'Country', isRelative: true, type: 'select', options: [] },
   { field: 'town', label: 'town', isRelative: true, type: 'select', options: [] },
-  { field: 'street', label: 'street', isRelative: true, type: 'select', options: [] },
-  // ...datePickTypes.map(i => {
-  //   return {
-  //     field: i,
-  //     type: i,
-  //     label: i.toUpperCase(),
-  //   }
-  // }),
   { field: 'time', label: 'Time', type: 'time' },
   { field: 'timerange', label: 'Timerange', isRange: true, type: 'time' },
-  { field: 'labelSlot', label: 'LabelSlot', labelSlot: 'templatelabelSlot', formSlot: ' ' },
+  { field: 'custom', label: 'Custom', labelSlot: 'templatelabelSlot', formSlot: 'templateSlot' },
 ]

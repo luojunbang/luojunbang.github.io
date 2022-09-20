@@ -1,18 +1,25 @@
 <template>
-  <div class="clearfix">
-    <div class="w-full float-left">
-      <LoFormList ref="LoFormListRef" label-position="right" size="large" :list="list" :inline="true" @formChange="onFormChange">
-        <template v-slot:templatelabelSlot="{ item }">{{ item.label + '-labelslot' }}</template>
-        <template v-slot:="{ item }">{{ item.field + '-formslot' }}</template>
-      </LoFormList>
-      <div>
-        <pre class="mt-lg" style="word-break: break-word; width: 500px">{{ JSON.stringify(form, null, 2) }}</pre>
+  <div class="p-md h-[800px]">
+    <div class="w-full h-1/2 p-md border overflow-y-auto">
+      <div class="w-full overflow-hidden">
+        <LoFormList
+          ref="LoFormListRef"
+          :rowCount="formSetttingData.rowCount"
+          :list="formList"
+          :label-width="formSetttingData.labelWidth + '%'"
+          :inline="formSetttingData.inline"
+          @formChange="onFormChange"
+        >
+          <template v-slot:templatelabelSlot="{ item }">{{ item.label + '-Label' }}</template>
+          <template v-slot:templateSlot="{ item }">{{ item.field + '-Form' }}</template>
+        </LoFormList>
       </div>
     </div>
-    <div class="w-full">
-      <el-table :data="tableData" @row-click="handleTableRowClick">
-        <el-table-column label="Test" prop="test" />
-      </el-table>
+    <div class="flex-row-nowrap h-1/2 mt-md">
+      <pre class="flex-1 mr-md pl-md h-full overflow-auto border p-md text-sm" style="word-break: break-word">{{ JSON.stringify(formData, null, 2) }}</pre>
+      <div class="flex-1 border h-full p-md">
+        <LoFormList ref="formSettingListRef" :list="formSettingList" :inline="false" />
+      </div>
     </div>
   </div>
 </template>
@@ -26,61 +33,44 @@ import { formConfig } from './config'
 
 import { useAddressSelect, addressProps } from './useAddress'
 
-const list = reactive<LoFormItem[]>(formConfig)
+// refs
+const formList = reactive<LoFormItem[]>(formConfig)
 
 const LoFormListRef = ref<InstanceType<typeof LoFormList> | null>(null)
+const formSettingListRef = ref<InstanceType<typeof LoFormList> | null>(null)
+
+// lifecycle
 onMounted(() => {
-  console.log('LoFormListRef.value:', LoFormListRef.value?.form)
   initOptions()
 })
 
-const tableData = ref([{ test: r() }])
+const formSettingList = reactive<LoFormItem[]>([
+  { label: 'RowCount', field: 'rowCount', type: 'number', controls: true, value: 4 },
+  { label: 'Inline', field: 'inline', type: 'switch', value: true },
+  { label: 'LabelWidth', field: 'labelWidth', type: 'slider', value: 36 },
+])
+
+const formSetttingData = computed(() => formSettingListRef.value?.form ?? {})
 
 function onFormChange(item: { field: string }, value: string | undefined, oldVal: any) {
-  console.log('onFormChange:', item.field, value, oldVal)
   if (addressProps.includes(item.field)) {
-    const idx = addressProps.indexOf(item.field) + 1
-    const _field = list.find(i => i.field == addressProps[idx])
-    if (!_field) return
-    const res = useAddressSelect(item.field, value, _field)
-    addressProps.slice(idx).forEach(field => LoFormListRef.value?.setFormValue(field, res[field]))
+    initOptions(item.field, value)
   }
 }
 
-function onSome(a: string) {}
-
-const activeName = ref('User')
-
-const handleTableRowClick = (row: string, col: any, event: any) => {
-  console.log(row.includes('123'))
-}
-
-async function handleClick() {
-  const field = 'select'
-  list.splice(list.length - 1, 1)
-  await t(2)
-  list.push({ label: 'Select', field: field, type: 'select', options: [{ label: '--all', value: 'all' }], isRelative: true })
-  setTimeout(() => {
-    list[list.length - 1].options = [{ label: 'reveal', value: 'reveal' }]
-    if (LoFormListRef.value) LoFormListRef.value.form[field] = 'reveal'
-  }, 3000)
-}
-
-function initOptions() {
-  const idx = addressProps.indexOf('') + 1
-  const _field = list.find(i => i.field == addressProps[idx])
+function initOptions(field = '', value = '') {
+  const idx = addressProps.indexOf(field) + 1
+  const _field = formList.find(i => i.field == addressProps[idx])
   if (!_field) return
-  const res = useAddressSelect('', '', _field)
-  addressProps.slice(idx).forEach(field => LoFormListRef.value?.setFormValue(field, res[field]))
+  useAddressSelect(field, value, _field)
+  addressProps.slice(idx).forEach(field => LoFormListRef.value?.setFormValue(field, ''))
 }
 
 async function handleReset() {
   LoFormListRef.value?.resetFields(['email'])
 }
 
-const form = computed(() => {
-  return LoFormListRef.value?.form
-})
+const formData = computed(() => LoFormListRef.value?.form)
 
 function handleSubmit() {
   LoFormListRef.value

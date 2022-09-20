@@ -1,10 +1,14 @@
 <template>
-  <div class="swiper-item">
+  <div class="swiper-item text-center pd-t-lg" :style="itemStyle">
     <slot></slot>
   </div>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { reactive } from 'vue'
+
+const itemStyle = reactive({})
+</script>
 
 <style lang="scss" scoped>
 .swiper-item {

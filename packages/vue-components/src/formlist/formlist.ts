@@ -38,7 +38,7 @@ export enum FORM_TYPE {
 
 export const FORM_CHANGE_EVENT = 'formChange'
 export type IDatePickerType = typeof datePickTypes[number]
-export const fromNormalList = ['input', 'select', 'textarea', 'number', 'time', 'checkbox', 'checkbox-group', 'switch', 'radio-group']
+export const fromNormalList = ['input', 'select', 'textarea', 'number', 'time', 'checkbox', 'checkbox-group', 'switch', 'radio-group', 'slider']
 export type FromNormalType = typeof fromNormalList[number]
 export type LoFormType = FromNormalType | IDatePickerType
 
