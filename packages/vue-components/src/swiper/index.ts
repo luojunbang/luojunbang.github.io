@@ -9,3 +9,5 @@ export * from './swiper'
 export const LoSwiper = Swiper
 
 export default LoSwiper
+
+export type LoSwiperInstance = InstanceType<typeof Swiper>

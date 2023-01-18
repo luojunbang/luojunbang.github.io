@@ -24,6 +24,7 @@ importers:
       fork-ts-checker-webpack-plugin: ^7.2.13
       html-webpack-plugin: ^5.5.0
       lo-utils: ^1.2.21
+      lo-vue-components: workspace:^1.0.0
       loclass-style-loader: ^0.0.4
       mini-css-extract-plugin: ^2.6.1
       postcss: ^8.4.16
@@ -51,6 +52,7 @@ importers:
       echarts: 5.3.3
       element-plus: 2.2.16
       lo-utils: 1.2.21
+      lo-vue-components: link:packages/vue-components
       webpack-dev-server: 4.10.0_5v66e2inugklgvlh4huuavolfq
     devDependencies:
       '@babel/core': 7.18.10

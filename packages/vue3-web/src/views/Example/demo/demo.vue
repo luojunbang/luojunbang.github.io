@@ -1,38 +1,21 @@
 <template>
-  <!-- <div :class="bgc" class="px-4 LborderTopLeftRadius-30px Ltransition-all-2s h-400px Lfont-24px Lbd-1px-solid-red Lpdx-20px">2word1</div>
-
-  <div class="flex items-center">
-    <div class="box p-xs bg-black"></div>
-    <div class="box p-sm bg-black-80"></div>
-    <div class="box p-md bg-black-60"></div>
-    <div class="box p-lg bg-black-40"></div>
-    <div class="box p-xl bg-black-20"></div>
-    <div class="box p-xl bg-black-10"></div>
-  </div>
-  <div class="flex items-center">
-    <div class="box m-xs bg-blue"></div>
-    <div class="box m-sm bg-success"></div>
-    <div class="box m-md bg-normal"></div>
-    <div class="box m-lg bg-warn"></div>
-    <div class="box m-xl bg-danger"></div>
-  </div> -->
-  <LoSwiper direction="horizon" />
-  <el-button icon="123">Button</el-button>
+  <LoSwiper ref="LoSwiperRef" direction="horizon" />
+  <el-button type="text" />
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-import { ElButton } from 'element-plus'
-import { LoSwiper } from 'lo-vue-components'
-defineComponent({
-  name: 'demo',
-})
-</script>
-
 <script lang="ts" setup>
-import { ref, computed } from 'vue'
+import { LoSwiper } from 'lo-vue-components'
+import { ref, computed, onMounted } from 'vue'
 import { t } from 'lo-utils'
 const color = ref('blue')
+
+const LoSwiperRef = ref<InstanceType<typeof LoSwiper> | null>(null)
+
+onMounted(() => {
+  setTimeout(() => {
+    LoSwiperRef.value?.left()
+  }, 3000)
+})
 
 const bgc = computed(() => {
   return {

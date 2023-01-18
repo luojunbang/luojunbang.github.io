@@ -11,7 +11,10 @@ import glob from 'fast-glob'
 
 import { Project } from 'ts-morph'
 
-import ElementPlus from 'unplugin-element-plus/rollup'
+import AutoImport from 'unplugin-auto-import/rollup'
+import Components from 'unplugin-vue-components/rollup'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+
 
 const { resolve } = path
 
@@ -21,7 +24,13 @@ const TSCONFIG_PATH = resolve(__dirname, 'tsconfig.json')
 
 const plugins = [
   vuePlugin(),
-  ElementPlus({}),
+  // ElementPlus({}),
+  AutoImport({
+    resolvers: [ElementPlusResolver()],
+  }),
+  Components({
+    resolvers: [ElementPlusResolver()],
+  }),
   postcss({
     extensions: ['.css', '.scss'],
   }),
@@ -44,7 +53,7 @@ const componentsList = excludeFiles(glob.sync('**', { cwd: entryRoot, onlyFiles:
       glob.sync('**/*.{js,ts,vue}', {
         cwd: resolve(entryRoot, dir),
         absolute: true,
-      }),
+      })
     ),
     output: [
       {
@@ -75,6 +84,7 @@ async function generateDefination() {
     preserveSymlinks: true,
     skipLibCheck: true,
     noImplicitAny: false,
+    typeRoots: resolve(__dirname, './src'),
   }
   const project = new Project({
     compilerOptions,
@@ -86,7 +96,7 @@ async function generateDefination() {
       cwd: entryRoot,
       absolute: true,
       onlyFiles: true,
-    }),
+    })
   )
   const sourceFiles = []
 
@@ -119,7 +129,7 @@ async function generateDefination() {
       } else {
         sourceFiles.push(project.addSourceFileAtPath(file))
       }
-    }),
+    })
   )
   // typeCheck(project)
   await project.emit({

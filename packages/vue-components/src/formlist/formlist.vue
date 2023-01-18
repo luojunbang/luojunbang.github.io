@@ -10,7 +10,6 @@
         <slot :name="item.formSlot" :item="item"></slot>
       </template>
       <!-- progress -->
-      <el-slider v-else-if="item.type === 'slider'" v-bind="item" v-model="form[item.field]" />
       <!-- select -->
       <el-select v-else-if="item.type === 'select'" v-model="form[item.field]" v-bind="item">
         <el-option v-for="opt in item.options" :value="optionsFmt(opt, 'value')" :key="optionsFmt(opt, 'value')" :label="optionsFmt(opt)" />
@@ -43,23 +42,7 @@
 </template>
 
 <script lang="ts" setup>
-import {
-  ElInput,
-  ElSwitch,
-  ElRadio,
-  ElRadioButton,
-  ElRadioGroup,
-  ElForm,
-  ElFormItem,
-  ElCheckbox,
-  ElCheckboxGroup,
-  ElSelect,
-  ElOption,
-  ElDatePicker,
-  ElTimePicker,
-  ElInputNumber,
-  ElSlider,
-} from 'element-plus'
+// import { ElInput, ElSwitch, ElRadio, ElRadioButton, ElRadioGroup, ElForm, ElFormItem, ElCheckbox, ElCheckboxGroup, ElSelect, ElOption, ElDatePicker, ElTimePicker, ElInputNumber } from 'element-plus'
 
 import { datePickTypes } from 'element-plus'
 import type { WatchStopHandle } from 'vue'
