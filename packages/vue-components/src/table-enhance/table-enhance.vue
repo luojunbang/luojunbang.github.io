@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ElTable, ElTableColumn } from 'element-plus'
+import { ElTable } from 'element-plus'
 import { isJSType } from 'lo-utils'
 import { defineExpose, defineProps, onMounted, nextTick, computed, watch, ref } from 'vue'
 import { tableEnhanceProps } from './table-enhance'
