@@ -1,44 +1,46 @@
 <template>
-  <el-form ref="FormRef" class="lo-form" :model="form" v-bind="$attrs" :inline="inline" :label-width="labelWidth">
-    <el-form-item v-for="item in list" :key="item.field" :label="item.label + ':'" :prop="item.field" :required="item.required" :rules="item.rules">
-      <!-- label slot -->
-      <template v-if="item.labelSlot" v-slot:label>
-        <slot :name="item.labelSlot" :item="item"></slot>
-      </template>
-      <!-- form item slot -->
-      <template v-if="item.formSlot">
-        <slot :name="item.formSlot" :item="item"></slot>
-      </template>
-      <!-- progress -->
-      <!-- select -->
-      <el-select v-else-if="item.type === 'select'" v-model="form[item.field]" v-bind="item">
-        <el-option v-for="opt in item.options" :value="optionsFmt(opt, 'value')" :key="optionsFmt(opt, 'value')" :label="optionsFmt(opt)" />
-      </el-select>
-      <!-- switch -->
-      <el-switch v-else-if="item.type === 'switch'" v-model="form[item.field]" />
-      <!-- checkbox -->
-      <el-checkbox-group v-else-if="item.type === 'checkbox-group'" v-model="form[item.field]" v-bind="item">
-        <el-checkbox v-for="opt in item.options" :key="optionsFmt(opt)" :label="optionsFmt(opt)" />
-      </el-checkbox-group>
-      <!-- radio -->
-      <el-radio-group v-else-if="item.type === 'radio-group'" v-model="form[item.field]" v-bind="item">
-        <template v-if="item.button">
-          <el-radio-button v-for="opt in item.options" :key="optionsFmt(opt)" :label="optionsFmt(opt)" />
+  <div class="formlist-container">
+    <el-form ref="FormRef" class="lo-form" :model="form" v-bind="$attrs" :inline="inline" :label-width="labelWidth">
+      <el-form-item v-for="item in list" :key="item.field" :label="item.label + ':'" :prop="item.field" :required="item.required" :rules="item.rules">
+        <!-- label slot -->
+        <template v-if="item.labelSlot" v-slot:label>
+          <slot :name="item.labelSlot" :item="item"></slot>
         </template>
-        <template v-else>
-          <el-radio v-for="opt in item.options" :key="optionsFmt(opt)" :label="optionsFmt(opt)" />
+        <!-- form item slot -->
+        <template v-if="item.formSlot">
+          <slot :name="item.formSlot" :item="item"></slot>
         </template>
-      </el-radio-group>
-      <!-- date -->
-      <el-date-picker v-else-if="isValidDatePickType(item.type)" v-model="form[item.field]" :type="item.type" :value-format="item.valueFormat ?? 'x'" :default-value="item.value" />
-      <!-- time -->
-      <el-time-picker v-else-if="item.type === 'time'" v-model="form[item.field]" :is-range="item.isRange ?? false" :default-value="item.value" format="HH:mm" v-bind="item" />
-      <!-- input-number -->
-      <el-input-number v-else-if="item.type === 'number'" v-model="form[item.field]" :controls="item.controls ?? false" />
-      <!-- input -->
-      <el-input v-else :type="item.type ?? 'text'" v-model="form[item.field]" v-bind="item" />
-    </el-form-item>
-  </el-form>
+        <!-- progress -->
+        <!-- select -->
+        <el-select v-else-if="item.type === 'select'" v-model="form[item.field]" v-bind="item">
+          <el-option v-for="opt in item.options" :value="optionsFmt(opt, 'value')" :key="optionsFmt(opt, 'value')" :label="optionsFmt(opt)" />
+        </el-select>
+        <!-- switch -->
+        <el-switch v-else-if="item.type === 'switch'" v-model="form[item.field]" />
+        <!-- checkbox -->
+        <el-checkbox-group v-else-if="item.type === 'checkbox-group'" v-model="form[item.field]" v-bind="item">
+          <el-checkbox v-for="opt in item.options" :key="optionsFmt(opt)" :label="optionsFmt(opt)" />
+        </el-checkbox-group>
+        <!-- radio -->
+        <el-radio-group v-else-if="item.type === 'radio-group'" v-model="form[item.field]" v-bind="item">
+          <template v-if="item.button">
+            <el-radio-button v-for="opt in item.options" :key="optionsFmt(opt)" :label="optionsFmt(opt)" />
+          </template>
+          <template v-else>
+            <el-radio v-for="opt in item.options" :key="optionsFmt(opt)" :label="optionsFmt(opt)" />
+          </template>
+        </el-radio-group>
+        <!-- date -->
+        <el-date-picker v-else-if="isValidDatePickType(item.type)" v-model="form[item.field]" :type="item.type" :value-format="item.valueFormat ?? 'x'" :default-value="item.value" />
+        <!-- time -->
+        <el-time-picker v-else-if="item.type === 'time'" v-model="form[item.field]" :is-range="item.isRange ?? false" :default-value="item.value" format="HH:mm" v-bind="item" />
+        <!-- input-number -->
+        <el-input-number v-else-if="item.type === 'number'" v-model="form[item.field]" :controls="item.controls ?? false" />
+        <!-- input -->
+        <el-input v-else :type="item.type ?? 'text'" v-model="form[item.field]" v-bind="item" />
+      </el-form-item>
+    </el-form>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -150,5 +152,11 @@ defineExpose({
       width: calc(100% - v-bind(labelWidth));
     }
   }
+}
+</style>
+
+<style scoped>
+.formlist-container {
+  overflow: hidden;
 }
 </style>

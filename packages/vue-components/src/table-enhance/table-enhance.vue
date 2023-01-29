@@ -1,5 +1,5 @@
 <template>
-  <el-table ref="enhanceTable" class="querytableloading table-text-cut" :highlight-current-row="!canSelect" stripe border :height="height">
+  <el-table ref="enhanceTable" class="querytableloading table-text-cut" :highlight-current-row="!canSelect" stripe border :height="height" :data="data">
     <el-table-column v-if="!isHideIndexCol" label="序号" width="70px" fixed="">
       <template v-slot="{ $index }">{{ cpIndex($index) }}</template>
     </el-table-column>
@@ -12,9 +12,9 @@
         :min-width="item.width"
         :show-overflow-tooltip="!item.isCustomTooltip"
         :sortable="cpSortable(item.sortable)"
-        :formatter="itemFormatter"
+        :formatter="isJSType(item.formatter, 'function') ? (r, c, val) => item.formatter(val) : undefined"
       >
-        <template v-slot:header>
+        <template v-if="item.slotHeader" v-slot:header>
           <slot :name="item.slotHeader"></slot>
         </template>
         <template v-if="item.slot" v-slot="{ row, $index }">
@@ -27,8 +27,10 @@
 
 <script lang="ts" setup>
 import { ElTable, ElTableColumn } from 'element-plus'
-import { onMounted, nextTick, computed, watch, ref } from 'vue'
+import { isJSType } from 'lo-utils'
+import { defineExpose, defineProps, onMounted, nextTick, computed, watch, ref } from 'vue'
 import { tableEnhanceProps } from './table-enhance'
+
 const props = defineProps(tableEnhanceProps)
 
 const itemFormatter = (r: any, c: any, val: any) => val
@@ -37,7 +39,7 @@ const enhanceTableRef = ref<InstanceType<typeof ElTable>>()
 
 const cpIndex = (index: number) => {
   const { query } = props
-  return index + 1 + (query.page - 1) * query.rows
+  return index + 1 + (query.offset - 1) * query.limit
 }
 
 const cpSortable = computed(() => {
