@@ -1,6 +1,6 @@
 {
   "name": "lo-vue-components",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -10,7 +10,8 @@
     "clean": "rimraf dist",
     "build": "pnpm run clean && rollup --config  ./rollup.config.js",
     "dev": "rollup --config  ./rollup.config.js --watch",
-    "build:dts": "tsc  --emitDeclarationOnly --declaration --project tsconfig.json --outDir dist"
+    "build:dts": "tsc  --emitDeclarationOnly --declaration --project tsconfig.json --outDir dist",
+    "publish:bug": "npm version patch && npm publish"
   },
   "files": [
     "dist",

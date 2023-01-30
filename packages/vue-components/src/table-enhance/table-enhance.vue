@@ -28,9 +28,8 @@
 <script lang="ts" setup>
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
 import type { ElTable } from 'element-plus'
-import { columns } from 'element-plus/es/components/table-v2/src/common'
 import { isJSType } from 'lo-utils'
-import { defineExpose, defineProps, onMounted, nextTick, computed, watch, ref } from 'vue'
+import { onMounted, nextTick, computed, watch, ref } from 'vue'
 import { tableEnhanceProps } from './table-enhance'
 
 const props = defineProps(tableEnhanceProps)
