@@ -23,13 +23,6 @@ const TSCONFIG_PATH = resolve(__dirname, 'tsconfig.json')
 
 const plugins = [
   vuePlugin(),
-  // ElementPlus({}),
-  // AutoImport({
-  //   resolvers: [ElementPlusResolver({ importStyle: false })],
-  // }),
-  // Components({
-  //   resolvers: [ElementPlusResolver({ importStyle: false })],
-  // }),
   postcss({
     extensions: ['.css', '.scss'],
   }),
