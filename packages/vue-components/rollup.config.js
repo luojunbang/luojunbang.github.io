@@ -10,6 +10,7 @@ import chalk from 'chalk'
 import glob from 'fast-glob'
 
 import { Project } from 'ts-morph'
+import ElementPlus from 'unplugin-element-plus/vite'
 
 import AutoImport from 'unplugin-auto-import/rollup'
 import Components from 'unplugin-vue-components/rollup'
@@ -23,6 +24,15 @@ const TSCONFIG_PATH = resolve(__dirname, 'tsconfig.json')
 
 const plugins = [
   vuePlugin(),
+  // ElementPlus({
+  //   useSource: true,
+  // }),
+  AutoImport({
+    resolvers: [ElementPlusResolver({ importStyle: 'sass' })],
+  }),
+  Components({
+    resolvers: [ElementPlusResolver({ importStyle: 'sass' })],
+  }),
   postcss({
     extensions: ['.css', '.scss'],
   }),
