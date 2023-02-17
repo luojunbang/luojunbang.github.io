@@ -317,19 +317,19 @@ const FileManagerPlugin = require('filemanager-webpack-plugin')
 if (PROD) {
   config.plugins.push(...prodPlugins)
   config.optimization.minimizer.push(new CssMinimizerPlugin())
-  config.plugins.push(
-    new FileManagerPlugin({
-      events: {
-        //初始化 filemanager-webpack-plugin 插件实例
-        onEnd: {
-          copy: [
-            //然后我们选择dist文件夹将之打包成dist.zip并放在根目录
-            { source: resolve('./dist'), destination: resolve('../../dist') },
-          ],
-        },
-      },
-    }),
-  )
+  // config.plugins.push(
+  //   new FileManagerPlugin({
+  //     events: {
+  //       //初始化 filemanager-webpack-plugin 插件实例
+  //       onEnd: {
+  //         copy: [
+  //           //然后我们选择dist文件夹将之打包成dist.zip并放在根目录
+  //           { source: resolve('./dist'), destination: resolve('../../dist') },
+  //         ],
+  //       },
+  //     },
+  //   }),
+  // )
 } else {
   // config.plugins.push(
   //   new ProgressPlugin((percentage, message, ...args) => {

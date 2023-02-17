@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts" setup>
-import Swiper from './components/swiper.vue'
+import Swiper from './components/swiper1.vue'
 import SwiperItem from './components/swiper-item.vue'
 import { r } from 'lo-utils'
 import { computed, reactive, ref, nextTick, watchPostEffect, watchSyncEffect, onMounted } from 'vue'
