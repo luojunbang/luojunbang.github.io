@@ -37,9 +37,12 @@ export enum FORM_TYPE {
 }
 
 export const FORM_CHANGE_EVENT = 'formChange'
-export type IDatePickerType = typeof datePickTypes[number]
-export const fromNormalList = ['input', 'select', 'textarea', 'number', 'time', 'checkbox', 'checkbox-group', 'switch', 'radio-group', 'slider']
-export type FromNormalType = typeof fromNormalList[number]
+export type IDatePickerType = (typeof datePickTypes)[number]
+
+export const FromNormalList = ['input', 'select', 'textarea', 'number', 'time', 'checkbox', 'checkbox-group', 'switch', 'radio-group', 'slider'] as const
+
+export type FromNormalType = (typeof FromNormalList)[number]
+
 export type LoFormType = FromNormalType | IDatePickerType
 
 type refable<T> = Ref<T> | T
@@ -68,6 +71,22 @@ export function defaultValue(type?: LoFormType) {
     number: 0,
     'checkbox-group': [],
     switch: false,
+    year: undefined,
+    month: undefined,
+    date: undefined,
+    dates: undefined,
+    week: undefined,
+    datetime: undefined,
+    datetimerange: undefined,
+    daterange: undefined,
+    monthrange: undefined,
+    input: undefined,
+    select: undefined,
+    textarea: undefined,
+    time: undefined,
+    checkbox: undefined,
+    'radio-group': undefined,
+    slider: 0,
   }
   return typeConfig[type] ?? ''
 }

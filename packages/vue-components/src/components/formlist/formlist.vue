@@ -11,6 +11,7 @@
           <slot :name="item.formSlot" :item="item"></slot>
         </template>
         <!-- progress -->
+        <el-slider v-else-if="item.type === 'slider'" v-model="form[item.field]" v-bind="item" />
         <!-- select -->
         <el-select v-else-if="item.type === 'select'" v-model="form[item.field]" v-bind="item">
           <el-option v-for="opt in item.options" :value="optionsFmt(opt, 'value')" :key="optionsFmt(opt, 'value')" :label="optionsFmt(opt)" />
