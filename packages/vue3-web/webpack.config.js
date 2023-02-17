@@ -75,6 +75,7 @@ const config = {
     alias: {
       '@': resolve('./src'),
       vue$: 'vue/dist/vue.runtime.esm-bundler.js',
+      // 'lo-vue-components$': resolve('../vue-components/src'),
     },
     extensions: ['.ts', '.tsx', '.vue', '.js'],
   },

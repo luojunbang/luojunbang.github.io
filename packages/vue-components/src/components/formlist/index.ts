@@ -1,6 +1,6 @@
 import Formlist from './formlist.vue'
 // import 'element-plus/dist/index.css'
-import { withInstall } from '../utils'
+import { withInstall } from '../../utils'
 
 export const LoFormList = withInstall(Formlist)
 

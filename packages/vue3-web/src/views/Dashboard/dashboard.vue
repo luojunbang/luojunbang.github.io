@@ -45,7 +45,7 @@
         <div class="search xm-yb mb-lg w-full">
           <div class="search-input flex-row-nowrap">
             <icon class="mr-sm" icon="sousuo" />
-            <input autofocus class="search-input__content flex1" v-model="inputText" @change="onChange" @keyup.enter="onKeyup" @input="onInput" />
+            <input autofocus class="search-input__content flex-1" v-model="inputText" @change="onChange" @keyup.enter="onKeyup" @input="onInput" />
           </div>
           <div class="search-button text-center">
             <button @click="handleSearchClick('google')">Google</button>

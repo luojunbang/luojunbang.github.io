@@ -1,5 +1,5 @@
 <template>
-  <el-table ref="enhanceTable" class="querytableloading table-text-cut" :highlight-current-row="!canSelect" stripe border :height="height" :data="data">
+  <el-table ref="enhanceTable" :highlight-current-row="!canSelect" stripe border :height="height" :data="data">
     <el-table-column v-if="!isHideIndexCol" label="序号" width="70px" fixed="">
       <template v-slot="{ $index }">{{ cpIndex($index) }}</template>
     </el-table-column>

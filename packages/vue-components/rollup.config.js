@@ -20,6 +20,7 @@ const { resolve } = path
 
 const outputRoot = resolve(__dirname, './dist')
 const entryRoot = resolve(__dirname, './src')
+const componentsRoot = resolve(__dirname, './src/components')
 const TSCONFIG_PATH = resolve(__dirname, 'tsconfig.json')
 
 const plugins = [
@@ -34,6 +35,9 @@ const plugins = [
     resolvers: [ElementPlusResolver({ importStyle: 'sass' })],
   }),
   postcss({
+    config: {
+      path: resolve(__dirname, './postcss.config.js'),
+    },
     extensions: ['.css', '.scss'],
   }),
   vueJsx(),
@@ -49,17 +53,17 @@ const excludeFiles = (files, excludes = ['node_modules', 'test', 'mock', 'gulpfi
   return files.filter(path => !excludes.some(exclude => path.includes(exclude)))
 }
 
-const componentsList = excludeFiles(glob.sync('**', { cwd: entryRoot, onlyFiles: false, deep: 1 }), glob.sync('**', { cwd: entryRoot, onlyFiles: true, deep: 1 })).map(dir => {
+const componentsList = excludeFiles(glob.sync('**', { cwd: componentsRoot, onlyFiles: false, deep: 1 }), glob.sync('**', { cwd: componentsRoot, onlyFiles: true, deep: 1 })).map(dir => {
   return {
     input: excludeFiles(
       glob.sync('**/*.{js,ts,vue}', {
-        cwd: resolve(entryRoot, dir),
+        cwd: resolve(componentsRoot, dir),
         absolute: true,
       }),
     ),
     output: [
       {
-        dir: resolve(outputRoot, dir),
+        dir: resolve(outputRoot + '/components', dir),
         format: 'esm',
         entryFileNames: `[name].js`,
       },
@@ -137,7 +141,6 @@ async function generateDefination() {
   await project.emit({
     emitOnlyDtsFiles: true,
   })
-  console.log(sourceFiles.length, sourceFiles.map(i => i.getFilePath()).join('\n'))
 
   const tasks = sourceFiles.map(async sourceFile => {
     const relativePath = path.relative(entryRoot, sourceFile.getFilePath())

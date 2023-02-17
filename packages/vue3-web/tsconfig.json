@@ -4,10 +4,11 @@
     "baseUrl": ".",
     "paths": {
       /* 指定一组将导入重新映射到其他查找位置的条目。 */
-      "@/*": ["./src/*"]
-    },
+      "@/*": ["./src/*"],
+      // "lo-vue-components": ["../vue-components/src/index.ts"]
+    }
     // "types": ["src/typings/env.d.ts"]
   },
-  "include": ["src/**/**.ts", "src/**/**.vue"],
+  "include": ["src/**/*.vue", "src/**/*.ts"],
   "exclude": ["node_modules"]
 }

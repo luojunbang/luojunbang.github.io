@@ -26,7 +26,7 @@
 
 <script lang="ts" setup>
 import type { LoFormItem } from 'lo-vue-components'
-import { LoFormList } from 'lo-vue-components'
+import { LoFormList, fileName } from 'lo-vue-components'
 import { computed, onMounted, reactive, ref } from 'vue'
 import { r, t } from 'lo-utils'
 import { formConfig } from './config'
@@ -42,6 +42,7 @@ const formSettingListRef = ref<InstanceType<typeof LoFormList> | null>(null)
 // lifecycle
 onMounted(() => {
   initOptions()
+  console.log(fileName)
 })
 
 const formSettingList = reactive<LoFormItem[]>([

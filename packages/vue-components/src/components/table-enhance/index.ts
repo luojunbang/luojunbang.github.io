@@ -1,6 +1,6 @@
 import TableEnhance from './table-enhance.vue'
 
-import { withInstall } from '../utils'
+import { withInstall } from '../../utils'
 
 export const LoTableEnhance = withInstall(TableEnhance)
 

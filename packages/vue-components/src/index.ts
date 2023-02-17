@@ -1,3 +1,6 @@
-export * from './swiper'
-export * from './formlist'
-export * from './table-enhance'
+export * from './components/swiper'
+export * from './components/formlist'
+export * from './components/table-enhance'
+// export * from './pagination'
+
+export const fileName = 'index.ts'

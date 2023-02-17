@@ -29,16 +29,3 @@ function filterIndex(root) {
 
 console.log(filterIndex(PATH))
 console.log(JSON.stringify(filePathToNest(filterIndex(PATH))))
-// console.log('\33[2J')
-// const main = { main: '1' }
-// const Appmain = { Appmain: '1' }
-// const sub = { sub: '1' }
-// setTimeout(() => {
-//   console.log(
-//     JSON.stringify(routeAutoLink(filterIndex(PATH), [main, Appmain, sub])(path => `()=>import(/*webpackChunkName:"${path.split('/').slice(-2, -1)}"*/ "../views/${path.replace(/\.vue$/, '')}.vue")`))
-//       .map(i => ({ ...i, path: '/' + i.path }))
-//       .replaceAll('{"main":"1"}', 'main')
-//       .replaceAll('{"Appmain":"1"}', 'Appmain')
-//       .replaceAll('{"sub":"1"}', 'sub')
-//   )
-// }, 300)

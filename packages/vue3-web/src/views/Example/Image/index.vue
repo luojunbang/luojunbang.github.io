@@ -10,7 +10,8 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, Ref, ref } from 'vue'
+import type { Ref } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 const urls: string[] = reactive([
   'https://hexo-blog-1256114407.cos.ap-shenzhen-fsi.myqcloud.com/AboutMe-painting1.png',
   'https://hexo-blog-1256114407.cos.ap-shenzhen-fsi.myqcloud.com/AboutMe-painting2.png',
@@ -34,7 +35,7 @@ function debounce(fn, wait = 300) {
       result = fn.apply(ctx, args)
     }
   }
-  return  () => {
+  return () => {
     lastEmitTime = Date.now()
     args = arguments
     if (!timer) timer = setTimeout(handler, wait)

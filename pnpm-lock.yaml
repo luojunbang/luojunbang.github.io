@@ -117,9 +117,12 @@ importers:
     specifiers:
       '@types/node': ^18.11.9
       '@vitejs/plugin-vue-jsx': ^2.0.0
+      autoprefixer: ^10.4.8
       esbuild: ^0.15.5
       fast-glob: ^3.2.11
+      postcss: ^8.4.16
       rollup-plugin-esbuild: ^4.9.3
+      tailwindcss: ^3.1.8
       ts-morph: ^15.1.0
       vue: ^3.2.37
     dependencies:
@@ -127,9 +130,12 @@ importers:
     devDependencies:
       '@types/node': 18.11.9
       '@vitejs/plugin-vue-jsx': 2.0.0_vue@3.2.37
+      autoprefixer: 10.4.8_postcss@8.4.16
       esbuild: 0.15.5
       fast-glob: 3.2.11
+      postcss: 8.4.16
       rollup-plugin-esbuild: 4.9.3_esbuild@0.15.5
+      tailwindcss: 3.1.8_postcss@8.4.16
       ts-morph: 15.1.0
 
   packages/vue3-web:
