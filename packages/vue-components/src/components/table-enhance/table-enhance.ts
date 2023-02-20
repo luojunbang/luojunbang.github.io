@@ -1,6 +1,6 @@
 import type { Prop, PropType } from 'vue'
 
-export type TableColumn = Record<string | 'label' | 'fields', any>
+export type LoTableColumn = Record<string | 'label' | 'fields', any>
 
 export const tableEnhanceProps = {
   height: {
@@ -19,6 +19,8 @@ export const tableEnhanceProps = {
     type: Boolean,
     default: false,
   },
+  pageField: { default: 'page' },
+  rowsField: { default: 'rows' },
   selectable: {
     type: Function as PropType<(row: any, index: number) => true>,
     default: (row: any, index: number) => true,
@@ -36,7 +38,7 @@ export const tableEnhanceProps = {
     default: () => {},
   },
   columns: {
-    type: Array as PropType<TableColumn>,
+    type: Array as PropType<LoTableColumn>,
     default: () => [],
   },
 }

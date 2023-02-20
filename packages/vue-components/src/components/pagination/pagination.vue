@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ hidden: hidden }" class="flex items-start">
+  <div :class="{ hidden: hidden }" class="flex items-center py-sm">
     <el-pagination
       :background="background"
       v-model:current-page="currentPage"

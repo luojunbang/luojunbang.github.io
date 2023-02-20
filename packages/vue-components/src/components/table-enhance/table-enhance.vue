@@ -41,7 +41,10 @@ const enhanceTableRef = ref<InstanceType<typeof ElTable>>()
 
 const cpIndex = (index: number) => {
   const { query } = props
-  return index + 1 + (query.offset - 1) * query.limit
+  const _pageField = props.pageField,
+    _rowsField = props.rowsField
+
+  return index + 1 + (props.query[_pageField] - 1) * props.query[_rowsField]
 }
 
 const cpSortable = computed(() => {
