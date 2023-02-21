@@ -33,7 +33,7 @@
         <i class="flex-1 mr-sm">label</i>
         <i class="flex-1">key</i>
       </div>
-      <div v-for="item in tableColumnConfig" :key="item.key" class="flex-row-nowrap mt-sm">
+      <div v-for="(item, index) in tableColumnConfig" :key="index" class="flex-row-nowrap mt-sm">
         <el-input class="flex-1 mr-sm" v-model="item.label" placeholder="Label" />
         <el-input class="flex-1" v-model="item.key" placeholder="Key" />
       </div>
@@ -54,7 +54,7 @@ import { useAddressSelect, addressProps } from './useAddress'
 const isViewFormConfig = ref(false)
 const isViewTableConfig = ref(false)
 const tableData = reactive({
-  value: [],
+  value: [] as any[],
   total: 0,
   query: {
     page: 1,
@@ -101,6 +101,9 @@ const onTableConfigClose = () => {
     tableColumn.push({ label: i.label, key: i.key })
   })
   tableColumnConfig.splice(0, tableColumnConfig.length)
+  tableData.value = new Array(15).fill(0).map(i => {
+    return Object.fromEntries(tableColumn.map(i => [i.key, r()]))
+  })
 }
 
 function onFormChange(item: { field: string }, value: string | undefined, oldVal: any) {
