@@ -6,6 +6,8 @@ importers:
     specifiers:
       '@antv/g6': ^4.6.18
       '@babel/core': ^7.18.10
+      '@element-plus/icons': ^0.0.11
+      '@element-plus/icons-vue': ^2.0.10
       '@lo/common': workspace:*
       '@microsoft/api-extractor': ^7.29.3
       '@types/webpack-env': ^1.18.0
@@ -41,6 +43,7 @@ importers:
       ts-loader: ^9.3.1
       typescript: ^4.7.4
       unplugin-element-plus: ^0.4.1
+      unplugin-icons: ^0.15.3
       vite: ^3.0.9
       webpack: ^5.74.0
       webpack-bundle-analyzer: ^4.6.1
@@ -56,6 +59,8 @@ importers:
       webpack-dev-server: 4.11.1_pda42hcaj7d62cr262fr632kue
     devDependencies:
       '@babel/core': 7.20.12
+      '@element-plus/icons': 0.0.11
+      '@element-plus/icons-vue': 2.0.10
       '@lo/common': link:packages/common
       '@microsoft/api-extractor': 7.34.4
       '@types/webpack-env': 1.18.0
@@ -86,6 +91,7 @@ importers:
       ts-loader: 9.4.2_hhrrucqyg4eysmfpujvov2ym5u
       typescript: 4.9.5
       unplugin-element-plus: 0.4.1_zov6skww2zctybyxe3e6vzrifa
+      unplugin-icons: 0.15.3
       vite: 3.2.5_sass@1.58.2
       webpack: 5.75.0_webpack-cli@4.10.0
       webpack-bundle-analyzer: 4.8.0
@@ -141,6 +147,7 @@ importers:
   packages/vue3-web:
     specifiers:
       '@antv/g6': ^4.6.18
+      '@iconify-json/ep': ^1.1.9
       lo-utils: ^1.2.21
       lo-vue-components: workspace:*
       pinia: ^2.0.32
@@ -159,6 +166,7 @@ importers:
       vue: 3.2.47
       vue-router: 4.1.6_vue@3.2.47
     devDependencies:
+      '@iconify-json/ep': 1.1.9
       tailwindcss: 3.2.7
       unplugin-auto-import: 0.11.5
       unplugin-vue-components: 0.22.12_vue@3.2.47
@@ -180,6 +188,13 @@ packages:
     dependencies:
       tinycolor2: 1.6.0
     dev: false
+
+  /@antfu/install-pkg/0.1.1:
+    resolution: {integrity: sha512-LyB/8+bSfa0DFGC06zpCEfs89/XoWZwws5ygEa5D+Xsm3OfI+aXQ86VgVG7Acyef+rSZ5HE7J8rrxzrQeM3PjQ==}
+    dependencies:
+      execa: 5.1.1
+      find-up: 5.0.0
+    dev: true
 
   /@antfu/utils/0.7.2:
     resolution: {integrity: sha512-vy9fM3pIxZmX07dL+VX1aZe7ynZ+YyB0jY+jE6r3hOK6GNY2t6W8rzpFC4tgpbXUYABkFQwgJq2XYXlxbXAI0g==}
@@ -718,7 +733,11 @@ packages:
     resolution: {integrity: sha512-ygEZ1mwPjcPo/OulhzLE7mtDrQBWI8vZzEWSNB2W/RNCRjoQGwbaK4N8lV4rid7Ts4qvySU3njMN7YCiSlSaTQ==}
     peerDependencies:
       vue: ^3.2.0
-    dev: false
+
+  /@element-plus/icons/0.0.11:
+    resolution: {integrity: sha512-iKQXSxXu131Ai+I9Ymtcof9WId7kaXvB1+WRfAfpQCW7UiAMYgdNDqb/u0hgTo2Yq3MwC4MWJnNuTBEpG8r7+A==}
+    deprecated: Please use @element-plus/icons-vue instead.
+    dev: true
 
   /@esbuild/android-arm/0.15.18:
     resolution: {integrity: sha512-5GT+kcs2WVGjVs7+boataCkO5Fg0y4kCjzkB5bAip7H4jfnOS3dA6KPiww9W1OEKTKeAcUVhdZGvgI65OXmUnw==}
@@ -783,6 +802,29 @@ packages:
 
   /@humanwhocodes/object-schema/1.2.1:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
+    dev: true
+
+  /@iconify-json/ep/1.1.9:
+    resolution: {integrity: sha512-vhrCvikS/uRsEaM8eMyH7Fj13TSbkOuXqn0W/hqj79C9mtlUZMXPq31f+Mr5Cw4ag6sBPt8uY5WMhbwAR0vOMA==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
+  /@iconify/types/2.0.0:
+    resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
+    dev: true
+
+  /@iconify/utils/2.1.4:
+    resolution: {integrity: sha512-7vzsYIvxv5Hng0MNEtSSnyMBD/+zqnORqmKiYsSgpMBGSz1r93URgBZHPYCZ1/gpoaVstYW4/SVLGCMJBNMCLQ==}
+    dependencies:
+      '@antfu/install-pkg': 0.1.1
+      '@antfu/utils': 0.7.2
+      '@iconify/types': 2.0.0
+      debug: 4.3.4
+      kolorist: 1.7.0
+      local-pkg: 0.4.3
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /@jest/schemas/29.4.3:
@@ -3941,6 +3983,10 @@ packages:
     engines: {node: '>= 8'}
     dev: true
 
+  /kolorist/1.7.0:
+    resolution: {integrity: sha512-ymToLHqL02udwVdbkowNpzjFd6UzozMtshPQKVi5k1EjKRqKqBrOnE9QbLEb0/pV76SAiIT13hdL8R6suc+f3g==}
+    dev: true
+
   /lazystream/1.0.1:
     resolution: {integrity: sha512-b94GiNHQNy6JNTrt5w6zNyffMrNkXZb3KTkCZJb2V1xaEGCk093vkZ2jk3tpaeP33/OiXC+WvK9AxUebnf5nbw==}
     engines: {node: '>= 0.6.3'}
@@ -5699,6 +5745,8 @@ packages:
     resolution: {integrity: sha512-B6DLqJzc21x7wntlH/GsZwEXTBttVSl1FtCzC8WP4oBc/NKef7kaax5jeihkkCEWc831/5NDJ9gRNDK6NEioQQ==}
     engines: {node: '>=12.13.0'}
     hasBin: true
+    peerDependencies:
+      postcss: ^8.0.9
     dependencies:
       arg: 5.0.2
       chokidar: 3.5.3
@@ -5714,6 +5762,7 @@ packages:
       normalize-path: 3.0.0
       object-hash: 3.0.0
       picocolors: 1.0.0
+      postcss: 8.4.21
       postcss-import: 14.1.0_postcss@8.4.21
       postcss-js: 4.0.1_postcss@8.4.21
       postcss-load-config: 3.1.4_postcss@8.4.21
@@ -5723,7 +5772,6 @@ packages:
       quick-lru: 5.1.1
       resolve: 1.22.1
     transitivePeerDependencies:
-      - postcss
       - ts-node
     dev: true
 
@@ -5945,6 +5993,34 @@ packages:
       - rollup
       - vite
       - webpack
+    dev: true
+
+  /unplugin-icons/0.15.3:
+    resolution: {integrity: sha512-YWgJqv5AahrokeOnta8uX/m1damZA6Rf6zPClgHg2Fa/45iyOe3Lj+Wn/Ba+CSsq9yBffn17YfKfJNyWCNZPvw==}
+    peerDependencies:
+      '@svgr/core': '>=5.5.0'
+      '@vue/compiler-sfc': ^3.0.2 || ^2.7.0
+      vue-template-compiler: ^2.6.12
+      vue-template-es2015-compiler: ^1.9.0
+    peerDependenciesMeta:
+      '@svgr/core':
+        optional: true
+      '@vue/compiler-sfc':
+        optional: true
+      vue-template-compiler:
+        optional: true
+      vue-template-es2015-compiler:
+        optional: true
+    dependencies:
+      '@antfu/install-pkg': 0.1.1
+      '@antfu/utils': 0.7.2
+      '@iconify/utils': 2.1.4
+      debug: 4.3.4
+      kolorist: 1.7.0
+      local-pkg: 0.4.3
+      unplugin: 1.1.0
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /unplugin-vue-components/0.22.12_vue@3.2.47:

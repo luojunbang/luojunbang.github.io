@@ -44,7 +44,7 @@
       <div class="right-top relative">
         <div class="search xm-yb mb-lg w-full">
           <div class="search-input flex-row-nowrap">
-            <icon class="mr-sm" icon="sousuo" />
+            <i-ep-search />
             <input autofocus class="search-input__content flex-1" v-model="inputText" @change="onChange" @keyup.enter="onKeyup" @input="onInput" />
           </div>
           <div class="search-button text-center">
@@ -55,8 +55,11 @@
           </div>
         </div>
       </div>
-
       <friendly-link />
+      <div class="mr-md mb-md xr-yb cursor-pointer opacity-30">
+        <i-ep-menu class="mb-sm" @click="$router.push('/admin')" />
+        <i-ep-setting class="" @click="$router.push('/setting')" />
+      </div>
     </div>
   </div>
 </template>

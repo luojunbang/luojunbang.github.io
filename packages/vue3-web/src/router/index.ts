@@ -10,21 +10,38 @@ export const routes: Array<RouteRecordRaw> = [
     path: '/',
     redirect: '/dashboard',
   },
-  { path: '/Dashboard', name: 'Dashboard_dashboard_vue', component: dashboard },
-  { path: '/setting', name: 'setting', component: () => import(/*webpackChunkName:"Setting"*/ '../views/Setting/index.vue') },
-  { path: '/Carousel', component: main, children: [{ path: '', component: () => import(/*webpackChunkName:"Carousel"*/ '../views/Carousel/index.vue'), name: 'Carousel_index_vue', children: [] }] },
+  { path: '/dashboard', name: 'dashboard', component: dashboard },
   {
-    path: '/CssDisplay',
+    path: '/setting',
     component: main,
-    children: [{ path: '', component: () => import(/*webpackChunkName:"CssDisplay"*/ '../views/CssDisplay/index.vue'), name: 'CssDisplay_index_vue', children: [] }],
+    redirect: '/setting/',
+    children: [
+      {
+        path: '',
+        name: 'setting',
+        component: () => import(/*webpackChunkName:"Setting"*/ '@/views/Setting/index.vue'),
+      },
+    ],
+  },
+  {
+    path: '/admin',
+    component: main,
+    // redirect: '/admin/',
+    // children: [
+    //   {
+    //     name: 'admin',
+    //     path: '',
+    //     component: () => import(/*webpackChunkName:"Admin"*/ '@/views/Admin/index.vue'),
+    //   },
+    // ],
   },
 ]
 
-const routeRequire = require.context('./modules', false, /example\.ts$/)
-routeRequire.keys().forEach(path => {
-  const { default: _default } = routeRequire(path)
-  routes.push(_default)
-})
+// const routeRequire = require.context('./modules', false, /example\.ts$/)
+// routeRequire.keys().forEach(path => {
+//   const { default: _default } = routeRequire(path)
+//   routes.push(_default)
+// })
 console.log(routes)
 
 const router = createRouter({
