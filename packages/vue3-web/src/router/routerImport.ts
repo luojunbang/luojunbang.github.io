@@ -1,77 +1,126 @@
 import type { Component } from 'vue'
 
-import type { RouteRecordRaw, RouteMeta, RouteRecordName, RouteComponent } from 'vue-router'
+import type { _RouteRecordBase, RouteRecordRaw, RouteMeta, RouteRecordName, RouteComponent } from 'vue-router'
 
-export declare interface navRouteConfig {
+export declare interface RouteInfo {
   path: string
   href: string
   fullPath?: string
   meta?: RouteMeta
-  title: string
-  children?: navRouteConfig[]
+  children?: RouteInfo[]
 }
 
-interface routerConfig {
+interface RouteConfig extends Record<string, any> {
   meta?: RouteMeta
   params?: string
 }
-interface singleRouteConfig {
-  path: string
-  component: string | Component
-  name?: RouteRecordName
-  meta?: RouteMeta
-  children?: singleRouteConfig[]
+
+type RouteInfoCallback = (routeInfo: RouteInfo) => any
+type routerConfig = Record<string, RouteConfig>
+
+declare interface AIRouteRecordBase extends _RouteRecordBase {
+  component?: string | Component | null | undefined
 }
 
-// 判断是否是index.vue或者 */DIR/DIR.vue 不区分大小写
-const isIndex = (path: string): boolean => {
-  if (!path) return false
-  const _path = path.replace(/^\.\//, '').split('/')
-  if (_path.length == 1) return /\.vue$/.test(path)
-  else if (_path.length == 2) {
+/**
+ * @description 去掉路径开始的./
+ * @param path
+ * @returns
+ */
+const purePathToArray = (path: string | string[]): string[] => (Array.isArray(path) ? path : path.replace(/^\.\//, '').split('/'))
+
+/**
+ * @description 判断是否是 DIR\DIR.vue 或者 DIR\index.vue 不区分大小写
+ * @param path
+ * @returns
+ */
+const isIndex = (path: string | string[]): boolean => {
+  if (purePathToArray(path).length > 2) return false
+  return isIndexPath(path)
+}
+
+/**
+ * @description 判断是否是 *\DIR\DIR.vue 或者 *\DIR\index.vue 不区分大小写
+ * @param path
+ * @returns
+ */
+const isIndexPath = (path: string | string[]) => {
+  const _path = purePathToArray(path)
+  if (_path.length == 1) return isVueFile(_path[0])
+  if (_path.length >= 2) {
     const [dir, name] = _path.slice(-2)
     return dir.toLowerCase() + '.vue' === name.toLowerCase() || name.toLowerCase() === 'index.vue'
-  } else return false
+  }
+  return false
 }
 
-export function routeAutoLink(routePath: string[], layoutComponentLists: Component[], routeConfig: { [x: string]: routerConfig } = {}) {
+/**
+ * @description
+ * @param name
+ * @returns
+ */
+export const isVueFile = (name: string) => /\.vue$/.test(name)
+
+/**
+ * @description routerInfo 转化为 vue-router
+ * @param route
+ * @returns
+ */
+export function parseRouteInfoToRouteRaw(route: RouteInfo): AIRouteRecordBase {
+  return {
+    path: route.path,
+    component: route.fullPath,
+    meta: route.meta,
+  }
+}
+
+/**
+ * @description 自动根据路径生成菜单
+ * @param routePath
+ * @param routeConfig
+ * @param hrefPrefix
+ * @returns
+ */
+export function generateMenuFromFilePath(routePath: string[], hrefPrefix = '', routeConfigCallback: RouteInfoCallback = _ => void 0) {
+  return parseRouteConfigToNest(pathToRouteInfo(routePath, hrefPrefix, routeConfigCallback))
+}
+
+/**
+ *
+ * @description 自动根据路径生成vue-router
+ * @param routePath
+ * @param layoutComponentLists
+ * @param routeConfig
+ * @param prefix
+ * @returns
+ */
+export function generateRouterFromFilePath(routePath: string[], layoutComponentLists: Component[], routeConfigCallback: RouteInfoCallback = _ => void 0) {
   if (!Array.isArray(layoutComponentLists)) throw Error('Should be Array fo LayoutComponents.')
 
-  const routerNest: navRouteConfig[] = filePathToNest(routePath, routeConfig).map(route => {
-    if (!route.children) {
-      return {
-        path: route.path,
-        title: route.title,
-        href: route.href,
-        children: [
-          {
-            path: '',
-            href: route.href,
-            fullPath: route.fullPath,
-            title: route.title,
-            meta: route.meta,
-          },
-        ],
-      }
-    }
-    return route
-  })
-  const routes: singleRouteConfig[] = (function parseRouterRaw(routeAry: navRouteConfig[], deep) {
-    if (!Array.isArray(routeAry)) return []
-    return routeAry.map(i => {
-      if (!i.fullPath && !layoutComponentLists[deep]) throw Error(`LayoutComponents ${deep} is undefined`)
-      const routerRaw: singleRouteConfig = {
-        path: i.path,
-        component: i.fullPath ?? layoutComponentLists[deep],
-        name: i.fullPath?.replace(/(\/|\.)/g, '_'),
-        meta: i.meta,
-      }
-      if (i.children) routerRaw.children = parseRouterRaw(i.children, deep + 1)
-      return routerRaw
-    })
-  })(routerNest, 0)
+  const routeObject = pathToRouteInfo(routePath, '', routeConfigCallback)
 
-  return function toCompoennt(importFn: (someArg: string) => RouteComponent | (() => Promise<RouteComponent>), routeLists?: singleRouteConfig[]): RouteRecordRaw[] {
+  const routeRawObject: Record<string, AIRouteRecordBase> = Object.fromEntries(
+    Object.entries(routeObject).map(([key, value]) => {
+      const _routeRaw = parseRouteInfoToRouteRaw(value)
+      return [key, _routeRaw]
+    }),
+  )
+
+  Object.entries(routeRawObject).forEach(([key, routeRaw]) => {
+    if (key.includes('/')) {
+      // add layout components
+      key.split('/').forEach((path, index, keyAry) => {
+        const parentRouteRaw = routeRawObject[keyAry.slice(0, index + 1).join('/')]
+        if (parentRouteRaw && parentRouteRaw.component === void 0) {
+          parentRouteRaw.component = layoutComponentLists[index]
+          parentRouteRaw.redirect = keyAry.slice(0, index + 1).join('/')
+        }
+      })
+    }
+  })
+  const routes: AIRouteRecordBase[] = parseRouteConfigToNest(routeRawObject)
+
+  return function toCompoennt(importFn: (path: string) => RouteComponent | (() => Promise<RouteComponent>), routeLists?: AIRouteRecordBase[]): RouteRecordRaw[] {
     if (!routeLists) routeLists = routes
     return routeLists.map(i => {
       let children: RouteRecordRaw[] = []
@@ -81,42 +130,50 @@ export function routeAutoLink(routePath: string[], layoutComponentLists: Compone
   }
 }
 
-export function filePathToNest(routePath: string[], config: { [x: string]: routerConfig }, prefix = ''): navRouteConfig[] {
-  const pathList = routePath.filter(i => isIndex(i.split('/').slice(-2).join('/'))).map(i => i.replace(/^\.\//, '').split('/'))
-  const ans: Record<string, navRouteConfig> = {}
+export function pathToRouteInfo(routePath: string[], hrefPrefix: string, routeConfigCallback: RouteInfoCallback) {
+  const pathList = routePath.filter(isIndexPath).map(purePathToArray)
+  const ans: Record<string, RouteInfo> = {}
   let idx = 0
   while (pathList.some(i => i[idx] !== void 0)) {
     pathList.forEach(path => {
-      if (!path[idx] || isIndex(path.slice(idx - 1, idx + 1).join('/'))) return // 筛选重复导入 xx/index.vue
+      if (!path[idx] || isVueFile(path[idx])) return // 筛选重复导入 xx/index.vue
       const key = path.slice(0, idx + 1).join('/')
+
       if (!ans[key]) {
-        const obj: navRouteConfig = {
+        const routeInfo: RouteInfo = {
           path: path[idx],
-          title: path[idx],
-          href: prefix + key,
+          href: hrefPrefix + key,
         }
-        if (isIndex(path.slice(idx).join('/'))) {
-          obj.fullPath = prefix + path.join('/')
-          obj.meta = config[obj.fullPath]?.meta
+        if (isIndex(path.slice(idx))) {
+          routeInfo.fullPath = hrefPrefix + path.join('/')
+          routeConfigCallback(routeInfo)
         }
-        obj.title = (obj.meta?.title as string) ?? path[idx]
-        ans[key] = obj
+        ans[key] = routeInfo
       }
     })
     idx++
   }
+  return ans
+}
 
-  const list: navRouteConfig[] = []
-  Object.keys(ans).forEach(item => {
-    const pathList = item.split('/')
-    if (pathList.length == 1) list.push(ans[item])
-    else {
-      const prePath = pathList.slice(0, pathList.length - 1).join('/')
-      if (ans[prePath]) {
-        if (Array.isArray(ans[prePath].children)) ans[prePath].children?.push(ans[item])
-        else ans[prePath].children = [ans[item]]
+/**
+ * @description 扁平数据转化为树结构 children
+ * @param routeConfig
+ * @returns
+ */
+export const parseRouteConfigToNest = (routeConfig: Record<string, any>): any[] => {
+  Object.keys(routeConfig).forEach(item => {
+    const pathKeyArray = item.split('/')
+    const parent = routeConfig[pathKeyArray.slice(0, pathKeyArray.length - 1).join('/')]
+    if (parent) {
+      if (Array.isArray(parent.children)) {
+        parent.children.push(routeConfig[item])
+      } else {
+        parent.children = [routeConfig[item]]
       }
     }
   })
-  return list
+  return Object.entries(routeConfig)
+    .filter(([key, val]) => !key.includes('/'))
+    .map(i => i[1])
 }

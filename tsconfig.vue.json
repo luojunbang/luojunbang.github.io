@@ -9,6 +9,6 @@
       "webpack-env",
       "element-plus/global"
     ],
-    "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
+    "lib": ["ES2018", "dom", "dom.iterable", "scripthost"]
   },
 }
