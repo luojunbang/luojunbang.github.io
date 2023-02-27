@@ -52,7 +52,7 @@ export default [
 
   {
     label: 'Rollup',
-    icon: 'https://rollupjs.org/logo.svg',
+    icon: 'https://rollupjs.org/rollup-logo.svg',
     href: 'https://rollupjs.org/guide/en/',
   },
   {

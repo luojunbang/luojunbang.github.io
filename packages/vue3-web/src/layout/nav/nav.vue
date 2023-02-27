@@ -1,41 +1,28 @@
 <template>
   <div class="nav">
-    <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+    <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal">
       <NavMenu :menuList="routerNest" />
     </el-menu>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ElMenu } from 'element-plus'
-import { routes } from '@/router'
+import type { AIRouteRecordBase } from '@/router/routerImport'
 import type { Ref } from 'vue'
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
 import NavMenu from './NavMenu.vue'
-import { generateMenuFromFilePath } from '@/router/routerImport'
+import { exampleMenu } from '@/router'
+
+// data
 const activeIndex: Ref = ref('dashboard')
-
-const router = useRouter()
-
-function handleSelect(e: string) {
-  activeIndex.value = e
-  router.push('/' + e)
-}
-
-const routerNest = [
-  { path: 'Dashboard', href: 'dashboard', fullPath: 'Dashboard/dashboard.vue' },
-  { path: 'CssDisplay', href: 'cssDisplay', fullPath: 'CssDisplay/index.vue' },
-  { path: 'Components', href: 'carousel', fullPath: 'Carousel/index.vue' },
-  {
-    path: 'Example',
-    href: 'example',
-    fullPath: 'Example/index.vue',
-    children: generateMenuFromFilePath((process.env.EXAMPLE_LIST ?? []) as string[], 'example/', route => {
-      if (route.path === 'FormTable') route.meta = { title: '可视化表格表单' }
-    }),
-  },
+const routerNest: AIRouteRecordBase[] = [
+  { path: 'Dashboard', name: 'dashboard', component: 'Dashboard/dashboard.vue' },
+  { path: 'CssDisplay', name: 'css-display', component: 'CssDisplay/index.vue' },
+  { path: 'Components', name: 'carousel', component: 'Carousel/index.vue' },
+  { path: 'Example', name: 'example', children: exampleMenu },
 ]
+
+// methods
 </script>
 
 <style lang="scss" scoped></style>

@@ -4,6 +4,15 @@ import main from '@/layout/main.vue'
 import sub from '@/layout/sub.vue'
 import Appmain from '@/layout/Appmain.vue'
 import dashboard from '@/views/Dashboard/dashboard.vue'
+import { toCompoennt, generateRouterFromFilePath } from './routerImport'
+
+const autoImportExampleList = (process.env.EXAMPLE_LIST ?? []) as string[]
+
+export const exampleMenu = generateRouterFromFilePath(autoImportExampleList, [Appmain, sub], route => {
+  if (route.path === 'FormTable') route.meta = { title: '可视化表格表单' }
+})
+
+const importFn = (path: string) => () => import(/*webpackChunkName:"[request]"*/ `@/views/Example/${path.replace('.vue', '')}.vue`)
 
 export const routes: Array<RouteRecordRaw> = [
   {
@@ -34,6 +43,11 @@ export const routes: Array<RouteRecordRaw> = [
         component: () => import(/*webpackChunkName:"Admin"*/ '@/views/Admin/index.vue'),
       },
     ],
+  },
+  {
+    path: '/example',
+    component: main,
+    children: toCompoennt(importFn, exampleMenu),
   },
 ]
 

@@ -1,25 +1,16 @@
 import type { Component } from 'vue'
 
-import type { _RouteRecordBase, RouteRecordRaw, RouteMeta, RouteRecordName, RouteComponent } from 'vue-router'
+import type { _RouteRecordBase, RouteMeta, RouteRecordName, RouteComponent, RouteRecordRedirectOption, RouteRecordRaw } from 'vue-router'
 
-export declare interface RouteInfo {
+type RouteInfoCallback = (routeInfo: AIRouteRecordBase) => any
+
+export declare interface AIRouteRecordBase {
+  name?: RouteRecordName
   path: string
-  href: string
-  fullPath?: string
-  meta?: RouteMeta
-  children?: RouteInfo[]
-}
-
-interface RouteConfig extends Record<string, any> {
-  meta?: RouteMeta
-  params?: string
-}
-
-type RouteInfoCallback = (routeInfo: RouteInfo) => any
-type routerConfig = Record<string, RouteConfig>
-
-declare interface AIRouteRecordBase extends _RouteRecordBase {
   component?: string | Component | null | undefined
+  redirect?: RouteRecordRedirectOption
+  meta?: RouteMeta
+  children?: AIRouteRecordBase[]
 }
 
 /**
@@ -62,19 +53,6 @@ const isIndexPath = (path: string | string[]) => {
 export const isVueFile = (name: string) => /\.vue$/.test(name)
 
 /**
- * @description routerInfo 转化为 vue-router
- * @param route
- * @returns
- */
-export function parseRouteInfoToRouteRaw(route: RouteInfo): AIRouteRecordBase {
-  return {
-    path: route.path,
-    component: route.fullPath,
-    meta: route.meta,
-  }
-}
-
-/**
  * @description 自动根据路径生成菜单
  * @param routePath
  * @param routeConfig
@@ -97,20 +75,13 @@ export function generateMenuFromFilePath(routePath: string[], hrefPrefix = '', r
 export function generateRouterFromFilePath(routePath: string[], layoutComponentLists: Component[], routeConfigCallback: RouteInfoCallback = _ => void 0) {
   if (!Array.isArray(layoutComponentLists)) throw Error('Should be Array fo LayoutComponents.')
 
-  const routeObject = pathToRouteInfo(routePath, '', routeConfigCallback)
+  const routeObject: Record<string, AIRouteRecordBase> = pathToRouteInfo(routePath, '', routeConfigCallback)
 
-  const routeRawObject: Record<string, AIRouteRecordBase> = Object.fromEntries(
-    Object.entries(routeObject).map(([key, value]) => {
-      const _routeRaw = parseRouteInfoToRouteRaw(value)
-      return [key, _routeRaw]
-    }),
-  )
-
-  Object.entries(routeRawObject).forEach(([key, routeRaw]) => {
+  Object.entries(routeObject).forEach(([key, routeRaw]) => {
     if (key.includes('/')) {
       // add layout components
       key.split('/').forEach((path, index, keyAry) => {
-        const parentRouteRaw = routeRawObject[keyAry.slice(0, index + 1).join('/')]
+        const parentRouteRaw = routeObject[keyAry.slice(0, index + 1).join('/')]
         if (parentRouteRaw && parentRouteRaw.component === void 0) {
           parentRouteRaw.component = layoutComponentLists[index]
           parentRouteRaw.redirect = keyAry.slice(0, index + 1).join('/')
@@ -118,21 +89,21 @@ export function generateRouterFromFilePath(routePath: string[], layoutComponentL
       })
     }
   })
-  const routes: AIRouteRecordBase[] = parseRouteConfigToNest(routeRawObject)
+  const routes: AIRouteRecordBase[] = parseRouteConfigToNest(routeObject)
+  return routes
+}
 
-  return function toCompoennt(importFn: (path: string) => RouteComponent | (() => Promise<RouteComponent>), routeLists?: AIRouteRecordBase[]): RouteRecordRaw[] {
-    if (!routeLists) routeLists = routes
-    return routeLists.map(i => {
-      let children: RouteRecordRaw[] = []
-      if (i.children && i.children.length > 0) children = toCompoennt(importFn, i.children)
-      return { ...i, children, component: typeof i.component === 'string' ? importFn(i.component) : i.component }
-    })
-  }
+export function toCompoennt(importFn: (path: string) => RouteComponent | (() => Promise<RouteComponent>), routeLists: AIRouteRecordBase[]): RouteRecordRaw[] {
+  return routeLists.map(i => {
+    let children: RouteRecordRaw[] = []
+    if (i.children && i.children.length > 0) children = toCompoennt(importFn, i.children)
+    return { ...i, children, component: typeof i.component === 'string' ? importFn(i.component) : i.component }
+  })
 }
 
 export function pathToRouteInfo(routePath: string[], hrefPrefix: string, routeConfigCallback: RouteInfoCallback) {
   const pathList = routePath.filter(isIndexPath).map(purePathToArray)
-  const ans: Record<string, RouteInfo> = {}
+  const ans: Record<string, AIRouteRecordBase> = {}
   let idx = 0
   while (pathList.some(i => i[idx] !== void 0)) {
     pathList.forEach(path => {
@@ -140,12 +111,13 @@ export function pathToRouteInfo(routePath: string[], hrefPrefix: string, routeCo
       const key = path.slice(0, idx + 1).join('/')
 
       if (!ans[key]) {
-        const routeInfo: RouteInfo = {
+        const routeInfo: AIRouteRecordBase = {
           path: path[idx],
-          href: hrefPrefix + key,
+          name: path[idx],
+          component: undefined,
         }
         if (isIndex(path.slice(idx))) {
-          routeInfo.fullPath = hrefPrefix + path.join('/')
+          routeInfo.component = path.join('/')
           routeConfigCallback(routeInfo)
         }
         ans[key] = routeInfo
