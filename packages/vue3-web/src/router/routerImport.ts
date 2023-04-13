@@ -113,10 +113,11 @@ export function pathToRouteInfo(routePath: string[], hrefPrefix: string, routeCo
       if (!ans[key]) {
         const routeInfo: AIRouteRecordBase = {
           path: path[idx],
-          name: path[idx],
+          name: undefined,
           component: undefined,
         }
         if (isIndex(path.slice(idx))) {
+          routeInfo.name = path[idx]
           routeInfo.component = path.join('/')
           routeConfigCallback(routeInfo)
         }

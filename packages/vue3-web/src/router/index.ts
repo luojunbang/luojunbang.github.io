@@ -22,27 +22,8 @@ export const routes: Array<RouteRecordRaw> = [
   { path: '/dashboard', name: 'dashboard', component: dashboard },
   {
     path: '/setting',
-    component: main,
-    redirect: '/setting/',
-    children: [
-      {
-        path: '',
-        name: 'setting',
-        component: () => import(/*webpackChunkName:"Setting"*/ '@/views/Setting/index.vue'),
-      },
-    ],
-  },
-  {
-    path: '/admin',
-    component: main,
-    redirect: '/admin/',
-    children: [
-      {
-        name: 'admin',
-        path: '',
-        component: () => import(/*webpackChunkName:"Admin"*/ '@/views/Admin/index.vue'),
-      },
-    ],
+    name: 'setting',
+    component: () => import(/*webpackChunkName:"Setting"*/ '@/views/Setting/index.vue'),
   },
   {
     path: '/example',
@@ -50,6 +31,24 @@ export const routes: Array<RouteRecordRaw> = [
     children: toCompoennt(importFn, exampleMenu),
   },
 ]
+
+const adminRoute = {
+  path: '/admin',
+  component: main,
+  redirect: '/admin/',
+  children: [
+    {
+      name: 'admin',
+      path: '',
+      component: () => import(/*webpackChunkName:"Admin"*/ '@/views/Admin/index.vue'),
+    },
+    {
+      name: 'login',
+      path: 'login',
+      component: () => import(/*webpackChunkName:"Admin"*/ '@/views/Admin/index.vue'),
+    },
+  ],
+}
 
 const routeRequire = require.context('./modules', false, /example\.ts$/)
 routeRequire.keys().forEach(path => {
@@ -60,7 +59,7 @@ console.log(routes)
 
 const router = createRouter({
   history: createWebHashHistory(process.env.BASE_URL),
-  routes: routes, //
+  routes: [...routes, adminRoute], //
 })
 
 export default router
