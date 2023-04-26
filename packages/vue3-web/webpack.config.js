@@ -83,12 +83,21 @@ const config = {
   mode: process.env.NODE_ENV,
   entry: { app: [resolve('./src/main.ts')] },
   output: {
+    clean: process.env.NODE_ENV === 'development' ? false : true,
+    filename: 'js/[name].[contenthash].js',
+    chunkFilename: 'js/[name].[contenthash].js',
+    // 需要配置成 umd 规范
+    libraryTarget: 'umd',
+    // 修改不规范的代码格式，避免逃逸沙箱
+    globalObject: 'window',
+    // 保证子应用的资源路径变为绝对路径
+    publicPath: 'http://localhost:8080/',
     hashFunction: 'xxhash64',
-    clean: true,
+    // clean: true,
     path: resolve('./dist'),
-    publicPath: process.env.BASE_URL,
-    filename: 'js/[name]-[contenthash:8].js',
-    chunkFilename: 'js/[name]-[contenthash:8].js',
+    // publicPath: process.env.BASE_URL,
+    // filename: 'js/[name]-[contenthash:8].js',
+    // chunkFilename: 'js/[name]-[contenthash:8].js',
   },
   resolve: {
     alias: {
@@ -101,44 +110,49 @@ const config = {
   devServer: {
     // port: 9988,
     // static: resolve('../dist/'),
-    hot: true,
-    setupMiddlewares: (middlewares, devServer) => {
-      if (!devServer) {
-        throw new Error('webpack-dev-server is not defined')
-      }
-
-      devServer.app.get('/setup-middleware/some/path', (_, response) => {
-        response.send('setup-middlewares option GET')
-      })
-
-      // 如果你想在所有其他中间件之前运行一个中间件或者当你从 `onBeforeSetupMiddleware` 配置项迁移时，
-      // 可以使用 `unshift` 方法
-      middlewares.unshift({
-        name: 'fist-in-array',
-        // `path` 是可选的
-        path: '/foo/path',
-        middleware: (req, res) => {
-          res.send('Foo!')
-        },
-      })
-
-      // 如果你想在所有其他中间件之后运行一个中间件或者当你从 `onAfterSetupMiddleware` 配置项迁移时，
-      // 可以使用 `push` 方法
-      middlewares.push({
-        name: 'hello-world-test-one',
-        // `path` 是可选的
-        path: '/foo/bar',
-        middleware: (req, res) => {
-          res.send('Foo Bar!')
-        },
-      })
-
-      middlewares.push((req, res) => {
-        res.send('Hello World!')
-      })
-
-      return middlewares
+    headers: {
+      // 保证子应用的资源支持跨域，在上线后需要保证子应用的资源在主应用的环境中加载不会存在跨域问题（**也需要限制范围注意安全问题**）
+      'Access-Control-Allow-Origin': '*',
     },
+    historyApiFallback: true,
+    hot: true,
+    // setupMiddlewares: (middlewares, devServer) => {
+    //   if (!devServer) {
+    //     throw new Error('webpack-dev-server is not defined')
+    //   }
+
+    //   devServer.app.get('/setup-middleware/some/path', (_, response) => {
+    //     response.send('setup-middlewares option GET')
+    //   })
+
+    //   // 如果你想在所有其他中间件之前运行一个中间件或者当你从 `onBeforeSetupMiddleware` 配置项迁移时，
+    //   // 可以使用 `unshift` 方法
+    //   middlewares.unshift({
+    //     name: 'fist-in-array',
+    //     // `path` 是可选的
+    //     path: '/foo/path',
+    //     middleware: (req, res) => {
+    //       res.send('Foo!')
+    //     },
+    //   })
+
+    //   // 如果你想在所有其他中间件之后运行一个中间件或者当你从 `onAfterSetupMiddleware` 配置项迁移时，
+    //   // 可以使用 `push` 方法
+    //   middlewares.push({
+    //     name: 'hello-world-test-one',
+    //     // `path` 是可选的
+    //     path: '/foo/bar',
+    //     middleware: (req, res) => {
+    //       res.send('Foo Bar!')
+    //     },
+    //   })
+
+    //   middlewares.push((req, res) => {
+    //     res.send('Hello World!')
+    //   })
+
+    //   return middlewares
+    // },
   },
   externalsType: 'script',
   externals: PROD

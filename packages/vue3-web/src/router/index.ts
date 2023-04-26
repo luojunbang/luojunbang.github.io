@@ -1,5 +1,5 @@
 import type { RouteRecordRaw } from 'vue-router'
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import main from '@/layout/main.vue'
 import sub from '@/layout/sub.vue'
 import Appmain from '@/layout/Appmain.vue'
@@ -57,9 +57,10 @@ routeRequire.keys().forEach(path => {
 })
 console.log(routes)
 
-const router = createRouter({
-  history: createWebHashHistory(process.env.BASE_URL),
-  routes: [...routes, adminRoute], //
-})
+const router = (basename?: string) =>
+  createRouter({
+    history: createWebHistory(basename),
+    routes: [...routes, adminRoute], //
+  })
 
 export default router

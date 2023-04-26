@@ -1,4 +1,5 @@
-import axios, { AxiosPromise } from 'axios'
+import type { AxiosPromise } from 'axios'
+import axios from 'axios'
 
 export default {
   getList(userId: string): AxiosPromise {

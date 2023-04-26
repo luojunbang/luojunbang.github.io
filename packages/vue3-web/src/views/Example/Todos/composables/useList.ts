@@ -1,7 +1,9 @@
 import api from '@/api'
 
-import { onMounted, reactive, Ref, ref, watch } from 'vue'
-import { Todo, STATUS, TYPE } from './todo'
+import type { Ref } from 'vue'
+import { onMounted, reactive, ref, watch } from 'vue'
+import type { Todo } from './todo'
+import { STATUS, TYPE } from './todo'
 
 const cached_list = () =>
   new Array(5).fill(0).map(_ => ({

@@ -12,6 +12,8 @@
   "license": "ISC",
   "dependencies": {
     "@antv/g6": "^4.6.18",
+    "@garfish/bridge-vue-v3": "^1.14.3",
+    "garfish": "^1.14.3",
     "lo-utils": "^1.2.21",
     "lo-vue-components": "workspace:*",
     "pinia": "^2.0.32",
