@@ -50,11 +50,6 @@ const adminRoute = {
   ],
 }
 
-const routeRequire = require.context('./modules', false, /example\.ts$/)
-routeRequire.keys().forEach(path => {
-  const { default: _default } = routeRequire(path)
-  routes.push(_default)
-})
 console.log(routes)
 
 const router = (basename?: string) =>
