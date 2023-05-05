@@ -1,0 +1,1 @@
+"use strict";(window["webpackChunk_lo_vue3_web"]=window["webpackChunk_lo_vue3_web"]||[]).push([[672],{4506:(e,n,u)=>{function w(e,n){return"Admin"}u.r(n),u.d(n,{default:()=>t});var r=u(634);const d={},o=(0,r.Z)(d,[["render",w]]),t=o}}]);
