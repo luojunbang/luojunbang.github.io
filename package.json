@@ -13,7 +13,7 @@
     "build:vue": "rimraf ./dist &&  pnpm run -C ./packages/vue3-web build",
     "build:gh-page": "rimraf ./dist &&  pnpm run -C ./packages/vue-components build &&  pnpm run -C ./packages/vue3-web build",
     "webpack:build": "webpack --config  --mode=producticon ./webpack.config.js",
-    "server":"pnpm run -C ./packages/server start",
+    "server:build":"pnpm run -C ./packages/server build",
     "vite": "vite",
     "vite:build": "vite build",
     "vite:review": "vite preview"
