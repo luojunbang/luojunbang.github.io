@@ -84,20 +84,18 @@ const config = {
   entry: { app: [resolve('./src/main.ts')] },
   output: {
     clean: process.env.NODE_ENV === 'development' ? false : true,
-    filename: 'js/[name].[contenthash].js',
-    chunkFilename: 'js/[name].[contenthash].js',
     // 需要配置成 umd 规范
     libraryTarget: 'umd',
     // 修改不规范的代码格式，避免逃逸沙箱
     globalObject: 'window',
     // 保证子应用的资源路径变为绝对路径
-    publicPath: 'http://localhost:8080/',
+    // publicPath: 'http://localhost:8080/',
     hashFunction: 'xxhash64',
     // clean: true,
     path: resolve('./dist'),
-    // publicPath: process.env.BASE_URL,
-    // filename: 'js/[name]-[contenthash:8].js',
-    // chunkFilename: 'js/[name]-[contenthash:8].js',
+    publicPath: process.env.BASE_URL,
+    filename: 'js/[name]-[contenthash:8].js',
+    chunkFilename: 'js/[name]-[contenthash:8].js',
   },
   resolve: {
     alias: {

@@ -25,3 +25,4 @@ app.config.js
 # src/common/config.ts
 output*.js
 note.md
+.vercel
