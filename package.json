@@ -13,7 +13,7 @@
     "build:vue": "rimraf ./dist &&  pnpm run -C ./packages/vue3-web build",
     "build:gh-page": "rimraf ./dist &&  pnpm run -C ./packages/vue-components build &&  pnpm run -C ./packages/vue3-web build",
     "webpack:build": "webpack --config  --mode=producticon ./webpack.config.js",
-    "server:build":"pnpm run -C ./packages/server build",
+    "server:build": "pnpm run -C ./packages/server build",
     "vite": "vite",
     "vite:build": "vite build",
     "vite:review": "vite preview"
@@ -47,7 +47,7 @@
     "rollup-plugin-vue": "^6.0.0",
     "sass": "^1.54.4",
     "sass-loader": "^13.0.2",
-    "tailwindcss": "^3.1.8",
+    "tailwindcss": "^3.2.7",
     "terser-webpack-plugin": "^5.3.5",
     "ts-loader": "^9.3.1",
     "typescript": "^4.7.4",
@@ -63,7 +63,7 @@
     "axios": "^0.27.2",
     "echarts": "^5.3.3",
     "element-plus": "^2.2.16",
-    "lo-utils": "^1.2.21",
+    "lo-utils": "^1.2.24",
     "lo-vue-components": "workspace:*",
     "webpack-dev-server": "^4.10.0"
   }

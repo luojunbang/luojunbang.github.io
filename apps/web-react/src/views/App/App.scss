@@ -1,0 +1,60 @@
+.app {
+  --perfect-percent: 38.2%;
+  position: relative;
+  background-color: rgba(
+    var(--background-start-rgb),
+    var(--background-opacity)
+  );
+  overflow: hidden;
+  &::before {
+    --bg-opacity: 0.8;
+    content: "";
+    width: 200%;
+    height: 100%;
+    position: absolute;
+    z-index: -1;
+    left: -30%;
+    top: 0;
+    background-image: linear-gradient(
+      90deg,
+      rgb(var(--primary-color), var(--bg-opacity)) 0%,
+      rgb(var(--primary-color), var(--bg-opacity)) 12.7%,
+      rgb(var(--success-color), var(--bg-opacity)) 12.7%,
+      rgb(var(--success-color), var(--bg-opacity)) 25.4%,
+      rgb(var(--danger-color), var(--bg-opacity)) 25.4%,
+      rgb(var(--danger-color), var(--bg-opacity)) 38.2%,
+      rgb(var(--white-color), var(--bg-opacity)) 38.2%,
+      rgb(var(--white-color), var(--bg-opacity)) 100%
+    );
+    transform: skewX(-45deg);
+    filter: blur(50px);
+  }
+  @apply min-h-screen flex font-sans;
+
+  @mixin left-block {
+    @apply p-10 rounded-r-lg absolute top-1/2 translate-y-[-50%] bg-block shadow-md;
+  }
+  .left {
+    width: var(--perfect-percent);
+    @apply flex flex-col;
+    &-top {
+      height: var(--perfect-percent);
+      @apply font-mono;
+      & > div {
+        @include left-block;
+      }
+    }
+    &-bottom {
+      & > div {
+        @include left-block;
+      }
+      @apply flex-1;
+    }
+  }
+  .right {
+    @apply flex-1;
+    &-container {
+      top: var(--perfect-percent);
+    }
+  }
+}

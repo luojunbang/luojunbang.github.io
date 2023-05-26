@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+  font-family: Optimistic Display, -apple-system, ui-sans-serif, system-ui,
+    BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans,
+    sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol,
+    Noto Color Emoji;
+}
+
+@mixin dark-theme {
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 17, 17, 17;
+  --background-end-rgb: 0, 0, 0;
+  --background-opacity: 0.92;
+  --primary-color: 48, 112, 180;
+  --success-color: 27, 67, 126;
+  --danger-color: 212, 65, 45;
+  --white-color: 255, 255, 255;
+  --black-color: 0, 0, 0;
+  --block-background-color: 63, 63, 63;
+}
+@mixin light-theme {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+  --background-opacity: 0.8;
+
+  --primary-color: 48, 112, 180;
+  --success-color: 27, 67, 126;
+  --danger-color: 212, 65, 45;
+  --white-color: 255, 255, 255;
+  --black-color: 0, 0, 0;
+  --block-background-color: 255, 255, 255;
+}
+
+.light {
+  @include light-theme;
+}
+.dark {
+  @include dark-theme;
+}
+
+:root:not(.light):not(.dark) {
+  @media (prefers-color-scheme: dark) {
+    color-scheme: dark;
+    @include dark-theme;
+  }
+  @media (prefers-color-scheme: light) {
+    color-scheme: light;
+    @include light-theme;
+  }
+}
