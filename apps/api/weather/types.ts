@@ -1,4 +1,4 @@
-export declare interface WeatherRes {
+export declare interface WeatherResWrapper {
   status: string;
   api_version: string;
   api_status: string;
@@ -8,10 +8,10 @@ export declare interface WeatherRes {
   timezone: string;
   server_time: number;
   location: number[];
-  result: Result;
+  result: WeatherRes;
 }
 
-interface Result {
+export declare interface WeatherRes {
   realtime: Realtime;
   minutely: Minutely;
   hourly: Hourly;

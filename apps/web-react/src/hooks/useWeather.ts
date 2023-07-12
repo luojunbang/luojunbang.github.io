@@ -1,19 +1,19 @@
 import { useEffect, useState } from 'react'
 import { fetchWeather } from '@lo/api'
+import { WeatherRes } from '@lo/api'
 
 export function useWeather(position: string) {
-  const [weather, setWeather] = useState({})
+  const [weather, setWeather] = useState<WeatherRes>()
   useEffect(() => {
-    console.log('mounted')
     async function fetchData(p: string) {
-      console.log('fetchData')
-      const { data } = await fetchWeather(p)
-      setWeather(data.result)
+      fetchWeather(p)
+        .then((res) => {
+          setWeather(res.result)
+        })
+        .catch((err) => {})
     }
     fetchData(position)
-    return () => {
-      console.log('unmounted')
-    }
+    return () => {}
   }, [position])
   return weather
 }

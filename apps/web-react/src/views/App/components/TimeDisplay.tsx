@@ -1,22 +1,24 @@
-import { useEffect, useState } from 'react';
-import { fmtDateTime } from 'lo-utils';
+import { fmtTime } from 'lo-utils'
+import { useEffect, useState } from 'react'
 
 function TimeDisplay() {
-  const [date, setDate] = useState('');
+  const [date, setDate] = useState(0)
 
   useEffect(() => {
-    console.log('setInterval');
     const id = setInterval(() => {
-      setDate(fmtDateTime(Date.now()));
-    }, 1000);
+      setDate(Date.now())
+    }, 99)
 
     return () => {
-      console.log('clearInterval');
-      clearInterval(id);
-    };
-  }, []);
+      clearInterval(id)
+    }
+  }, [])
 
-  return <div>{date}</div>;
+  return (
+    <div>
+      {fmtTime(date)}.{Math.floor(date / 100) % 10}
+    </div>
+  )
 }
 
-export default TimeDisplay;
+export default TimeDisplay

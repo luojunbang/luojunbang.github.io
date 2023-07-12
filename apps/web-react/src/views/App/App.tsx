@@ -1,15 +1,15 @@
-import './App.scss';
-import TimeDisplay from './components/TimeDisplay';
-import Weather from './components/Weather';
+import './App.scss'
+import TimeDisplay from './components/TimeDisplay'
+import Weather from './components/Weather'
 
 function getweatherInfo(position: string): string {
-  return `https://api.caiyunapp.com/v2.6/UnVaX9RcoCKpAsGa/${position}/weather.json`;
+  return `https://api.caiyunapp.com/v2.6/UnVaX9RcoCKpAsGa/${position}/weather.json`
 }
 
-const gz = '113.459749,23.106402';
+const gz = '113.459749,23.106402'
 export async function queryWeatherInfo() {
-  const data = await fetch(getweatherInfo(gz)).then((res) => res.json());
-  return data;
+  const data = await fetch(getweatherInfo(gz)).then((res) => res.json())
+  return data
 }
 
 export default function Home() {
@@ -29,5 +29,5 @@ export default function Home() {
       </div>
       <div className="right"></div>
     </main>
-  );
+  )
 }
