@@ -19,7 +19,7 @@
 <script setup lang="ts">
 import { onMounted, ref, unref } from 'vue'
 import { storage, FRIENDILY_LINK } from '@/common'
-import { useList } from '../composables/useList'
+import { useList } from "../composables/useList"
 import type { LinkItem } from './friendlyLink'
 import defaultList from '../common/config'
 

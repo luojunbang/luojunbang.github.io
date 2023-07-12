@@ -1,0 +1,12 @@
+{
+  "name": "@lo/api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "build":" rimraf ./dist && npx tsc --outDir dist/ -d",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "rootDir": "./",
+    "types": [],
+    "paths": {
+      "@lo/*": ["packages/*"]
+    }
+  },
+  "include": ["**/**.ts"]
+}

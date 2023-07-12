@@ -1,5 +1,4 @@
 import { useWeather } from '../../../hooks/useWeather';
-import { useEffect, useState } from 'react';
 
 const gz = '113.459749,23.106402';
 
