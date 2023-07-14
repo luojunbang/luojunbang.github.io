@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@antv/l7": "^2.17.3",
+    "@antv/l7-three": "^2.17.3",
     "@lo/api": "workspace:*",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -11,6 +13,7 @@
     "@types/node": "^16.18.33",
     "@types/react": "^18.2.7",
     "@types/react-dom": "^18.2.4",
+    "leaflet": "^1.9.4",
     "lo-utils": "^1.2.25",
     "prettier": "^2.8.8",
     "react": "^18.2.0",
@@ -41,9 +44,12 @@
   },
   "devDependencies": {
     "@craco/craco": "^7.1.0",
+    "@types/leaflet": "^1.9.3",
+    "@types/three": "^0.154.0",
     "eslint": "^8.44.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-react": "^7.32.2"
+    "eslint-plugin-react": "^7.32.2",
+    "three": "^0.154.0"
   }
 }

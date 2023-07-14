@@ -1,4 +1,4 @@
-import { StrictMode } from 'react'
+import { StrictMode, Suspense, lazy } from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.scss'
 import App from './views/App/App'
@@ -7,16 +7,26 @@ import { Routes, Route, HashRouter } from 'react-router-dom'
 
 const NoMatch = () => <div>404</div>
 
+const Leaflet = lazy(() => import('./views/leaflet/index'))
+
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <>
     <HashRouter>
-      <StrictMode>
-        <Routes>
-          <Route path="/" element={<App />}></Route>
-          <Route path="*" element={<NoMatch />} />
-        </Routes>
-      </StrictMode>
+      {/* <StrictMode> */}
+      <Routes>
+        <Route path="/" element={<App />}></Route>
+        <Route
+          path="leaflet"
+          element={
+            <Suspense fallback="loading">
+              <Leaflet />
+            </Suspense>
+          }
+        ></Route>
+        <Route path="*" element={<NoMatch />} />
+      </Routes>
+      {/* </StrictMode> */}
     </HashRouter>
   </>,
 )

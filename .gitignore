@@ -2,7 +2,6 @@
 node_modules
 dist_*
 dist
-lib
 # local env files
 .env.local
 .env.*.local
@@ -27,3 +26,4 @@ app.config.js
 output*.js
 note.md
 .vercel
+apps/web-react/src/views/leaflet/map/map.png
