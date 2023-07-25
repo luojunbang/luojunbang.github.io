@@ -231,8 +231,8 @@ importers:
         specifier: ^7.32.2
         version: 7.32.2(eslint@8.44.0)
       three:
-        specifier: ^0.154.0
-        version: 0.154.0
+        specifier: ^0.115.0
+        version: 0.115.0
 
   apps/web-vue3:
     dependencies:
@@ -10012,11 +10012,6 @@ packages:
 
   /three@0.115.0:
     resolution: {integrity: sha512-mAV2Ky3RdcbdSbR9capI+tKLvRldWYxd4151PZTT/o7+U2jh9Is3a4KmnYwzyUAhB2ZA3pXSgCd2DOY4Tj5kow==}
-    dev: false
-
-  /three@0.154.0:
-    resolution: {integrity: sha512-Uzz8C/5GesJzv8i+Y2prEMYUwodwZySPcNhuJUdsVMH2Yn4Nm8qlbQe6qRN5fOhg55XB0WiLfTPBxVHxpE60ug==}
-    dev: true
 
   /throat@6.0.2:
     resolution: {integrity: sha512-WKexMoJj3vEuK0yFEapj8y64V0A6xcuPuK9Gt1d0R+dzCSJc0lHqQytAbSB4cDAK0dWh4T0E2ETkoLE2WZ41OQ==}
