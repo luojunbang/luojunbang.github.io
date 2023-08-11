@@ -2,32 +2,28 @@ import { StrictMode, Suspense, lazy } from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.scss'
 import App from './views/App/App'
+import Three from './views/three/index'
+import Leaflet from './views/leaflet/index'
 import reportWebVitals from './reportWebVitals'
-import { Routes, Route, HashRouter } from 'react-router-dom'
+import { Routes, Route, BrowserRouter, RouterProvider } from 'react-router-dom'
 
+import router from '@/router/index'
 const NoMatch = () => <div>404</div>
-
-const Leaflet = lazy(() => import('./views/leaflet/index'))
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <>
-    <HashRouter>
-      {/* <StrictMode> */}
-      <Routes>
-        <Route path="/" element={<App />}></Route>
-        <Route
-          path="leaflet"
-          element={
-            <Suspense fallback="loading">
-              <Leaflet />
-            </Suspense>
-          }
-        ></Route>
-        <Route path="*" element={<NoMatch />} />
-      </Routes>
-      {/* </StrictMode> */}
-    </HashRouter>
+    <StrictMode>
+      <RouterProvider router={router}></RouterProvider>
+      {/* <Routes>
+          <Route path="/" element={<App />}></Route>
+          <Route path="map">
+            <Route path="leaflet" element={<Leaflet />}></Route>
+            <Route path="three" element={<Three />} />
+          </Route>
+          <Route path="*" element={<NoMatch />} />
+        </Routes> */}
+    </StrictMode>
   </>,
 )
 

@@ -4,7 +4,11 @@ module.exports = defineConfig({
   env: {
     node: true,
   },
-  extends: ['plugin:vue/vue3-essential', 'eslint:recommended', '@vue/typescript/recommended', 'plugin:prettier/recommended'],
+  extends: [
+    'plugin:vue/vue3-essential',
+    'eslint:recommended',
+    '@vue/typescript/recommended',
+  ],
   parserOptions: {
     ecmaVersion: 2020,
     parser: '@typescript-eslint/parser',
@@ -34,25 +38,11 @@ module.exports = defineConfig({
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
     '@typescript-eslint/no-non-null-asserted-optional-chain': 'off',
-    '@typescript-eslint/consistent-type-imports': ['error', { disallowTypeAnnotations: false }],
-    '@typescript-eslint/ban-ts-comment': ['off', { 'ts-ignore': false }],
-
-    'prettier/prettier': [
+    '@typescript-eslint/consistent-type-imports': [
       'error',
-      {
-        trailingComma: 'all',
-        arrowParens: 'avoid',
-        eslintIntegration: true,
-        singleQuote: true,
-        semi: false,
-        printWidth: 200,
-        wrapAttributes: false,
-        sortAttributes: false,
-        bracketSpacing: true,
-        tabWidth: 2,
-        endOfLine: 'auto',
-      },
+      { disallowTypeAnnotations: false },
     ],
+    '@typescript-eslint/ban-ts-comment': ['off', { 'ts-ignore': false }],
   },
   overrides: [
     {

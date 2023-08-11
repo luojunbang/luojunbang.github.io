@@ -150,3 +150,9 @@ export const parseRouteConfigToNest = (routeConfig: Record<string, any>): any[] 
     .filter(([key, val]) => !key.includes('/'))
     .map(i => i[1])
 }
+
+interface TreeNode {
+  path: string
+  name: string
+  children: TreeNode[]
+}

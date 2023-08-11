@@ -4,9 +4,9 @@ module.exports = {
   spacing: {
     xs: '5px',
     sm: '10px',
-    md: '20px',
-    lg: '30px',
-    xl: '50px',
+    md: '15px',
+    lg: '25px',
+    xl: '30px',
   },
   fontFamily: {
     serif: [
@@ -24,7 +24,15 @@ module.exports = {
       'Segoe UI Symbol',
       'Noto Color Emoji',
     ],
-    monospace: ['SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'monospace'],
+    monospace: [
+      'SFMono-Regular',
+      'Menlo',
+      'Monaco',
+      'Consolas',
+      'Liberation Mono',
+      'Courier New',
+      'monospace',
+    ],
   },
   colors: {
     danger: 'rgba(215,0,15,1.0)',

@@ -4,9 +4,12 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "build":" rimraf ./dist && npx tsc --outDir dist/ -d",
+    "build": " rimraf ./dist && npx tsc --outDir dist/ -d",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.27.2"
+  }
 }

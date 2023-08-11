@@ -17,17 +17,18 @@ const AutoImport = require('unplugin-auto-import/webpack')
 const Components = require('unplugin-vue-components/webpack')
 
 const { ElementPlusResolver } = require('unplugin-vue-components/resolvers')
-const resolve = p => path.resolve(__dirname, p)
+const resolve = p => path.resolve(__dirname, p).split(path.sep).join('/')
 
-const ExamplePath = resolve('./src/views/example')
+const ExamplePath = 'src/views/example/' // resolve('./src/views/example')
 
 const glob = require('fast-glob')
 const autoImportList = glob
-  .sync(ExamplePath + '/**/*.vue', {
+  .sync(ExamplePath + '/**/index.vue', {
     onlyFiles: true,
     absolute: false,
   })
-  .map(p => p.replace(ExamplePath, '.'))
+  .map(p => p.replace(ExamplePath, ''))
+console.log(autoImportList)
 
 const ElementPlus = [
   AutoImport({
@@ -371,4 +372,41 @@ if (PROD) {
   // )
 }
 
-module.exports = config
+// module.exports = config
+
+function buildTree(paths) {
+  const root = []
+
+  for (const path of paths) {
+    const segments = path.split('/')
+    let currentNode = root
+    let accumulatedPath = ''
+
+    for (const segment of segments) {
+      accumulatedPath += (accumulatedPath ? '/' : '') + segment
+
+      const existingNode = currentNode.find(node => node.path === segment)
+
+      if (existingNode) {
+        currentNode = existingNode.children
+      } else {
+        const newNode = {
+          path: segment,
+          name: accumulatedPath
+            .replace(/\.[^.]*$/, '') // 删除文件扩展名
+            .replace(/\//g, '.'), // 将 / 替换为 .
+          children: [],
+        }
+        currentNode.push(newNode)
+        currentNode = newNode.children
+      }
+    }
+  }
+
+  return root
+}
+
+// 使用示例
+
+const tree = buildTree(autoImportList)
+console.log(JSON.stringify(tree, null, 2))

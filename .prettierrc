@@ -1,0 +1,13 @@
+{
+  "trailingComma": "all",
+  "arrowParens": "avoid",
+  "eslintIntegration": true,
+  "singleQuote": true,
+  "semi": false,
+  "printWidth": 200,
+  "wrapAttributes": false,
+  "sortAttributes": false,
+  "bracketSpacing": true,
+  "tabWidth": 2,
+  "endOfLine": "auto"
+}
