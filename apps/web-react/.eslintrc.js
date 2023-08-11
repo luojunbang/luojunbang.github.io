@@ -4,7 +4,7 @@ module.exports = {
     commonjs: true,
     es6: true,
   },
-  extends: ['react-app', 'eslint:recommended'],
+  extends: ['react-app', 'react-app/jest', 'eslint:recommended'],
   globals: {
     $: true,
     process: true,
