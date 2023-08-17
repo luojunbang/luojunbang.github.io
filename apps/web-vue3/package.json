@@ -5,12 +5,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rimraf ./dist",
-    "serve": "cross-env NODE_ENV=development webpack-dev-server --config ./webpack.config.js",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --config ./webpack.config.js",
     "build": "pnpm run clean && cross-env NODE_ENV=production webpack --config ./webpack.config.js"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "sass": "^1.65.1"
+    "sass": "^1.65.1",
+    "tailwindcss": "^3.3.2"
   }
 }

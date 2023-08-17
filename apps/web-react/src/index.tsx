@@ -8,19 +8,63 @@ import router from '@/router/index'
 import PageLayout from './layout'
 const NoMatch = () => <div>404</div>
 
+declare global {
+  interface Window {
+    // 是否存在无界
+    __POWERED_BY_WUJIE__?: boolean
+    // 子应用mount函数
+    __WUJIE_MOUNT: () => void
+    // 子应用unmount函数
+    __WUJIE_UNMOUNT: () => void
+    // 子应用无界实例
+    __WUJIE: { mount: () => void }
+  }
+}
+
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
-root.render(
-  <>
-    <StrictMode>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<PageLayout />}></Route>
-          {/* <Route path="*" element={<NoMatch />} /> */}
-        </Routes>
-      </BrowserRouter>
-    </StrictMode>
-  </>,
-)
+
+if (window.__POWERED_BY_WUJIE__) {
+  window.__WUJIE_MOUNT = () => {
+    root.render(
+      <>
+        <StrictMode>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<PageLayout />}>
+                {router.map((route) => {
+                  return <Route path={`${route.key}`} element={route.component} key={route.name} />
+                })}
+              </Route>
+
+              {/* <Route path="*" element={<NoMatch />} /> */}
+            </Routes>
+          </BrowserRouter>
+        </StrictMode>
+      </>,
+    )
+  }
+  window.__WUJIE_UNMOUNT = () => {
+    root.unmount()
+  }
+} else {
+  root.render(
+    <>
+      <StrictMode>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<PageLayout />}>
+              {router.map((route) => {
+                return <Route path={`${route.key}`} element={route.component} key={route.name} />
+              })}
+            </Route>
+
+            {/* <Route path="*" element={<NoMatch />} /> */}
+          </Routes>
+        </BrowserRouter>
+      </StrictMode>
+    </>,
+  )
+}
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

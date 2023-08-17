@@ -1,33 +1,34 @@
 {
-  "name": "@lo/web-react",
+  "name": "main-app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@antv/l7-three": "^2.17.8",
-    "@lo/api": "workspace:*",
-    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.2",
-    "@types/node": "^16.18.33",
-    "@types/react": "^18.2.7",
+    "@types/node": "^16.18.40",
+    "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
-    "leaflet": "^1.9.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.14.1",
     "react-scripts": "5.0.1",
-    "three": "^0.155.0",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4",
+    "wujie": "^1.0.18",
     "wujie-react": "^1.0.18"
   },
   "scripts": {
-    "dev": "craco start",
-    "serve": "craco start",
-    "build": "craco build",
+    "dev": "react-scripts start",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
   "browserslist": {
     "production": [
@@ -40,14 +41,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@antv/l7": "^2.17.8",
-    "@antv/l7-maps": "^2.17.8",
-    "@craco/craco": "^7.1.0",
-    "@types/leaflet": "^1.9.3",
-    "@types/three": "^0.155.0",
-    "sass": "^1.65.1",
-    "tailwindcss": "^3.3.2"
   }
 }
