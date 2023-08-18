@@ -7,8 +7,8 @@ const { bus, setupApp, preloadApp, destroyApp } = WujieReact
 export default function Page() {
   setupApp({
     name: 'react',
-    url: '//localhost:3000/react-build/index.html',
+    url: '//localhost:10888/react-build',
     alive: true,
   })
-  return <WujieReact width="100%" height="100%" name="react" sync={true} url="//localhost:3000/react-build/index.html" prefix={{ reactpage: '/react-build/index.html' }}></WujieReact>
+  return <WujieReact width="100%" height="100%" name="react" sync={true} url="//localhost:10888/react-build"></WujieReact>
 }

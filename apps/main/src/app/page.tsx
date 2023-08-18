@@ -1,4 +1,5 @@
 'use client'
+import { useRouter } from 'next/navigation'
 
 import dynamic from 'next/dynamic'
 import { Suspense } from 'react'
@@ -7,5 +8,9 @@ const DynamicLazyComponent = dynamic(() => import('../components/sub-react'), {
   suspense: true,
 })
 export default function Page() {
-  return <div>app</div>
+  const router = useRouter()
+  const onClick = _ => {
+    router.push('/react')
+  }
+  return <div onClick={onClick}>app</div>
 }

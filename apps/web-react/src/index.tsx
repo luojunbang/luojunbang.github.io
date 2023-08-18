@@ -28,7 +28,7 @@ if (window.__POWERED_BY_WUJIE__) {
     root.render(
       <>
         <StrictMode>
-          <Router>
+          <Router basename="/react-build">
             <Routes>
               <Route path="/" element={<PageLayout />}>
                 {router.map((route) => {
