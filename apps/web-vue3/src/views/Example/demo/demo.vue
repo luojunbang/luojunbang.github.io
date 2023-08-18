@@ -1,23 +1,17 @@
 <template>
-  <LoSwiper ref="LoSwiperRef" direction="horizon" />
   <el-button type="text" />
-  <LoTableEnhance :columns="cols" :data="[{}, {}]" />
 </template>
 
 <script lang="ts" setup>
-import { LoSwiper, LoTableEnhance } from 'lo-vue-components'
+// import { LoSwiper, LoTableEnhance } from 'lo-vue-components'
 import { ref, computed, onMounted } from 'vue'
 import { t } from 'lo-utils'
 const color = ref('blue')
 
-const LoSwiperRef = ref<InstanceType<typeof LoSwiper> | null>(null)
-
 const cols = [{ label: 'XX1', field: 'xx1' }]
 
 onMounted(() => {
-  setTimeout(() => {
-    LoSwiperRef.value?.left()
-  }, 3000)
+  setTimeout(() => {}, 3000)
 })
 
 const bgc = computed(() => {

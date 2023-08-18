@@ -29,24 +29,12 @@ import 'element-plus/dist/index.css'
 //   },
 //   true,
 // )
-import { vueBridge } from '@garfish/bridge-vue-v3'
 
-export const provider = vueBridge({
-  rootComponent: App,
-  // 可选，注册 vue-router或状态管理对象
-  handleInstance: (vueInstance, _) => {
-    vueInstance.use(router('vue'))
-    vueInstance.use(createPinia())
-  },
-})
-
-if (!window.__GARFISH__) {
-  const app = createApp(App)
-  app
-    .use(createPinia())
-    // .use(ElementPlus)
-    .use(router())
-    .mount('#app')
-  // app.component('content-box', ContentBox)
-  // app.component('icon', Icon)
-}
+const app = createApp(App)
+app
+  .use(createPinia())
+  // .use(ElementPlus)
+  .use(router())
+  .mount('#app')
+// app.component('content-box', ContentBox)
+// app.component('icon', Icon)

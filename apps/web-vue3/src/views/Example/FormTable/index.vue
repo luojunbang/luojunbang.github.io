@@ -1,6 +1,7 @@
 <template>
-  <div class="p-md h-full flex flex-col">
-    <div class="w-full overflow-hidden">
+  <div class="p-md h-full flex flex-col"></div>
+
+  <!-- <div class="w-full overflow-hidden">
       <LoFormList
         ref="LoFormListRef"
         :rowCount="formSetttingData.rowCount"
@@ -38,10 +39,10 @@
         <el-input class="flex-1" v-model="item.key" placeholder="Key" />
       </div>
     </div>
-  </el-drawer>
+  </el-drawer> -->
 </template>
 
-<script lang="ts" setup>
+<!-- <script lang="ts" setup>
 import type { LoFormItem, LoTableColumn } from 'lo-vue-components'
 import { LoFormList, LoTableEnhance as TableEnhance, LoPagination as Pagination } from 'lo-vue-components'
 import { computed, onMounted, reactive, ref } from 'vue'
@@ -136,7 +137,7 @@ function handleSubmit() {
       console.log(err)
     })
 }
-</script>
+</script> -->
 
 <style lang="scss">
 .clearfix::after {

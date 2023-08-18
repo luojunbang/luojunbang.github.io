@@ -5,7 +5,7 @@
  * When the newValue is an Object/Array, conitnue setp 1
  */
 
-import { isUndef, isJSType } from 'lo-utils'
+import { isJSType } from 'lo-utils'
 
 export class Observe {
   constructor(obj: Record<string, any>) {

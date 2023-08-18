@@ -1,14 +1,25 @@
 {
-  "extends": "../../tsconfig.vue.json",
   "compilerOptions": {
-    "baseUrl": ".",
+    "target": "es2018",
+    "module": "esnext",
+    "sourceMap": false,
+    "moduleResolution": "node",
+    "allowJs": false,
+    "strict": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "removeComments": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "rootDir": "./",
+    "baseUrl": "./",
+    "types": ["webpack-env", "element-plus/global"],
     "paths": {
-      /* 指定一组将导入重新映射到其他查找位置的条目。 */
-      "@/*": ["./src/*"],
-      // "lo-vue-components": ["../vue-components/src/index.ts"]
-    }
-    // "types": ["src/typings/env.d.ts"]
+      "@/*": ["./src/*"]
+    },
+    "lib": ["ESNext", "dom", "dom.iterable", "scripthost"]
   },
-  "include": ["src/**/*.vue", "src/**/*.ts"],
+  "include": ["src"],
   "exclude": ["node_modules"]
 }

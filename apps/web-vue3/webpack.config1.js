@@ -1,37 +1,27 @@
-import webpack from 'webpack'
-const { DefinePlugin, ProgressPlugin } = webpack
-import HTMLWebpackPlugin from 'html-webpack-plugin'
-import { fmtDateTime } from 'lo-utils'
-import path from 'path'
-import chalk from 'chalk'
-import CssMinimizerPlugin from 'css-minimizer-webpack-plugin'
-import MiniCssExtractPlugin from 'mini-css-extract-plugin'
-import TerserPlugin from 'terser-webpack-plugin'
-import { VueLoaderPlugin } from 'vue-loader'
+const { DefinePlugin, ProgressPlugin } = require('webpack')
+const HTMLWebpackPlugin = require('html-webpack-plugin')
+const { fmtDateTime } = require('lo-utils')
+const path = require('path')
+const d = Date.now()
+const chalk = require('chalk')
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
-import { fileURLToPath } from 'url'
+const IconsResolver = require('unplugin-icons/resolver')
+const Icons = require('unplugin-icons/webpack')
 
-const __filename = fileURLToPath(import.meta.url)
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 
-// 👇️ "/home/john/Desktop/javascript"
-const __dirname = path.dirname(__filename)
-import IconsResolver from 'unplugin-icons/resolver'
-import Icons from 'unplugin-icons/webpack'
+const AutoImport = require('unplugin-auto-import/webpack')
+const Components = require('unplugin-vue-components/webpack')
 
-import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
-
-import AutoImport from 'unplugin-auto-import/webpack'
-import Components from 'unplugin-vue-components/webpack'
-
-import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
-import glob from 'fast-glob'
+const { ElementPlusResolver } = require('unplugin-vue-components/resolvers')
+const resolve = p => path.resolve(__dirname, p).split(path.sep).join('/')
 
 const ExamplePath = 'src/views/example/' // resolve('./src/views/example')
 
-const resolve = p => path.resolve(__dirname, p)
-console.log(resolve('./postcss.config.js'))
-const d = Date.now()
-
+const glob = require('fast-glob')
 const autoImportList = glob
   .sync(ExamplePath + '/**/index.vue', {
     onlyFiles: true,
@@ -63,6 +53,10 @@ const ElementPlus = [
     autoInstall: true,
   }),
 ]
+
+const { VueLoaderPlugin } = require('vue-loader')
+
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const prodPlugins = [new MiniCssExtractPlugin({ filename: 'css/[name].[contenthash:8].css', chunkFilename: 'css/[name].[contenthash:8].css' })]
 
@@ -249,7 +243,12 @@ const config = {
       },
       {
         test: /\.vue$/,
-        use: ['vue-loader'],
+        use: [
+          'vue-loader',
+          {
+            loader: 'loclass-style-loader',
+          },
+        ],
       },
       {
         test: /\.scss$/,
@@ -263,6 +262,11 @@ const config = {
           },
           {
             loader: 'postcss-loader',
+            options: {
+              postcssOptions: {
+                plugins: [require('tailwindcss'), require('autoprefixer')],
+              },
+            },
           },
           'sass-loader',
         ],
@@ -276,6 +280,11 @@ const config = {
           },
           {
             loader: 'postcss-loader',
+            options: {
+              postcssOptions: {
+                plugins: [require('tailwindcss'), require('autoprefixer')],
+              },
+            },
           },
         ],
       },
@@ -337,12 +346,32 @@ const config = {
     }),
   ],
 }
+const FileManagerPlugin = require('filemanager-webpack-plugin')
 
 if (PROD) {
   config.plugins.push(...prodPlugins)
   config.optimization.minimizer.push(new CssMinimizerPlugin())
+  // config.plugins.push(
+  //   new FileManagerPlugin({
+  //     events: {
+  //       //初始化 filemanager-webpack-plugin 插件实例
+  //       onEnd: {
+  //         copy: [
+  //           //然后我们选择dist文件夹将之打包成dist.zip并放在根目录
+  //           { source: resolve('./dist'), destination: resolve('../../dist') },
+  //         ],
+  //       },
+  //     },
+  //   }),
+  // )
 } else {
+  // config.plugins.push(
+  //   new ProgressPlugin((percentage, message, ...args) => {
+  //     console.info(chalk.green((percentage * 100).toFixed(0) + '%'), message, ...args)
+  //     if (percentage === 1) {
+  //     }
+  //   }),
+  // )
 }
 
 // module.exports = config
-export default config

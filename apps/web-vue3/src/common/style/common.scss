@@ -1,31 +1,37 @@
-@use "sass:map";
+@use 'sass:map';
 
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
-$horizon-directions: [ "l", "m", "r"];
-$vertical-directions: [ "t", "m", "b"];
+$horizon-directions:
+  [ 'l',
+  'm',
+  'r'];
+$vertical-directions:
+  [ 't',
+  'm',
+  'b'];
 $count: (
-  "l": "0",
-  "m": "50%",
-  "r": "0",
-  "t": "0",
-  "b": "0",
+  'l': '0',
+  'm': '50%',
+  'r': '0',
+  't': '0',
+  'b': '0',
 );
 $horizon-position: (
-  "l": "left",
-  "r": "right",
-  "m": "left",
+  'l': 'left',
+  'r': 'right',
+  'm': 'left',
 );
 $vertical-position: (
-  "m": "top",
-  "t": "top",
-  "b": "bottom",
+  'm': 'top',
+  't': 'top',
+  'b': 'bottom',
 );
 @layer components {
   .clearfix::after {
-    content: "";
+    content: '';
     display: block;
     visibility: hidden;
     height: 0;

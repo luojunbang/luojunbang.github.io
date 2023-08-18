@@ -1,6 +1,4 @@
-import type { LoFormConfig } from 'lo-vue-components'
-
-export const formConfig: LoFormConfig = [
+export const formConfig = [
   { field: 'text', label: 'Text' },
   { field: 'daterange', label: 'DateRange', type: 'daterange' },
   { field: 'time', label: 'Time', type: 'time', isRange: true },
