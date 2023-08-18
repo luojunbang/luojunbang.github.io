@@ -9,6 +9,7 @@ import { routes } from './routes'
 import { deepPriority } from 'lo-utils'
 
 const router: any[] = []
+
 deepPriority(routes, (route) => {
   const _route: any = { ...route }
   const Component = lazy(() => import(`@/views/${route.key}/index.tsx`))

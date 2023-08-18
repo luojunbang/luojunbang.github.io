@@ -13,10 +13,13 @@ const config = {
     alias: {
       '@': 'src',
     },
-    configure: (webapckConfig, arg) => {
+    configure: (webapckConfig, { env, paths }) => {
       const { isFound, match } = getLoader(webapckConfig, loaderByName('babel-loader'))
       if (isFound) {
         match.loader.include = [...(Array.isArray(match.loader.include) ? match.loader.include : [match.loader.include]), ...packages]
+      }
+      webapckConfig.output = {
+        ...webapckConfig.output,
       }
       return webapckConfig
     },

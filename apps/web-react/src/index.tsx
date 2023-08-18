@@ -2,7 +2,7 @@ import { StrictMode, Suspense, lazy } from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.scss'
 import reportWebVitals from './reportWebVitals'
-import { Routes, Route, BrowserRouter, RouterProvider } from 'react-router-dom'
+import { Routes, Route, BrowserRouter as Router } from 'react-router-dom'
 
 import router from '@/router/index'
 import PageLayout from './layout'
@@ -28,7 +28,7 @@ if (window.__POWERED_BY_WUJIE__) {
     root.render(
       <>
         <StrictMode>
-          <BrowserRouter>
+          <Router>
             <Routes>
               <Route path="/" element={<PageLayout />}>
                 {router.map((route) => {
@@ -38,7 +38,7 @@ if (window.__POWERED_BY_WUJIE__) {
 
               {/* <Route path="*" element={<NoMatch />} /> */}
             </Routes>
-          </BrowserRouter>
+          </Router>
         </StrictMode>
       </>,
     )
@@ -50,9 +50,11 @@ if (window.__POWERED_BY_WUJIE__) {
   root.render(
     <>
       <StrictMode>
-        <BrowserRouter>
+        <div>REACT PAGE</div>
+        <Router basename="/react-build">
           <Routes>
             <Route path="/" element={<PageLayout />}>
+              <Route index element={<div>123</div>} />
               {router.map((route) => {
                 return <Route path={`${route.key}`} element={route.component} key={route.name} />
               })}
@@ -60,7 +62,7 @@ if (window.__POWERED_BY_WUJIE__) {
 
             {/* <Route path="*" element={<NoMatch />} /> */}
           </Routes>
-        </BrowserRouter>
+        </Router>
       </StrictMode>
     </>,
   )

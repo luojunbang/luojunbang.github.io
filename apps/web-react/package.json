@@ -2,6 +2,7 @@
   "name": "@lo/web-react",
   "version": "0.1.0",
   "private": true,
+  "homepage": "/react-build",
   "dependencies": {
     "@antv/l7-three": "^2.17.8",
     "@lo/api": "workspace:*",
