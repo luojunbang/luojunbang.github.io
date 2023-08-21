@@ -1,5 +1,6 @@
 import webpack from 'webpack'
 const { DefinePlugin, ProgressPlugin } = webpack
+import CopyPlugin from 'copy-webpack-plugin'
 import HTMLWebpackPlugin from 'html-webpack-plugin'
 import { fmtDateTime } from 'lo-utils'
 import path from 'path'
@@ -28,8 +29,7 @@ import glob from 'fast-glob'
 
 const ExamplePath = 'src/views/example/' // resolve('./src/views/example')
 
-const resolve = p => path.resolve(__dirname, p)
-console.log(resolve('./postcss.config.js'))
+const resolve = p => path.resolve(__dirname, p).replace(/\\/g, '/')
 const d = Date.now()
 
 const autoImportList = glob
@@ -76,10 +76,10 @@ const externals = {
     alias: 'echarts',
     url: 'https://cdn.bootcdn.net/ajax/libs/echarts/5.3.3/echarts.min.js',
   },
-  '@antv/g6': {
-    alias: 'G6',
-    url: 'https://gw.alipayobjects.com/os/lib/antv/g6/3.7.1/dist/g6.min.js',
-  },
+  // '@antv/g6': {
+  //   alias: 'G6',
+  //   url: 'https://gw.alipayobjects.com/os/lib/antv/g6/3.7.1/dist/g6.min.js',
+  // },
   // vue: {
   //   alias: 'Vue',
   //   url: 'https://unpkg.com/vue@3.2.7/dist/vue.runtime.global.prod.js',
@@ -87,22 +87,18 @@ const externals = {
 }
 
 const title = 'luojunbang.github.io'
-
+const BASE_URL = './'
+const distPath = resolve('./dist')
 const config = {
   mode: process.env.NODE_ENV,
   entry: { app: [resolve('./src/main.ts')] },
   output: {
     clean: process.env.NODE_ENV === 'development' ? false : true,
-    // 需要配置成 umd 规范
     libraryTarget: 'umd',
-    // 修改不规范的代码格式，避免逃逸沙箱
     globalObject: 'window',
-    // 保证子应用的资源路径变为绝对路径
-    // publicPath: 'http://localhost:8080/',
     hashFunction: 'xxhash64',
-    // clean: true,
-    path: resolve('./dist'),
-    publicPath: process.env.BASE_URL,
+    path: distPath,
+    publicPath: BASE_URL,
     filename: 'js/[name]-[contenthash:8].js',
     chunkFilename: 'js/[name]-[contenthash:8].js',
   },
@@ -123,43 +119,6 @@ const config = {
     },
     historyApiFallback: true,
     hot: true,
-    // setupMiddlewares: (middlewares, devServer) => {
-    //   if (!devServer) {
-    //     throw new Error('webpack-dev-server is not defined')
-    //   }
-
-    //   devServer.app.get('/setup-middleware/some/path', (_, response) => {
-    //     response.send('setup-middlewares option GET')
-    //   })
-
-    //   // 如果你想在所有其他中间件之前运行一个中间件或者当你从 `onBeforeSetupMiddleware` 配置项迁移时，
-    //   // 可以使用 `unshift` 方法
-    //   middlewares.unshift({
-    //     name: 'fist-in-array',
-    //     // `path` 是可选的
-    //     path: '/foo/path',
-    //     middleware: (req, res) => {
-    //       res.send('Foo!')
-    //     },
-    //   })
-
-    //   // 如果你想在所有其他中间件之后运行一个中间件或者当你从 `onAfterSetupMiddleware` 配置项迁移时，
-    //   // 可以使用 `push` 方法
-    //   middlewares.push({
-    //     name: 'hello-world-test-one',
-    //     // `path` 是可选的
-    //     path: '/foo/bar',
-    //     middleware: (req, res) => {
-    //       res.send('Foo Bar!')
-    //     },
-    //   })
-
-    //   middlewares.push((req, res) => {
-    //     res.send('Hello World!')
-    //   })
-
-    //   return middlewares
-    // },
   },
   externalsType: 'script',
   externals: PROD
@@ -208,19 +167,6 @@ const config = {
     splitChunks: {
       // minSize: 10,
       cacheGroups: {
-        // vue: {
-        //   name: 'vue',
-        //   minSize: 10,
-        //   test: /[\\/]node_modules[\\/](@vue[\S]*|vue|vue-router|vuex)[\\/]/,
-        //   priority: 10,
-        //   chunks: 'initial',
-        // },
-        // elementPlus: {
-        //   name: 'element-plus',
-        //   test: /[\\/]node_modules[\\/]element-plus[\\/]/,
-        //   priority: 10,
-        //   chunks: 'all',
-        // },
         defaultVendors: {
           name: 'chunk-vendors',
           test: /[\\/]node_modules[\\/]/,
@@ -307,14 +253,14 @@ const config = {
       'process.env': {
         // NODE_ENV: '"development"',
         EXAMPLE_LIST: JSON.stringify(autoImportList),
-        BASE_URL: '"./"',
+        BASE_URL: `'${BASE_URL}'`,
       },
     }),
     ...ElementPlus,
     new HTMLWebpackPlugin({
-      BASE_URL: process.env.BASE_URL,
       title: title,
       template: resolve('./public/index.html'),
+      templateParameters: { BASE_URL },
     }),
     new ProgressPlugin((percentage, message, ...args) => {
       console.info(chalk.green((percentage * 100).toFixed(0) + '%'), message, ...args)
@@ -339,6 +285,21 @@ const config = {
 }
 
 if (PROD) {
+  config.plugins.push(
+    new CopyPlugin({
+      patterns: [
+        {
+          from: resolve('./public'),
+          to: distPath,
+          toType: 'dir',
+          info: {
+            minimized: true,
+          },
+          globOptions: { ignore: ['**/.DS_Store', resolve('./public/index.html')] },
+        },
+      ],
+    }),
+  )
   config.plugins.push(...prodPlugins)
   config.optimization.minimizer.push(new CssMinimizerPlugin())
 } else {

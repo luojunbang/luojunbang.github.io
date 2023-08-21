@@ -11,7 +11,7 @@ const autoImportExampleList = (process.env.EXAMPLE_LIST ?? []) as string[]
 //   if (route.path === 'FormTable') route.meta = { title: '可视化表格表单' }
 // })
 
-const importFn = (path: string) => () => import(/*webpackChunkName:"[request]"*/ `@/views/Example/${path.replace('.vue', '')}.vue`)
+// const importFn = (path: string) => () => import(/*webpackChunkName:"[request]"*/ `@/views/Example/${path.replace('.vue', '')}.vue`)
 
 export const routes: Array<RouteRecordRaw> = [
   {

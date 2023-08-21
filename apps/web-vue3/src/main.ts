@@ -34,7 +34,7 @@ const app = createApp(App)
 app
   .use(createPinia())
   // .use(ElementPlus)
-  .use(router())
+  .use(router(process.env.NODE_ENV === 'development' ? '' : '/vue-page/'))
   .mount('#app')
 // app.component('content-box', ContentBox)
 // app.component('icon', Icon)

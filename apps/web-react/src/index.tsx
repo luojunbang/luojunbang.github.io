@@ -23,12 +23,13 @@ declare global {
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 
+const basename = '/react-page/'
 if (window.__POWERED_BY_WUJIE__) {
   window.__WUJIE_MOUNT = () => {
     root.render(
       <>
         <StrictMode>
-          <Router basename="/react-build">
+          <Router basename={basename}>
             <Routes>
               <Route path="/" element={<PageLayout />}>
                 {router.map((route) => {
@@ -51,7 +52,7 @@ if (window.__POWERED_BY_WUJIE__) {
     <>
       <StrictMode>
         <div>REACT PAGE</div>
-        <Router basename="/react-build">
+        <Router basename={basename}>
           <Routes>
             <Route path="/" element={<PageLayout />}>
               <Route index element={<div>123</div>} />

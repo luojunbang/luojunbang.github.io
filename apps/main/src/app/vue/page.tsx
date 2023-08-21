@@ -3,7 +3,7 @@
 import dynamic from 'next/dynamic'
 import { Suspense } from 'react'
 
-const DynamicLazyComponent = dynamic(() => import('@/components/sub-react'), {
+const DynamicLazyComponent = dynamic(() => import('@/components/sub-vue'), {
   ssr: false,
   suspense: true,
 })

@@ -6,7 +6,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rimraf ./dist",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --config ./webpack.config.js",
-    "build": "pnpm run clean && cross-env NODE_ENV=production webpack --config ./webpack.config.js"
+    "build": "cross-env NODE_ENV=production webpack --config ./webpack.config.js"
   },
   "type": "module",
   "author": "",
@@ -14,6 +14,7 @@
   "devDependencies": {
     "@iconify-json/ep": "^1.1.10",
     "@types/webpack-env": "^1.18.1",
+    "copy-webpack-plugin": "^11.0.0",
     "cross-env": "^7.0.3",
     "css-loader": "^6.8.1",
     "css-minimizer-webpack-plugin": "^5.0.1",
