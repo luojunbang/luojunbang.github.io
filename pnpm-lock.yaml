@@ -31,6 +31,9 @@ importers:
 
   apps/main:
     dependencies:
+      '@lo/common':
+        specifier: workspace:^
+        version: link:../../packages/common
       '@types/react-dom':
         specifier: 18.2.7
         version: 18.2.7
@@ -128,6 +131,9 @@ importers:
       '@lo/api':
         specifier: workspace:*
         version: link:../api
+      '@lo/common':
+        specifier: workspace:^
+        version: link:../../packages/common
       '@testing-library/jest-dom':
         specifier: ^5.16.5
         version: 5.16.5
@@ -201,6 +207,9 @@ importers:
 
   apps/web-vue3:
     dependencies:
+      '@lo/common':
+        specifier: workspace:^
+        version: link:../../packages/common
       echarts:
         specifier: ^5.4.3
         version: 5.4.3

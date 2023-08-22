@@ -8,3 +8,15 @@ declare global {
     __WUJIE_UNMOUNT: () => void
   }
 }
+
+declare module '*/setting.json' {
+  const values: {
+    navBar: boolean | number
+    menu: boolean
+    menuWidth: number
+  }
+
+  export default values
+}
+
+export {}

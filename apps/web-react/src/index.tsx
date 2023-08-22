@@ -1,5 +1,6 @@
 import { StrictMode, Suspense, lazy } from 'react'
 import ReactDOM from 'react-dom/client'
+import '@lo/common/reset.scss'
 import './index.scss'
 import reportWebVitals from './reportWebVitals'
 import { Routes, Route, BrowserRouter as Router, Navigate } from 'react-router-dom'
@@ -7,19 +8,6 @@ import { Routes, Route, BrowserRouter as Router, Navigate } from 'react-router-d
 import router from '@/router/index'
 import PageLayout from './layout'
 const NoMatch = () => <div>404</div>
-
-declare global {
-  interface Window {
-    // 是否存在无界
-    __POWERED_BY_WUJIE__?: boolean
-    // 子应用mount函数
-    __WUJIE_MOUNT: () => void
-    // 子应用unmount函数
-    __WUJIE_UNMOUNT: () => void
-    // 子应用无界实例
-    __WUJIE: { mount: () => void }
-  }
-}
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 const basename = process.env.NODE_ENV === 'development' ? '' : '/react-page/'

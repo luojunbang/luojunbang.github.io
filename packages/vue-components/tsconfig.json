@@ -1,14 +1,15 @@
 {
   "extends": "../../tsconfig.vue.json",
   "compilerOptions": {
-    "emitDeclarationOnly":true,
+    "emitDeclarationOnly": true,
+    "declaration": true,
     "rootDir": ".",
     "baseUrl": ".",
     "paths": {
       /* 指定一组将导入重新映射到其他查找位置的条目。 */
       "@/*": ["./src/*"]
-    },
+    }
   },
   "include": ["src/**/*.ts", "src/**/*.vue"],
-  "exclude": ["node_modules","element-plus/**/*.d.ts"]
+  "exclude": ["node_modules", "element-plus/**/*.d.ts"]
 }

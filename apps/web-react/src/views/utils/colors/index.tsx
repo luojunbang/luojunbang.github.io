@@ -55,7 +55,7 @@ export default function Page() {
 
   return (
     <>
-      <div className="flex">
+      <div className="flex h-[2000px]">
         {colors.map((color, index) => (
           <div key={index} className="w-[200px]">
             {palette(color).map((i) => (
