@@ -9,7 +9,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rimraf dist",
     "build": "pnpm run clean && rollup --config  ./rollup.config.js",
-    "dev": "rollup --config  ./rollup.config.js --watch",
+    "serve": "rollup --config  ./rollup.config.js --watch",
     "build:dts": "tsc  --emitDeclarationOnly --declaration --project tsconfig.json --outDir dist",
     "publish:bug": "npm version patch && npm publish"
   },

@@ -4,7 +4,6 @@ const { getLoader, loaderByName } = require('@craco/craco')
 const packages = ['../api'].map((i) => path.resolve(__dirname, i))
 const config = {
   devServer: {
-    port: '3001',
     headers: {
       'Access-Control-Allow-Origin': '*',
     },

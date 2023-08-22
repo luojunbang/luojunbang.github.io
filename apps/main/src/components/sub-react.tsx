@@ -2,13 +2,15 @@
 
 import WujieReact from 'wujie-react'
 import { useEffect } from 'react'
+import { getUrl } from '@/utils'
 const { bus, setupApp, preloadApp, destroyApp } = WujieReact
 
 export default function Page() {
+  const url = getUrl(9002)
   setupApp({
     name: 'react',
-    url: '//localhost:10888/react-page/',
+    url,
     alive: true,
   })
-  return <WujieReact width="100%" height="100%" name="react" sync={true} url="//localhost:10888/react-page/"></WujieReact>
+  return <WujieReact width="100%" height="100%" name="react" sync={true} url={url}></WujieReact>
 }

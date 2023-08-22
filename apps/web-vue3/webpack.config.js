@@ -87,7 +87,7 @@ const externals = {
 }
 
 const title = 'luojunbang.github.io'
-const BASE_URL = './'
+const BASE_URL = '/'
 const distPath = resolve('./dist')
 const config = {
   mode: process.env.NODE_ENV,
@@ -111,7 +111,7 @@ const config = {
     extensions: ['.ts', '.tsx', '.vue', '.js'],
   },
   devServer: {
-    // port: 9988,
+    port: 9001,
     // static: resolve('../dist/'),
     headers: {
       // 保证子应用的资源支持跨域，在上线后需要保证子应用的资源在主应用的环境中加载不会存在跨域问题（**也需要限制范围注意安全问题**）
@@ -251,7 +251,7 @@ const config = {
       __VUE_OPTIONS_API__: 'true',
       __VUE_PROD_DEVTOOLS__: 'false',
       'process.env': {
-        // NODE_ENV: '"development"',
+        NODE_ENV: '"development"',
         EXAMPLE_LIST: JSON.stringify(autoImportList),
         BASE_URL: `'${BASE_URL}'`,
       },

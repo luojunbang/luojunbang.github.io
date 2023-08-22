@@ -29,7 +29,6 @@ import 'element-plus/dist/index.css'
 //   },
 //   true,
 // )
-
 const app = createApp(App)
 app
   .use(createPinia())

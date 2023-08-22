@@ -7,11 +7,13 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "vue": "pnpm run -C ./apps/web-vue3 serve",
-    "react": "pnpm run -C ./apps/web-react serve",
-    "build:web": "pnpm run --filter @lo/web-* build",
+    "vue": "pnpm run -C ./apps/web-vue3 dev",
+    "react": "pnpm run -C ./apps/web-react dev",
+    "serve": "serve ./dist -l 10888",
+    "dev": "pnpm run --filter @lo/web-* dev",
+    "build:react": "rimraf ./dist/react-page && pnpm run -C ./apps/web-react build && mv ./apps/web-react/build ./dist/react-page",
+    "build:vue": "rimraf ./dist/vue-page && pnpm run -C ./apps/web-vue build && mv ./apps/web-vue3/dist ./dist/vue-page",
+    "build": "rimraf ./dist && pnpm run --filter @lo/web-* build && pnpm place",
     "place": "mv ./apps/main/out ./dist && mv ./apps/web-vue3/dist ./dist/vue-page && mv ./apps/web-react/build ./dist/react-page"
   },
   "dependencies": {
@@ -21,6 +23,7 @@
   "devDependencies": {
     "chalk": "^4.1.2",
     "prettier": "^3.0.1",
+    "rimraf": "^5.0.1",
     "serve": "^14.2.0",
     "webpack-cli": "^5.1.4"
   }

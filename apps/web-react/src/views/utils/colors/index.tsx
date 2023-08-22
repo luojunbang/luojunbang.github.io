@@ -49,8 +49,6 @@ export default function Page() {
                 return Math.round(i).toString(16).padStart(2, '0')
               })
               .join('')
-      console.log('#' + ret)
-
       return '#' + ret
     })
   }
@@ -58,8 +56,8 @@ export default function Page() {
   return (
     <>
       <div className="flex">
-        {colors.map((color) => (
-          <div className="w-[200px]">
+        {colors.map((color, index) => (
+          <div key={index} className="w-[200px]">
             {palette(color).map((i) => (
               <div key={i} style={{ height: '50px', backgroundColor: i }}>
                 {i}
