@@ -57,8 +57,8 @@
       </div>
       <friendly-link />
       <div class="mr-md mb-md xr-yb cursor-pointer opacity-30">
-        <i-ep-menu class="mb-sm" @click="$router.push('/admin')" />
-        <i-ep-setting class="" @click="$router.push('/setting')" />
+        <i-ep-menu class="mb-sm" @click="router.push('/admin')" />
+        <i-ep-setting class="" @click="router.push('/setting')" />
       </div>
     </div>
   </div>
@@ -66,11 +66,14 @@
 
 <script lang="ts" setup>
 import { Ref, ref, onMounted, onUnmounted } from 'vue'
+import { useRouter } from 'vue-router'
 import useWeatherInfo from './composables/weather'
 import { generatorDate, fmtTime } from 'lo-utils'
 import FriendlyLink from './components/FriendlyLink.vue'
 const position = '113.459749,23.106402'
 
+const parentNavHeight = window.__POWERED_BY_WUJIE__ ? '52px' : '0px'
+const router = useRouter()
 const { date, time, ms } = (() => {
   const date = ref<string>('')
   const time = ref<string>()
@@ -134,8 +137,7 @@ $BG: #1b1f25;
 $TEXT: #e7d7c2;
 
 .dashboard {
-  width: 100vw;
-  height: 100vh;
+  height: calc(100vh - v-bind(parentNavHeight));
   overflow: hidden;
   position: relative;
   * {

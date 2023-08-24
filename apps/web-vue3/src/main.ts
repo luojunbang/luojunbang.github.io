@@ -29,11 +29,25 @@ import 'element-plus/dist/index.css'
 //   },
 //   true,
 // )
-const app = createApp(App)
-app
-  .use(createPinia())
-  // .use(ElementPlus)
-  .use(router(process.env.NODE_ENV === 'development' ? '' : '/vue-page/'))
-  .mount('#app')
-// app.component('content-box', ContentBox)
-// app.component('icon', Icon)
+if (window.__POWERED_BY_WUJIE__) {
+  let instance: any
+  window.__WUJIE_MOUNT = () => {
+    instance = createApp(App)
+      .use(createPinia())
+      // .use(ElementPlus)
+      .use(router(process.env.NODE_ENV === 'development' ? '' : '/vue-page'))
+    instance.mount('#app')
+  }
+  window.__WUJIE_UNMOUNT = () => {
+    instance.unmount()
+  }
+} else {
+  const app = createApp(App)
+  app
+    .use(createPinia())
+    // .use(ElementPlus)
+    .use(router(process.env.NODE_ENV === 'development' ? '' : '/vue-page'))
+    .mount('#app')
+  // app.component('content-box', ContentBox)
+  // app.component('icon', Icon)
+}

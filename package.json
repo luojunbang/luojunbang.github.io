@@ -11,10 +11,9 @@
     "react": "pnpm run -C ./apps/web-react dev",
     "serve": "serve ./dist -l 10888",
     "dev": "pnpm run --filter @lo/web-* dev",
-    "build:react": "rimraf ./dist/react-page && pnpm run -C ./apps/web-react build && mv ./apps/web-react/build ./dist/react-page",
-    "build:vue": "rimraf ./dist/vue-page && pnpm run -C ./apps/web-vue build && mv ./apps/web-vue3/dist ./dist/vue-page",
+    "build:vue": "rimraf ./dist/vue-page && pnpm run -C ./apps/web-vue build && cp ./apps/web-vue3/dist ./dist/vue-page",
     "build": "rimraf ./dist && pnpm run --filter @lo/web-* build && pnpm place",
-    "place": "mv ./apps/main/out ./dist && mv ./apps/web-vue3/dist ./dist/vue-page && mv ./apps/web-react/build ./dist/react-page"
+    "place": "cp -r ./apps/web-react/build ./dist && cp -r ./apps/web-vue3/dist ./dist/vue-page"
   },
   "dependencies": {
     "axios": "^1.4.0",

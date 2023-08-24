@@ -87,7 +87,7 @@ const externals = {
 }
 
 const title = 'luojunbang.github.io'
-const BASE_URL = '/'
+const BASE_URL = process.env.NODE_ENV === 'development' ? '/' : '/vue-page/'
 const distPath = resolve('./dist')
 const config = {
   mode: process.env.NODE_ENV,
@@ -110,6 +110,7 @@ const config = {
     },
     extensions: ['.ts', '.tsx', '.vue', '.js'],
   },
+  devtool: process.env.NODE_ENV === 'development' ? 'source-map' : undefined,
   devServer: {
     port: 9001,
     // static: resolve('../dist/'),
@@ -251,7 +252,6 @@ const config = {
       __VUE_OPTIONS_API__: 'true',
       __VUE_PROD_DEVTOOLS__: 'false',
       'process.env': {
-        NODE_ENV: '"development"',
         EXAMPLE_LIST: JSON.stringify(autoImportList),
         BASE_URL: `'${BASE_URL}'`,
       },
@@ -296,6 +296,10 @@ if (PROD) {
             minimized: true,
           },
           globOptions: { ignore: ['**/.DS_Store', resolve('./public/index.html')] },
+        },
+        {
+          from: resolve(path.join(distPath, './index.html')),
+          to: resolve(path.join(distPath, './404.html')),
         },
       ],
     }),

@@ -94,30 +94,35 @@ export default function useWeather(position: string): any {
   const dailyPrecipitationList = ref<dailyPrecipitation[]>([])
   const isWeatherReady = ref<boolean>(false)
   const askWeather = async () => {
-    const { data } = await jsonp<Record<string, any>>(getweatherInfo(position))
-    isWeatherReady.value = true
-    const { realtime, minutely, daily, forecast_keypoint } = data.result
-    console.log(data)
+    try {
+      const { data } = await jsonp<Record<string, any>>(getweatherInfo(position))
 
-    const { apparent_temperature, temperature, humidity, skycon, precipitation } = realtime
-    todayInfo.apparent_temperature = apparent_temperature
-    todayInfo.skycon = getSkyconDecription(skycon)
-    todayInfo.temperature = temperature
-    todayInfo.humidity = (parseFloat(humidity) * 100).toFixed(0) + '%'
-    todayInfo.forecast_keypoint = forecast_keypoint
-    todayInfo.precipitation = precipitation.local.intensity
-    todayInfo.precipitation_1h = minutely.precipitation
+      isWeatherReady.value = true
+      const { realtime, minutely, daily, forecast_keypoint } = data.result
+      console.log(data)
 
-    dailyPrecipitationList.value = daily.precipitation
-    dailyTemperatureList.value = daily.temperature.map((i: { max: number; min: number; date: string }, index: string | number) => {
-      return {
-        max: ~~i.max,
-        min: ~~i.min,
-        skycon: getSkyconDecription(daily.skycon[index].value),
-        week: generatorDate(i.date.replace('T', ' ').replace('+08', ''), '周a'),
-      }
-    })
-    dailySkyconList.value = daily.skycon.map((i: { value: any }) => getSkyconDecription(i.value))
+      const { apparent_temperature, temperature, humidity, skycon, precipitation } = realtime
+      todayInfo.apparent_temperature = apparent_temperature
+      todayInfo.skycon = getSkyconDecription(skycon)
+      todayInfo.temperature = temperature
+      todayInfo.humidity = (parseFloat(humidity) * 100).toFixed(0) + '%'
+      todayInfo.forecast_keypoint = forecast_keypoint
+      todayInfo.precipitation = precipitation.local.intensity
+      todayInfo.precipitation_1h = minutely.precipitation
+
+      dailyPrecipitationList.value = daily.precipitation
+      dailyTemperatureList.value = daily.temperature.map((i: { max: number; min: number; date: string }, index: string | number) => {
+        return {
+          max: ~~i.max,
+          min: ~~i.min,
+          skycon: getSkyconDecription(daily.skycon[index].value),
+          week: generatorDate(i.date.replace('T', ' ').replace('+08', ''), '周a'),
+        }
+      })
+      dailySkyconList.value = daily.skycon.map((i: { value: any }) => getSkyconDecription(i.value))
+    } catch (err) {
+      console.log(err)
+    }
   }
   onMounted(() => {
     askWeather()

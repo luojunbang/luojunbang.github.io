@@ -1,5 +1,3 @@
-import wujie from 'wujie'
-
 declare global {
   interface Window {
     // 是否存在无界
@@ -8,7 +6,7 @@ declare global {
     __WUJIE_MOUNT: () => void
     // 子应用unmount函数
     __WUJIE_UNMOUNT: () => void
-    __WUJIE: wujie
+    $wujie: any
   }
 }
 

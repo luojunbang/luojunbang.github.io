@@ -2,7 +2,7 @@
   <div>activeIndex:{{ activeIndexs.value.join(',') }}</div>
   <br />
   <!-- --- -->
-  <div ref="root" class="swiper-container" :style="{ overflow: isPreview ? 'auto' : 'visible' }" @mouseenter.stop="handleMouseEnter" @mouseleave.stop="handleMouseLeave">
+  <div ref="root" class="swiper-container" :style="{ overflow: isPreview ? 'auto' : 'visible' }">
     <slot></slot>
   </div>
   <div class="text-center">

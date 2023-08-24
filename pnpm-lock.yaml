@@ -204,6 +204,9 @@ importers:
       tailwindcss:
         specifier: ^3.3.2
         version: 3.3.2
+      wujie-polyfill:
+        specifier: ^1.0.6
+        version: 1.0.6
 
   apps/web-vue3:
     dependencies:
@@ -12421,6 +12424,10 @@ packages:
         optional: true
       utf-8-validate:
         optional: true
+
+  /wujie-polyfill@1.0.6:
+    resolution: {integrity: sha512-HmNr0NvX58DsX/zmAEhll2TE9PMW+DLNEOIsY1FtfKVffoxX1qeH5pY4jdtTctMcquF5aSOXUAreKNgkZWdsxQ==}
+    dev: true
 
   /wujie-react@1.0.18(react@18.2.0):
     resolution: {integrity: sha512-qvbVti2+fsonTTD8VIM6WeWQ6rlzxONxG5g65Pe/lcx29spNJIIbVQyeBsFI1tr09XaDM9Ges5HagEg0DcLHWg==}
