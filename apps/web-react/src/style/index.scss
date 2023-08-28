@@ -1,0 +1,70 @@
+@use 'function' as *;
+
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@import './promote.scss';
+
+body {
+  background-color: var(#{np('fill-color')});
+  color: var(#{np('text-color')});
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+@mixin dark-theme {
+  #{np('fill-color')}: #1d1d1f;
+  @each $index, $color in (1 #1d1d1f, 2 #212124, 3 #2a2a2b, 4 #303134, 5 #373739) {
+    #{np(('fill-color', $index))}: $color;
+  }
+  #{np('border-color')}: #424245;
+
+  @each $index, $color in (1 #f5f5f7, 2 #c5c5c5, 3 #86868b, 4 #6e6e73, 5 #5f5f60) {
+    #{np(('text-color', $index))}: $color;
+  }
+}
+
+@mixin light-theme {
+  #{np('fill-color')}: #f5f5f7;
+  @each $index, $color in (1 #ffffff, 2 #ffffff, 3 #e7eaea, 4 #dadada, 5 #c5c5c5) {
+    #{np(('fill-color', $index))}: $color;
+  }
+  #{np('border-color')}: rgb(229, 230, 235);
+
+  @each $index, $color in (1 #1d1d1f, 2 #424245, 3 #86868b, 4 #c5c5c5, 5 #e8e8ed) {
+    #{np(('text-color', $index))}: $color;
+  }
+}
+.light {
+  @include light-theme;
+}
+.dark {
+  @include dark-theme;
+}
+
+:root:not(.light):not(.dark) {
+  @media (prefers-color-scheme: dark) {
+    color-scheme: dark;
+    @include dark-theme;
+  }
+  @media (prefers-color-scheme: light) {
+    color-scheme: light;
+    @include light-theme;
+  }
+}
+
+#root {
+  background-color: v('fill-color', '2');
+  color: v('text-color', '1');
+  font-size: 14px;
+  line-height: 1.5;
+  a {
+  }
+}
+
+//

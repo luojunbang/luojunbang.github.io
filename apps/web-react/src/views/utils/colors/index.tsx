@@ -2,86 +2,75 @@ export default function Page() {
   const colors = ['484848', '929293']
   const grayLight = ['#ffffff', '#e7eaea', '#dadada', '#b6b6b6', '#919191', '#6d6d6d', '#484848', '#262626', '#141414', '#101010']
   const grayDark = ['#17171a', '#2e2e30', '#484849', '#5f5f60', '#78787a', '#929293', '#ababac', '#c5c5c5', '#dfdfdf', '#f6f6f6']
-  function palette(color: string, count = 10): string[] {
-    const _rgb = getRGB(color)
-    const [h, s, v] = hsv(getRGB(color))
-    const hueStep = 2
-    const maxSaturationStep = 100
-    const minSaturationStep = 9
-
-    const maxValue = 100
-    const minValue = 30
-    const getNewHue = (isLight: boolean, i: number) => {
-      let hue
-      if (h >= 60 && h <= 240) {
-        hue = isLight ? h - hueStep * i : h + hueStep * i
-      } else {
-        hue = isLight ? h + hueStep * i : h - hueStep * i
-      }
-      if (hue < 0) {
-        hue += 360
-      } else if (hue >= 360) {
-        hue -= 360
-      }
-      return Math.round(hue)
-    }
-    const getNewSaturation = (isLight: boolean, i: number) => {
-      let newSaturation
-
-      if (isLight) {
-        newSaturation = s <= minSaturationStep ? s : s - ((s - minSaturationStep) / 5) * i
-      } else {
-        newSaturation = s + ((maxSaturationStep - s) / 4) * i
-      }
-      return newSaturation
-    }
-    const getNewValue = (isLight: boolean, i: number) => {
-      return isLight ? v + ((maxValue - v) / 5) * i : v <= minValue ? v : v - ((v - minValue) / 4) * i
-    }
-    return new Array(10).fill(0).map((_, i) => {
-      const isLight = i < 5
-      const idx = isLight ? 5 - i : i - 5
-      const ret =
-        i === 5
-          ? color
-          : rgb([getNewHue(isLight, idx), getNewSaturation(isLight, idx), getNewValue(isLight, idx)])
-              .map((i) => {
-                return Math.round(i).toString(16).padStart(2, '0')
-              })
-              .join('')
-      return '#' + ret
-    })
-  }
-
+  const list = new Array(5).fill(0).map((_, i) => i + 1)
   return (
     <>
-      <div className="flex h-[2000px]">
-        {colors.map((color, index) => (
-          <div key={index} className="w-[200px]">
-            {palette(color).map((i) => (
-              <div key={i} style={{ height: '50px', backgroundColor: i }}>
-                {i}
-              </div>
-            ))}
-          </div>
-        ))}
-        <div className="w-[200px]">
-          {grayLight.map((i) => (
-            <div key={i} style={{ height: '50px', backgroundColor: i }}>
-              {i}
-            </div>
-          ))}
-        </div>
-        <div className="w-[200px]">
-          {grayDark.map((i) => (
-            <div key={i} style={{ height: '50px', backgroundColor: i }}>
-              {i}
+      <div className="w-[1024px] mx-auto bg-fill-100 p-4">
+        <div className="">
+          {list.map((i) => (
+            <div key={i} className={`bg-fill-${i}00 mt-4 p-4`}>
+              {list.map((i) => (
+                <div key={i} className={`text-text-${i}00`}>
+                  这是一段文字12345ABCDE
+                </div>
+              ))}
             </div>
           ))}
         </div>
       </div>
     </>
   )
+}
+
+function palette(color: string, count = 10): string[] {
+  const _rgb = getRGB(color)
+  const [h, s, v] = hsv(getRGB(color))
+  const hueStep = 2
+  const maxSaturationStep = 100
+  const minSaturationStep = 9
+
+  const maxValue = 100
+  const minValue = 30
+  const getNewHue = (isLight: boolean, i: number) => {
+    let hue
+    if (h >= 60 && h <= 240) {
+      hue = isLight ? h - hueStep * i : h + hueStep * i
+    } else {
+      hue = isLight ? h + hueStep * i : h - hueStep * i
+    }
+    if (hue < 0) {
+      hue += 360
+    } else if (hue >= 360) {
+      hue -= 360
+    }
+    return Math.round(hue)
+  }
+  const getNewSaturation = (isLight: boolean, i: number) => {
+    let newSaturation
+
+    if (isLight) {
+      newSaturation = s <= minSaturationStep ? s : s - ((s - minSaturationStep) / 5) * i
+    } else {
+      newSaturation = s + ((maxSaturationStep - s) / 4) * i
+    }
+    return newSaturation
+  }
+  const getNewValue = (isLight: boolean, i: number) => {
+    return isLight ? v + ((maxValue - v) / 5) * i : v <= minValue ? v : v - ((v - minValue) / 4) * i
+  }
+  return new Array(10).fill(0).map((_, i) => {
+    const isLight = i < 5
+    const idx = isLight ? 5 - i : i - 5
+    const ret =
+      i === 5
+        ? color
+        : rgb([getNewHue(isLight, idx), getNewSaturation(isLight, idx), getNewValue(isLight, idx)])
+            .map((i) => {
+              return Math.round(i).toString(16).padStart(2, '0')
+            })
+            .join('')
+    return '#' + ret
+  })
 }
 
 function getRGB(rgb: string) {

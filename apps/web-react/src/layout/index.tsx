@@ -6,32 +6,22 @@ import setting from '@/setting.json'
 import NavBar from './NavBar'
 import SideBar from './SideBar'
 
-const parentNavBarHeight = '52'
-
 export default function PageLayout() {
-  const collapsed = false
-  const POWERED_BY_WUJIE = !!window.__POWERED_BY_WUJIE__
-  const containerStyle = POWERED_BY_WUJIE ? { minHeight: `calc(100vh - ${parentNavBarHeight}px)` } : { minHeight: '100vh' }
-  const showNav = !POWERED_BY_WUJIE && setting.navHeight
-  const showMenu = !POWERED_BY_WUJIE && setting.menuWidth
+  const showNav = !!setting.navHeight
 
   const paddingTop = showNav ? { paddingTop: setting.navHeight } : {}
 
-  const menuWidth = collapsed ? 48 : setting.menuWidth
-
-  const paddingLeft = showMenu ? { paddingLeft: menuWidth } : {}
-
-  const contentStyle = {
+  const containerStyle = {
     ...paddingTop,
-    ...paddingLeft,
   }
-
+  const contentStyle = {
+    minHeight: `calc(100vh - ${setting.navHeight}px)`,
+  }
   return (
     <>
-      <div className="relative" style={containerStyle}>
+      <div className="relative min-h-screen" style={containerStyle}>
         {showNav && <NavBar />}
-        {showMenu && <SideBar />}
-        <div className="h-full" style={contentStyle}>
+        <div style={contentStyle}>
           <Outlet />
         </div>
       </div>

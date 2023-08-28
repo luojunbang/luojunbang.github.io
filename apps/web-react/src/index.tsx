@@ -1,7 +1,7 @@
 import { StrictMode, Suspense, lazy } from 'react'
 import ReactDOM from 'react-dom/client'
 import '@lo/common/reset.scss'
-import './index.scss'
+import '@/style/index.scss'
 import reportWebVitals from './reportWebVitals'
 import { Routes, Route, BrowserRouter as Router, Navigate } from 'react-router-dom'
 
@@ -45,7 +45,7 @@ const render = () => {
             {/* <Route path="vue" element={<VuePage />} /> */}
             <Route path="vue/:path?" element={<VuePage />} />
             <Route path="empty" />
-            <Route path="" element={<Navigate to="/utils/colors" />} />
+            <Route path="" element={<div>dashboard</div>} />
             {router.map((route) => {
               return <Route path={`${route.key}`} element={route.component} key={route.name} />
             })}

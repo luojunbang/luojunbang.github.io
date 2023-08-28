@@ -1,0 +1,16 @@
+$namespace: 'lo' !default;
+
+@function np($list) {
+  $np: '--' + $namespace;
+  @each $item in $list {
+    @if $item != '' {
+      $np: $np + '-' + $item;
+    }
+  }
+  @return $np;
+}
+
+// getCssVar('button', 'text-color') => var(--el-button-text-color)
+@function v($args...) {
+  @return var(#{np($args)});
+}
