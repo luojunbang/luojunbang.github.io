@@ -6,7 +6,6 @@ export default function SideBar() {
     <div className="absolute pt-[60px] h-full">
       {route.map((i) => (
         <div key={i}>
-          {/* @ts-ignore */}
           <Link to={i}>{i}</Link>
         </div>
       ))}

@@ -1,7 +1,15 @@
 import setting from '@/setting.json'
 import styles from './style/index.module.scss'
 import { useState } from 'react'
-const menu = [
+import { Link } from 'react-router-dom'
+
+interface MenuItem {
+  label: string
+  key?: string
+  children?: MenuItem[]
+}
+
+const menuList: MenuItem[] = [
   {
     label: 'react',
     key: '',
@@ -39,6 +47,17 @@ const menu = [
 ]
 
 // /1024px
+const Menu = ({ menu }: { menu: MenuItem[] }) => {
+  console.log(menu)
+
+  return (
+    <div className="">
+      {menu.map((i) => (
+        <div>{i.label}</div>
+      ))}
+    </div>
+  )
+}
 
 export default function NavBar() {
   const navHeight = setting.navHeight
@@ -49,22 +68,12 @@ export default function NavBar() {
     const html = document.querySelector('html')
     html && (html.className = theme)
   }
-  const Menu = () => (
-    <div className="flex-1 flex ">
-      {menu.map((i) => {
-        return (
-          <a key={i.key} href={`/${i.key}`} className="flex-center px-2 no-underline">
-            <span>{i.label}</span>
-          </a>
-        )
-      })}
-    </div>
-  )
+
   return (
     <>
       <div className={styles.nav + ' fixed z-10 top-0 left-0 w-full'}>
         <nav style={{ height: navHeight }} className="max-w-[1024px] mx-auto flex-center">
-          <Menu />
+          <Menu menu={menuList} />
           <button onClick={toggleTheme}>{theme}</button>
         </nav>
       </div>

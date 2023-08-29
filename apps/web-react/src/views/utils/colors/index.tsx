@@ -1,3 +1,5 @@
+import { Button } from '@arco-design/web-react'
+import { IconFullscreenExit } from '@arco-design/web-react/icon'
 export default function Page() {
   const colors = ['484848', '929293']
   const grayLight = ['#ffffff', '#e7eaea', '#dadada', '#b6b6b6', '#919191', '#6d6d6d', '#484848', '#262626', '#141414', '#101010']
@@ -17,6 +19,8 @@ export default function Page() {
             </div>
           ))}
         </div>
+        <Button type="primary">TEST</Button>
+        <IconFullscreenExit />
       </div>
     </>
   )
