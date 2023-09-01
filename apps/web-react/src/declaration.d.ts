@@ -1,15 +1,8 @@
-import wujie from 'wujie'
-
-declare global {
-  interface Window {
-    // 是否存在无界
-    __POWERED_BY_WUJIE__?: boolean
-    // 子应用mount函数
-    __WUJIE_MOUNT: () => void
-    // 子应用unmount函数
-    __WUJIE_UNMOUNT: () => void
-    __WUJIE: wujie
-  }
+declare module '*.svg' {
+  import React from 'react'
+  const content: React.FunctionComponent<React.SVGAttributes<SVGElement>>
+  export const ReactComponent: React.FC<React.SVGProps<SVGSVGElement>>
+  export default content
 }
 
 declare module '*/setting.json' {
@@ -21,5 +14,3 @@ declare module '*/setting.json' {
 
   export default values
 }
-
-export {}

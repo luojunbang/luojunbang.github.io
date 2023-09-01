@@ -47,6 +47,7 @@
     "@arco-plugins/webpack-react": "1.4.9-beta.2",
     "@arco-themes/react-arco-pro": "^0.0.7",
     "@craco/craco": "^7.1.0",
+    "@svgr/webpack": "^8.1.0",
     "@types/leaflet": "^1.9.3",
     "@types/react": "18.2.0",
     "@types/react-dom": "18.2.0",

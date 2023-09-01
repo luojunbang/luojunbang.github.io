@@ -42,7 +42,6 @@ const config = {
     plugins: {
       add: [],
     },
-    module: {},
     configure: (webapckConfig, { env, paths }) => {
       const { isFound, match } = getLoader(webapckConfig, loaderByName('babel-loader'))
       if (isFound) {

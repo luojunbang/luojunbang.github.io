@@ -14,7 +14,20 @@ import { getUrl } from './utils'
 
 const NoMatch = () => <div>404</div>
 const { setupApp, preloadApp } = WujieReact
-/**
+
+declare global {
+  interface Window {
+    // 是否存在无界
+    __POWERED_BY_WUJIE__?: boolean
+    // 子应用mount函数
+    __WUJIE_MOUNT: () => void
+    // 子应用unmount函数
+    __WUJIE_UNMOUNT: () => void
+    __WUJIE: { id: string }
+  }
+}
+
+/**26988.19*1.04*1.04
  * 大部分业务无需设置 attrs
  * 此处修正 iframe 的 src，是防止github pages csp报错
  * 因为默认是只有 host+port，没有携带路径

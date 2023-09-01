@@ -22,6 +22,14 @@ export default function Page() {
         <Button type="primary">TEST</Button>
         <IconFullscreenExit />
       </div>
+      <div className="relative">
+        <div>
+          <div className="absolute z-10 bg-blue-500">2</div>
+        </div>
+        <div>
+          <div className="absolute  bg-red-500">3</div>
+        </div>
+      </div>
     </>
   )
 }

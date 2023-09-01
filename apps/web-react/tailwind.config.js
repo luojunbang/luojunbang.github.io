@@ -1,4 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+
+const plugin = require('tailwindcss/plugin')
+
 const getVar = (str, index) => `var(--lo-${str}-color${index ? '-' + index : ''})`
 const getTextColor = (index) => getVar('text', index)
 const getFillColor = (index) => getVar('fill', index)
@@ -45,7 +48,18 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(function ({ addComponents }) {
+      addComponents({
+        '.flex-center': {
+          display: 'flex',
+          'flex-flow': 'row nowrap',
+          'justify-content': 'center',
+          'align-items': 'center',
+        },
+      })
+    }),
+  ],
 }
 
 // cursor: pointer;

@@ -1,9 +1,5 @@
 @use 'function' as *;
 
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
-
 @import './promote.scss';
 
 body {
@@ -24,19 +20,19 @@ code {
   }
   #{np('border-color')}: #424245;
 
-  @each $index, $color in (1 #f5f5f7, 2 #c5c5c5, 3 #86868b, 4 #6e6e73, 5 #5f5f60) {
+  @each $index, $color in (1 #fff, 2 #f5f5f7, 3 #c5c5c5, 4 #86868b, 5 #6e6e73) {
     #{np(('text-color', $index))}: $color;
   }
 }
 
 @mixin light-theme {
   #{np('fill-color')}: #f5f5f7;
-  @each $index, $color in (1 #ffffff, 2 #ffffff, 3 #e7eaea, 4 #dadada, 5 #c5c5c5) {
+  @each $index, $color in (1 #ffffff, 2 #fbfbfd, 3 #e7eaea, 4 #dadada, 5 #c5c5c5) {
     #{np(('fill-color', $index))}: $color;
   }
   #{np('border-color')}: rgb(229, 230, 235);
 
-  @each $index, $color in (1 #1d1d1f, 2 #424245, 3 #86868b, 4 #c5c5c5, 5 #e8e8ed) {
+  @each $index, $color in (1#000, 2 #1d1d1f, 3 #424245, 4 #86868b, 5 #c5c5c5) {
     #{np(('text-color', $index))}: $color;
   }
 }
@@ -59,11 +55,20 @@ code {
 }
 
 #root {
-  background-color: v('fill-color', '2');
-  color: v('text-color', '1');
+  background-color: v('fill-color', '1');
+  color: v('text-color', '2');
   font-size: 14px;
   line-height: 1.5;
   a {
+    text-decoration: none;
+    &:visited,
+    &:link {
+      color: v('text-color', '2');
+    }
+    &:active,
+    &:hover {
+      color: v('text-color', '1');
+    }
   }
 }
 

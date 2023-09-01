@@ -1,10 +1,11 @@
 import setting from '@/setting.json'
 import styles from './style/index.module.scss'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-
+import { ReactComponent as Logo } from '@/assets/logo.svg'
+import { kl } from '@/utils'
 interface MenuItem {
-  label: string
+  label?: string
   key?: string
   children?: MenuItem[]
 }
@@ -12,7 +13,7 @@ interface MenuItem {
 const menuList: MenuItem[] = [
   {
     label: 'react',
-    key: '',
+    key: 'react',
     children: [
       { label: 'three', children: [{ label: 'demo', key: 'three/demo' }] },
       {
@@ -30,9 +31,16 @@ const menuList: MenuItem[] = [
     key: 'vue',
     children: [
       {
-        label: 'common',
-
-        children: [{ label: 'setting', key: 'vue/setting' }],
+        children: [
+          {
+            label: 'common1',
+            children: [{ label: 'setting', key: 'vue/setting' }],
+          },
+          {
+            label: 'common2',
+            children: [{ label: 'setting', key: 'vue/setting' }],
+          },
+        ],
       },
       {
         label: 'example',
@@ -46,14 +54,44 @@ const menuList: MenuItem[] = [
   },
 ]
 
+const SubMenu = ({ menu }: { menu: MenuItem }) => {
+  return (
+    <div>
+      <div>{menu.label}</div>
+      {menu.children?.map((i) => <div key={i.label}>{i.label}</div>)}
+    </div>
+  )
+}
+
 // /1024px
 const Menu = ({ menu }: { menu: MenuItem[] }) => {
-  console.log(menu)
+  const [activeMenu, setActiveMenu] = useState('')
 
   return (
-    <div className="">
+    <div>
       {menu.map((i) => (
-        <div>{i.label}</div>
+        <div key={i.key}>
+          <div className="relative z-10">
+            <Link to={`/${i.key}`}>
+              <div style={{ height: setting.navHeight }} className="flex-center px-4">
+                {i.label}
+              </div>
+            </Link>
+          </div>
+
+          <div>
+            <div>
+              {i.key}
+              <div>
+                {i.children?.map((sub, i) => (
+                  <div className="w-[200px]" key={i}>
+                    {sub.label ? <SubMenu menu={sub} /> : sub.children?.map((_sub) => <SubMenu key={_sub.label} menu={_sub} />)}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
       ))}
     </div>
   )
@@ -71,8 +109,9 @@ export default function NavBar() {
 
   return (
     <>
-      <div className={styles.nav + ' fixed z-10 top-0 left-0 w-full'}>
-        <nav style={{ height: navHeight }} className="max-w-[1024px] mx-auto flex-center">
+      <div className={styles.nav}>
+        <nav style={{ height: navHeight }} className={styles['nav-container']}>
+          <Logo fill={theme === 'dark' ? '#f5f5f7' : '#1d1d1f'} />
           <Menu menu={menuList} />
           <button onClick={toggleTheme}>{theme}</button>
         </nav>

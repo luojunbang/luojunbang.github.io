@@ -1,6 +1,22 @@
 @use '@/style/function' as *;
 
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .nav {
+  --nav-tansition-rate: 2s;
   background-color: v('fill-color', 2);
-  border-bottom: 1px solid v('border-color');
+  @apply fixed z-10 top-0 left-0 w-full;
+  &-container {
+    @apply mx-auto flex-center md:container;
+  }
+  &-menu {
+    @apply h-full flex flex-1 overflow-hidden items-center;
+  }
 }
