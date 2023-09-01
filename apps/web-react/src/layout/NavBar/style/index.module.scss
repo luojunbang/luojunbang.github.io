@@ -9,8 +9,21 @@
   }
 }
 
+@keyframes fade-in-y {
+  0% {
+    transform: translateY(-4px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 .nav {
-  --nav-tansition-rate: 2s;
+  --nav-transition-rate: 0.24s;
+  --nav-transition-item-rate: 0.12s;
+  --nav-transition-func: cubic-bezier(0.4, 0, 0.6, 1);
   background-color: v('fill-color', 2);
   @apply fixed z-10 top-0 left-0 w-full;
   &-container {
@@ -18,5 +31,46 @@
   }
   &-menu {
     @apply h-full flex flex-1 overflow-hidden items-center;
+    &.animating {
+      .nav-submenu {
+        transition: height var(--nav-transition-rate) ease-in-out;
+      }
+    }
+    .nav-submenu {
+      @apply h-0 absolute top-full left-0 right-0 mt-[-44px] overflow-y-hidden  bg-fill-200;
+      &--container {
+        @apply md:container mx-auto py-4 mt-[44px];
+      }
+      &.open {
+        z-index: 2;
+        transition: height var(--nav-transition-rate) var(--nav-transition-func);
+        height: var(--submenu-height);
+        .nav-submenu--item {
+          animation-duration: var(--nav-transition-item-rate);
+          animation-name: fade-in-y;
+          animation-timing-function: var(--nav-transition-func);
+          animation-fill-mode: both;
+          animation-delay: calc(var(--nav-transition-rate) + 20ms * var(--submenu-item-index));
+        }
+      }
+      &.prev {
+      }
+      &.next {
+      }
+      &.closing:not(.prev):not(.next) {
+        @apply h-0;
+        transition: height var(--nav-transition-rate) var(--nav-transition-func) var(--nav-transition-item-rate);
+        .nav-submenu--item {
+          animation-duration: var(--nav-transition-item-rate);
+          animation-direction: reverse;
+          animation-name: fade-in;
+          animation-timing-function: var(--nav-transition-func);
+          animation-fill-mode: both;
+        }
+      }
+      &--item {
+        @apply py-1;
+      }
+    }
   }
 }

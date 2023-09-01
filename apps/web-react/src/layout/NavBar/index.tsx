@@ -1,6 +1,6 @@
 import setting from '@/setting.json'
 import styles from './style/index.module.scss'
-import { useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ReactComponent as Logo } from '@/assets/logo.svg'
 import { kl } from '@/utils'
@@ -56,21 +56,51 @@ const menuList: MenuItem[] = [
 
 const SubMenu = ({ menu }: { menu: MenuItem }) => {
   return (
-    <div>
-      <div>{menu.label}</div>
-      {menu.children?.map((i) => <div key={i.label}>{i.label}</div>)}
+    <div className="mt-4">
+      <h3 className={`text-text-400 ${styles['nav-submenu--item']}`} style={{ '--submenu-item-index': 0 } as React.CSSProperties}>
+        {menu.label}
+      </h3>
+      {menu.children?.map((i, idx) => (
+        <div className={styles['nav-submenu--item']} key={i.label} style={{ '--submenu-item-index': idx + 1 } as React.CSSProperties}>
+          {i.label}
+        </div>
+      ))}
     </div>
   )
 }
 
 // /1024px
 const Menu = ({ menu }: { menu: MenuItem[] }) => {
-  const [activeMenu, setActiveMenu] = useState('')
+  const [isAnimating, setIsAnimating] = useState(false)
+  const [activeMenu, setActiveMenu] = useState<string | null>('')
+  const [lastMenu, setLastMenu] = useState<string | null>('')
+  const getSubMenuClass = (item: MenuItem) => {
+    const isOpen = item.key === activeMenu
+    const isClosing = item.key === lastMenu
+    return kl([isOpen && styles.open, isClosing && styles.closing])
+  }
+  const handleMouseEnter = (item: MenuItem) => {
+    console.log('handleMouseEnter', item.key)
+    setIsAnimating(true)
+    setActiveMenu(item.key ?? null)
+  }
+  const handleMouseLeave = (item: MenuItem) => {
+    console.log('handleMouseLeave', item.key)
+    setLastMenu(activeMenu)
+    setIsAnimating(true)
+    setActiveMenu(null)
+  }
+
+  const handleTransitionEnd = (item: MenuItem) => {
+    console.log('handleTransitionEnd', item.key)
+    setIsAnimating(false)
+    setLastMenu(null)
+  }
 
   return (
-    <div>
-      {menu.map((i) => (
-        <div key={i.key}>
+    <div className={`${isAnimating ? styles.animating : ''} ${styles['nav-menu']}`}>
+      {menu.map((i, idx) => (
+        <div key={i.key} onMouseEnter={() => handleMouseEnter(i)} onMouseLeave={() => handleMouseLeave(i)} style={{ '--submenu-height': `${(idx + 1) * 200}px` } as React.CSSProperties}>
           <div className="relative z-10">
             <Link to={`/${i.key}`}>
               <div style={{ height: setting.navHeight }} className="flex-center px-4">
@@ -78,14 +108,12 @@ const Menu = ({ menu }: { menu: MenuItem[] }) => {
               </div>
             </Link>
           </div>
-
-          <div>
-            <div>
-              {i.key}
-              <div>
+          <div className={`${styles['nav-submenu']} ${getSubMenuClass(i)}`} onTransitionEnd={() => handleTransitionEnd(i)}>
+            <div className={styles['nav-submenu--container']}>
+              <div className="flex">
                 {i.children?.map((sub, i) => (
                   <div className="w-[200px]" key={i}>
-                    {sub.label ? <SubMenu menu={sub} /> : sub.children?.map((_sub) => <SubMenu key={_sub.label} menu={_sub} />)}
+                    {(sub.label ? [sub] : sub.children)?.map((_sub, idx) => <SubMenu key={_sub.label} menu={_sub} />)}
                   </div>
                 ))}
               </div>
@@ -101,19 +129,22 @@ export default function NavBar() {
   const navHeight = setting.navHeight
   const [theme, setTheme] = useState('light')
   const toggleTheme = () => {
-    if (theme === 'light') setTheme('dark')
-    if (theme === 'dark') setTheme('light')
+    const _theme = theme === 'light' ? 'dark' : 'light'
+    setTheme(_theme)
     const html = document.querySelector('html')
-    html && (html.className = theme)
+    html && (html.className = _theme)
   }
-
   return (
     <>
       <div className={styles.nav}>
         <nav style={{ height: navHeight }} className={styles['nav-container']}>
-          <Logo fill={theme === 'dark' ? '#f5f5f7' : '#1d1d1f'} />
+          <div className="relative z-10">
+            <Logo fill={theme === 'dark' ? '#f5f5f7' : '#1d1d1f'} />
+          </div>
           <Menu menu={menuList} />
-          <button onClick={toggleTheme}>{theme}</button>
+          <button className="relative z-10" onClick={toggleTheme}>
+            {theme}
+          </button>
         </nav>
       </div>
     </>
