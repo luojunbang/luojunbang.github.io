@@ -7,6 +7,7 @@ import { kl } from '@/utils'
 interface MenuItem {
   label?: string
   key?: string
+  height?: string
   children?: MenuItem[]
 }
 
@@ -14,6 +15,7 @@ const menuList: MenuItem[] = [
   {
     label: 'react',
     key: 'react',
+    height: '200px',
     children: [
       { label: 'three', children: [{ label: 'demo', key: 'three/demo' }] },
       {
@@ -29,6 +31,7 @@ const menuList: MenuItem[] = [
   {
     label: 'vue',
     key: 'vue',
+    height: '400px',
     children: [
       {
         children: [
@@ -75,12 +78,22 @@ const Menu = ({ menu }: { menu: MenuItem[] }) => {
   const [activeMenu, setActiveMenu] = useState<string | null>('')
   const [lastMenu, setLastMenu] = useState<string | null>('')
   const getSubMenuClass = (item: MenuItem) => {
+    const hasLast = activeMenu && lastMenu && activeMenu !== lastMenu
     const isOpen = item.key === activeMenu
-    const isClosing = item.key === lastMenu
+    const isClosing = item.key === lastMenu && activeMenu === null
+    if (hasLast) {
+      return kl([hasLast && isAnimating && item.key === activeMenu && styles.next, hasLast && isAnimating && item.key === lastMenu && styles.prev])
+    }
     return kl([isOpen && styles.open, isClosing && styles.closing])
   }
   const handleMouseEnter = (item: MenuItem) => {
     console.log('handleMouseEnter', item.key)
+    if (activeMenu) {
+      setLastMenu(activeMenu)
+      const _last = menu.find((i) => i.key === activeMenu)
+      document.getElementById('nav-menu')?.style?.setProperty('--nav-submenu-prev-height', _last?.height as string)
+    }
+    document.getElementById('nav-menu')?.style?.setProperty('--nav-submenu-next-height', item.height as string)
     setIsAnimating(true)
     setActiveMenu(item.key ?? null)
   }
@@ -91,14 +104,32 @@ const Menu = ({ menu }: { menu: MenuItem[] }) => {
     setActiveMenu(null)
   }
 
-  const handleTransitionEnd = (item: MenuItem) => {
-    console.log('handleTransitionEnd', item.key)
-    setIsAnimating(false)
-    setLastMenu(null)
+  const handleTransitionEnd = (e: React.TransitionEvent, item: MenuItem) => {
+    console.log('handleTransitionEnd', !activeMenu, item.key)
+    if (e.target === e.currentTarget) {
+      console.log('closing', !activeMenu, item.key)
+      if (activeMenu === null) {
+        setIsAnimating(false)
+        setLastMenu(null)
+      }
+    }
+    if (e.target !== e.currentTarget) {
+      setIsAnimating(false)
+      setLastMenu(null)
+    }
   }
 
+  const handlAnimationEnd = (e: React.AnimationEvent, item: MenuItem) => {
+    console.log(e)
+
+    if (e.target !== e.currentTarget) {
+      console.log('handlAnimationEnd', e, item.key)
+      setIsAnimating(false)
+      setLastMenu(null)
+    }
+  }
   return (
-    <div className={`${isAnimating ? styles.animating : ''} ${styles['nav-menu']}`}>
+    <div id="nav-menu" className={`${isAnimating ? styles.animating : ''} ${styles['nav-menu']}`}>
       {menu.map((i, idx) => (
         <div key={i.key} onMouseEnter={() => handleMouseEnter(i)} onMouseLeave={() => handleMouseLeave(i)} style={{ '--submenu-height': `${(idx + 1) * 200}px` } as React.CSSProperties}>
           <div className="relative z-10">
@@ -108,7 +139,7 @@ const Menu = ({ menu }: { menu: MenuItem[] }) => {
               </div>
             </Link>
           </div>
-          <div className={`${styles['nav-submenu']} ${getSubMenuClass(i)}`} onTransitionEnd={() => handleTransitionEnd(i)}>
+          <div className={`${styles['nav-submenu']} ${getSubMenuClass(i)}`} onTransitionEnd={(e) => handleTransitionEnd(e, i)} onAnimationEnd={(e) => handlAnimationEnd(e, i)}>
             <div className={styles['nav-submenu--container']}>
               <div className="flex">
                 {i.children?.map((sub, i) => (

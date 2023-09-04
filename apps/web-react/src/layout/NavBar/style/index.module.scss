@@ -20,6 +20,15 @@
   }
 }
 
+@keyframes submenu-height-change {
+  0% {
+    height: var(--nav-submenu-prev-height);
+  }
+  to {
+    height: var(--nav-submenu-next-height);
+  }
+}
+
 .nav {
   --nav-transition-rate: 0.24s;
   --nav-transition-item-rate: 0.12s;
@@ -33,7 +42,7 @@
     @apply h-full flex flex-1 overflow-hidden items-center;
     &.animating {
       .nav-submenu {
-        transition: height var(--nav-transition-rate) ease-in-out;
+        transition: height var(--nav-transition-rate) var(--nav-transition-func);
       }
     }
     .nav-submenu {
@@ -41,29 +50,61 @@
       &--container {
         @apply md:container mx-auto py-4 mt-[44px];
       }
+      .nav-submenu--item {
+        transition-property: opacity, transform;
+        transform: translateY(-4px);
+        opacity: 0;
+      }
       &.open {
         z-index: 2;
         transition: height var(--nav-transition-rate) var(--nav-transition-func);
         height: var(--submenu-height);
         .nav-submenu--item {
-          animation-duration: var(--nav-transition-item-rate);
-          animation-name: fade-in-y;
-          animation-timing-function: var(--nav-transition-func);
-          animation-fill-mode: both;
-          animation-delay: calc(var(--nav-transition-rate) + 20ms * var(--submenu-item-index));
+          transform: translateY(0);
+          opacity: 1;
+          transition-duration: var(--nav-transition-item-rate);
+          transition-delay: calc(var(--nav-transition-rate) + 20ms * var(--submenu-item-index));
         }
       }
       &.prev {
+        height: var(--nav-submenu-prev-height);
+        animation: submenu-height-change var(--nav-transition-item-rate) var(--nav-transition-func);
+        animation-fill-mode: both;
+        .nav-submenu--item {
+          opacity: 1;
+          transform: translateY(0);
+          animation-direction: reverse;
+          animation-duration: var(--nav-transition-rate);
+          animation-name: fade-in;
+          animation-timing-function: var(--nav-transition-func);
+          animation-fill-mode: both;
+          // animation-delay: var(--nav-transition-item-rate);
+        }
       }
       &.next {
-      }
-      &.closing:not(.prev):not(.next) {
-        @apply h-0;
-        transition: height var(--nav-transition-rate) var(--nav-transition-func) var(--nav-transition-item-rate);
+        z-index: 2;
+        transition: none !important;
+        height: var(--nav-submenu-prev-height);
+        animation: submenu-height-change var(--nav-transition-item-rate) var(--nav-transition-func);
+        animation-fill-mode: both;
+        background-color: transparent;
         .nav-submenu--item {
-          animation-duration: var(--nav-transition-item-rate);
-          animation-direction: reverse;
+          opacity: 1;
+          transform: translateY(0px);
+          animation-duration: var(--nav-transition-rate);
           animation-name: fade-in;
+          animation-timing-function: var(--nav-transition-func);
+          animation-fill-mode: both;
+          // animation-delay: calc(var(--nav-transition-item-rate));
+        }
+      }
+      &.closing:not(.prev, .next) {
+        @apply h-0;
+        transition: height var(--nav-transition-rate) var(--nav-transition-func) var(--nav-transition-rate);
+        .nav-submenu--item {
+          animation-duration: var(--nav-transition-rate);
+          animation-direction: reverse;
+          animation-name: fade-in-y;
           animation-timing-function: var(--nav-transition-func);
           animation-fill-mode: both;
         }
