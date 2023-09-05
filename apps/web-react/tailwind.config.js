@@ -38,7 +38,7 @@ module.exports = {
       },
       colors: {
         fill: {
-          DEFAULT: getFillColor(),
+          DEFAULT: getFillColor(1),
           ...getLevelClass(1, 5, getFillColor),
         },
         text: {
@@ -64,29 +64,3 @@ module.exports = {
     }),
   ],
 }
-
-// cursor: pointer;
-// display: inline-block;
-// text-align: center;
-// white-space: nowrap;
-// font-size: 17px;
-// line-height: 1.17648;
-// font-weight: 400;
-// letter-spacing: -.022em;
-// font-family: "SF Pro Text","Myriad Set Pro",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI","SF Pro Icons","Apple Legacy Icons","Helvetica Neue","Helvetica","Arial",sans-serif;
-// min-width: 28px;
-// padding-left: 16px;
-// padding-right: 16px;
-// padding-top: 8px;
-// padding-bottom: 8px;
-// border-radius: 980px;
-// background: #0071e3;
-// color: #fff;
-// box-sizing: border-box;
-// display: block;
-// width: 100%;
-// border-radius: 8px;
-// background: #1d1d1f;
-// color: #fff;
-// width: auto;
-// text-decoration: none;

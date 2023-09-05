@@ -1,5 +1,5 @@
 @use 'function' as *;
-
+@use 'sass:color';
 @import './promote.scss';
 
 body {
@@ -17,11 +17,19 @@ code {
   #{np('fill-color')}: #1d1d1f;
   @each $index, $color in (1 #1d1d1f, 2 #212124, 3 #2a2a2b, 4 #303134, 5 #373739) {
     #{np(('fill-color', $index))}: $color;
+    #{np(('fill-color', $index,'rgb'))}:
+      #{color.red($color)},
+      #{color.green($color)},
+      #{color.blue($color)};
   }
   #{np('border-color')}: #424245;
 
   @each $index, $color in (1 #fff, 2 #f5f5f7, 3 #c5c5c5, 4 #86868b, 5 #6e6e73) {
     #{np(('text-color', $index))}: $color;
+    #{np(('text-color', $index,'rgb'))}:
+      #{color.red($color)},
+      #{color.green($color)},
+      #{color.blue($color)};
   }
 }
 
@@ -29,11 +37,19 @@ code {
   #{np('fill-color')}: #f5f5f7;
   @each $index, $color in (1 #ffffff, 2 #fbfbfd, 3 #e7eaea, 4 #dadada, 5 #c5c5c5) {
     #{np(('fill-color', $index))}: $color;
+    #{np(('fill-color', $index,'rgb'))}:
+      #{color.red($color)},
+      #{color.green($color)},
+      #{color.blue($color)};
   }
   #{np('border-color')}: rgb(229, 230, 235);
 
   @each $index, $color in (1#000, 2 #1d1d1f, 3 #424245, 4 #86868b, 5 #c5c5c5) {
     #{np(('text-color', $index))}: $color;
+    #{np(('text-color', $index,'rgb'))}:
+      #{color.red($color)},
+      #{color.green($color)},
+      #{color.blue($color)};
   }
 }
 .light {

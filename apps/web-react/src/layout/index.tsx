@@ -19,7 +19,7 @@ export default function PageLayout() {
   }
   return (
     <>
-      <div className="relative min-h-screen" style={containerStyle}>
+      <div className="relative min-h-screen bg-fill-100" style={containerStyle}>
         {showNav && <NavBar />}
         <div style={contentStyle}>
           <Outlet />

@@ -36,11 +36,11 @@ const menuList: MenuItem[] = [
         children: [
           {
             label: 'common1',
-            children: [{ label: 'setting', key: 'vue/setting' }],
+            children: [{ label: 'setting', key: 'setting' }],
           },
           {
             label: 'common2',
-            children: [{ label: 'setting', key: 'vue/setting' }],
+            children: [{ label: 'setting', key: 'setting' }],
           },
         ],
       },
@@ -56,14 +56,14 @@ const menuList: MenuItem[] = [
   },
 ]
 
-const SubMenu = ({ menu }: { menu: MenuItem }) => {
-  const basePath = isNil(menu.key) ? '' : `/${menu.key}`
+const SubMenu = ({ menu, basePath }: { menu: MenuItem; basePath: string | undefined }) => {
+  const _basePath = isNil(basePath) ? '' : `/${basePath}`
   const navigate = useNavigate()
   const handleMenuItemClick = (item: MenuItem) => {
-    navigate(`${basePath}/${item.key}`)
+    navigate(`${_basePath}/${item.key}`)
   }
   return (
-    <div className="">
+    <div className={styles['nav-submenu--content']}>
       <h3 className={styles['nav-submenu--item']} style={{ '--submenu-item-index': 0 } as React.CSSProperties}>
         {menu.label}
       </h3>
@@ -81,8 +81,12 @@ const Menu = ({ menu }: { menu: MenuItem[] }) => {
   const [isAnimating, setIsAnimating] = useState(false)
   const [activeMenu, setActiveMenu] = useState<string | null>(null)
   const [lastMenu, setLastMenu] = useState<string | null>(null)
+
+  const hasLast = useMemo(() => {
+    return activeMenu !== null && lastMenu !== null && activeMenu !== lastMenu
+  }, [activeMenu, lastMenu])
+
   const getSubMenuClass = (item: MenuItem) => {
-    const hasLast = activeMenu !== null && lastMenu !== null && activeMenu !== lastMenu
     const isOpen = item.key === activeMenu
     const isClosing = item.key === lastMenu && activeMenu === null
     if (hasLast) {
@@ -91,15 +95,17 @@ const Menu = ({ menu }: { menu: MenuItem[] }) => {
     return kl([isOpen && styles.open, isClosing && styles.closing])
   }
   const handleMenuItemMouseEnter = (item: MenuItem) => {
+    const navElement = document.getElementById('nav')
     console.log('handleMenuItemMouseEnter ', item.key)
     if (activeMenu !== null) {
       setLastMenu(activeMenu)
       const lastItem = menu.find((i) => i.key === activeMenu)
-      lastItem && document.getElementById('nav-menu')?.style?.setProperty('--nav-submenu-prev-height', `${calculateSubMenuHeight(lastItem)}px`)
+      lastItem && navElement?.style?.setProperty('--nav-submenu-prev-height', `${calculateSubMenuHeight(lastItem)}px`)
     }
-    document.getElementById('nav-menu')?.style?.setProperty('--nav-submenu-next-height', `${calculateSubMenuHeight(item)}px`)
+    navElement?.style.setProperty('--nav-submenu-next-height', `${calculateSubMenuHeight(item)}px`)
     setIsAnimating(true)
     setActiveMenu(item.key ?? null)
+    navElement?.classList.add(styles.opened)
   }
   const handleMenuItemMouseLeave = (item: MenuItem) => {
     setLastMenu(activeMenu)
@@ -108,19 +114,26 @@ const Menu = ({ menu }: { menu: MenuItem[] }) => {
   }
 
   const handleTransitionEnd = (e: React.TransitionEvent, item: MenuItem) => {
-    if (e.target === e.currentTarget) {
-      if (activeMenu === null) {
+    console.log('handleTransitionEnd')
+    if (activeMenu === null) {
+      // open
+      if (e.target === e.currentTarget) {
+        const navElement = document.getElementById('nav')
+        setIsAnimating(false)
+        setLastMenu(null)
+        navElement?.classList.remove(styles.opened)
+      }
+    } else {
+      // close
+      if (e.target !== e.currentTarget) {
         setIsAnimating(false)
         setLastMenu(null)
       }
     }
-    if (e.target !== e.currentTarget) {
-      setIsAnimating(false)
-      setLastMenu(null)
-    }
   }
 
   const handlAnimationEnd = (e: React.AnimationEvent, item: MenuItem) => {
+    console.log('handlAnimationEnd')
     if (e.target !== e.currentTarget) {
       setIsAnimating(false)
       setLastMenu(null)
@@ -156,15 +169,7 @@ const Menu = ({ menu }: { menu: MenuItem[] }) => {
             </Link>
           </div>
           <div className={`${styles['nav-submenu']} ${getSubMenuClass(i)}`} onTransitionEnd={(e) => handleTransitionEnd(e, i)} onAnimationEnd={(e) => handlAnimationEnd(e, i)}>
-            <div className={styles['nav-submenu--container']}>
-              <div className="flex">
-                {i.children?.map((sub, i) => (
-                  <div className="w-[200px]" key={i}>
-                    {(sub.label ? [sub] : sub.children)?.map((_sub, idx) => <SubMenu key={_sub.label} menu={_sub} />)}
-                  </div>
-                ))}
-              </div>
-            </div>
+            <div className={styles['nav-submenu--container']}>{i.children?.map((sub, idx) => <div key={idx}>{(sub.label ? [sub] : sub.children)?.map((_sub, idx) => <SubMenu basePath={i.key} key={_sub.label} menu={_sub} />)}</div>)}</div>
           </div>
         </div>
       ))}
@@ -183,7 +188,7 @@ export default function NavBar() {
   }
   return (
     <>
-      <div className={styles.nav}>
+      <div id="nav" className={styles.nav}>
         <nav style={{ height: navHeight }} className={styles['nav-container']}>
           <div className="relative z-10">
             <Logo fill={theme === 'dark' ? '#f5f5f7' : '#1d1d1f'} className="mr-4" />

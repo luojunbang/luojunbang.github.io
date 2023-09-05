@@ -7,7 +7,7 @@ export default function Page() {
   const list = new Array(5).fill(0).map((_, i) => i + 1)
   return (
     <>
-      <div className="w-[1024px] mx-auto bg-fill-100 p-4">
+      <div className="md:container mx-auto bg-fill-100 p-4 h-[2000px]">
         <div className="">
           {list.map((i) => (
             <div key={i} className={`bg-fill-${i}00 mt-4 p-4`}>
@@ -21,14 +21,6 @@ export default function Page() {
         </div>
         <Button type="primary">TEST</Button>
         <IconFullscreenExit />
-      </div>
-      <div className="relative">
-        <div>
-          <div className="absolute z-10 bg-blue-500">2</div>
-        </div>
-        <div>
-          <div className="absolute  bg-red-500">3</div>
-        </div>
       </div>
     </>
   )
