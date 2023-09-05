@@ -34,9 +34,9 @@
   --nav-transition-item-rate: 0.12s;
   --nav-transition-func: cubic-bezier(0.4, 0, 0.6, 1);
   background-color: v('fill-color', 2);
-  @apply fixed z-10 top-0 left-0 w-full;
+  @apply fixed z-10 top-0 left-0 w-full text-xs;
   &-container {
-    @apply mx-auto flex-center md:container;
+    @apply mx-auto flex-center md:container px-6;
   }
   &-menu {
     @apply h-full flex flex-1 overflow-hidden items-center;
@@ -46,15 +46,20 @@
       }
     }
     .nav-submenu {
-      @apply h-0 absolute top-full left-0 right-0 mt-[-44px] overflow-y-hidden  bg-fill-200;
+      @apply h-0 absolute top-full left-0 right-0 mt-[-44px] overflow-y-hidden bg-fill-200;
       &--container {
-        @apply md:container mx-auto py-4 mt-[44px];
+        @apply md:container mx-auto mt-nav px-6 pt-8 pb-12;
       }
-      .nav-submenu--item {
+      &--item {
         transition-property: opacity, transform;
         transform: translateY(-4px);
         opacity: 0;
+        @apply text-2xl leading-none py-1 hover:text-text cursor-pointer;
+        &:first-child {
+          @apply mt-2 text-text-400 text-xs cursor-default;
+        }
       }
+
       &.open {
         z-index: 2;
         transition: height var(--nav-transition-rate) var(--nav-transition-func);
@@ -108,9 +113,6 @@
           animation-timing-function: var(--nav-transition-func);
           animation-fill-mode: both;
         }
-      }
-      &--item {
-        @apply py-1;
       }
     }
   }
