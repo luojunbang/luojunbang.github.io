@@ -56,19 +56,19 @@ const menuList: MenuItem[] = [
   },
 ]
 
-const SubMenu = ({ menu, basePath }: { menu: MenuItem; basePath: string | undefined }) => {
-  const _basePath = isNil(basePath) ? '' : `/${basePath}`
+const SubMenu = ({ menu, basePath, index }: { menu: MenuItem; basePath: string | undefined; index: number }) => {
+  const _basePath = basePath ? `/${basePath}` : ''
   const navigate = useNavigate()
   const handleMenuItemClick = (item: MenuItem) => {
     navigate(`${_basePath}/${item.key}`)
   }
   return (
     <div className={styles['nav-submenu--content']}>
-      <h3 className={styles['nav-submenu--item']} style={{ '--submenu-item-index': 0 } as React.CSSProperties}>
+      <h3 className={styles['nav-submenu--item']} style={{ '--submenu-item-index': index + 0 } as React.CSSProperties}>
         {menu.label}
       </h3>
       {menu.children?.map((i, idx) => (
-        <div className={styles['nav-submenu--item']} onClick={() => handleMenuItemClick(i)} key={i.label} style={{ '--submenu-item-index': idx + 1 } as React.CSSProperties}>
+        <div className={styles['nav-submenu--item']} onClick={() => handleMenuItemClick(i)} key={i.label} style={{ '--submenu-item-index': index + idx + 1 } as React.CSSProperties}>
           {i.label}
         </div>
       ))}
@@ -78,70 +78,57 @@ const SubMenu = ({ menu, basePath }: { menu: MenuItem; basePath: string | undefi
 
 // /1024px
 const Menu = ({ menu }: { menu: MenuItem[] }) => {
-  const [isAnimating, setIsAnimating] = useState(false)
   const [activeMenu, setActiveMenu] = useState<string | null>(null)
   const [lastMenu, setLastMenu] = useState<string | null>(null)
 
   const hasLast = useMemo(() => {
     return activeMenu !== null && lastMenu !== null && activeMenu !== lastMenu
   }, [activeMenu, lastMenu])
-
+  /** 子菜单类名函数 */
   const getSubMenuClass = (item: MenuItem) => {
+    if (hasLast) {
+      return kl([hasLast && item.key === activeMenu && styles.next, hasLast && item.key === lastMenu && styles.prev])
+    }
     const isOpen = item.key === activeMenu
     const isClosing = item.key === lastMenu && activeMenu === null
-    if (hasLast) {
-      return kl([hasLast && isAnimating && item.key === activeMenu && styles.next, hasLast && isAnimating && item.key === lastMenu && styles.prev])
-    }
     return kl([isOpen && styles.open, isClosing && styles.closing])
   }
   const handleMenuItemMouseEnter = (item: MenuItem) => {
     const navElement = document.getElementById('nav')
-    console.log('handleMenuItemMouseEnter ', item.key)
     if (activeMenu !== null) {
       setLastMenu(activeMenu)
       const lastItem = menu.find((i) => i.key === activeMenu)
       lastItem && navElement?.style?.setProperty('--nav-submenu-prev-height', `${calculateSubMenuHeight(lastItem)}px`)
     }
     navElement?.style.setProperty('--nav-submenu-next-height', `${calculateSubMenuHeight(item)}px`)
-    setIsAnimating(true)
     setActiveMenu(item.key ?? null)
     navElement?.classList.add(styles.opened)
   }
   const handleMenuItemMouseLeave = (item: MenuItem) => {
     setLastMenu(activeMenu)
-    setIsAnimating(true)
     setActiveMenu(null)
   }
 
   const handleTransitionEnd = (e: React.TransitionEvent, item: MenuItem) => {
-    console.log('handleTransitionEnd')
     if (activeMenu === null) {
-      // open
+      // close
       if (e.target === e.currentTarget) {
         const navElement = document.getElementById('nav')
-        setIsAnimating(false)
         setLastMenu(null)
         navElement?.classList.remove(styles.opened)
-      }
-    } else {
-      // close
-      if (e.target !== e.currentTarget) {
-        setIsAnimating(false)
-        setLastMenu(null)
       }
     }
   }
 
   const handlAnimationEnd = (e: React.AnimationEvent, item: MenuItem) => {
-    console.log('handlAnimationEnd')
     if (e.target !== e.currentTarget) {
-      setIsAnimating(false)
       setLastMenu(null)
     }
   }
   const MENU_ITEM_HEIGHT = 30,
     MENU_TITLE_HEIGHT = 40
-  function calculateSubMenuHeight(subMenuData: MenuItem) {
+  /** 计算子菜单内容高度 */
+  function calculateSubMenuHeight(subMenuData: MenuItem): number {
     if (!subMenuData.children) return MENU_ITEM_HEIGHT
     return (
       Math.max(
@@ -158,7 +145,7 @@ const Menu = ({ menu }: { menu: MenuItem[] }) => {
     )
   }
   return (
-    <div id="nav-menu" className={`${isAnimating ? styles.animating : ''} ${styles['nav-menu']}`}>
+    <div id="nav-menu" className={` ${styles['nav-menu']}`}>
       {menu.map((i, idx) => (
         <div key={i.key} onMouseEnter={() => handleMenuItemMouseEnter(i)} onMouseLeave={() => handleMenuItemMouseLeave(i)} style={{ '--submenu-height': `${calculateSubMenuHeight(i)}px` } as React.CSSProperties}>
           <div className="relative z-10">
@@ -169,7 +156,11 @@ const Menu = ({ menu }: { menu: MenuItem[] }) => {
             </Link>
           </div>
           <div className={`${styles['nav-submenu']} ${getSubMenuClass(i)}`} onTransitionEnd={(e) => handleTransitionEnd(e, i)} onAnimationEnd={(e) => handlAnimationEnd(e, i)}>
-            <div className={styles['nav-submenu--container']}>{i.children?.map((sub, idx) => <div key={idx}>{(sub.label ? [sub] : sub.children)?.map((_sub, idx) => <SubMenu basePath={i.key} key={_sub.label} menu={_sub} />)}</div>)}</div>
+            <div className={styles['nav-submenu--container']}>
+              {i.children?.map((sub, subIdx) => {
+                return <div key={subIdx}>{(sub.label ? [sub] : sub.children)?.map((_sub, idx) => <SubMenu index={subIdx} basePath={i.key} key={_sub.label} menu={_sub} />)}</div>
+              })}
+            </div>
           </div>
         </div>
       ))}

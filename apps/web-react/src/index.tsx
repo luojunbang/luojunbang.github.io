@@ -10,6 +10,7 @@ import PageLayout from './layout'
 import WujieReact from 'wujie-react'
 import VuePage from '@/views/vue'
 import { getUrl } from './utils'
+import App from '@/views/App/App'
 // const VuePage = lazy(() => import('@/views/vue'))
 
 const NoMatch = () => <div>404</div>
@@ -27,7 +28,7 @@ declare global {
   }
 }
 
-/**26988.19*1.04*1.04
+/**
  * 大部分业务无需设置 attrs
  * 此处修正 iframe 的 src，是防止github pages csp报错
  * 因为默认是只有 host+port，没有携带路径
@@ -55,10 +56,9 @@ const render = () => {
       <Router>
         <Routes>
           <Route path="/" element={<PageLayout />}>
-            {/* <Route path="vue" element={<VuePage />} /> */}
-            <Route path="vue/:path?" element={<VuePage />} />
+            <Route path="" element={<App />} />
             <Route path="empty" />
-            <Route path="" element={<div>dashboard</div>} />
+            <Route path="vue/:path?" element={<VuePage />} />
             {router.map((route) => {
               return <Route path={`${route.key}`} element={route.component} key={route.name} />
             })}

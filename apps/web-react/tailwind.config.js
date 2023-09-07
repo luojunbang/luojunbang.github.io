@@ -1,6 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 
 const plugin = require('tailwindcss/plugin')
+const setting = require('./src/setting.json')
+
+const { navHeight } = setting
 
 const getVar = (str, index) => `var(--lo-${str}-color${index ? '-' + index : ''})`
 const getTextColor = (index) => getVar('text', index)
@@ -27,7 +30,8 @@ module.exports = {
   theme: {
     extend: {
       spacing: {
-        nav: '44px',
+        nav: `${navHeight}px`,
+        main: `calc(100vh - ${navHeight}px)`,
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

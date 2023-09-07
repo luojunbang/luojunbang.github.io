@@ -107,9 +107,7 @@
         z-index: 2;
         transition: none !important;
         background-color: transparent;
-        height: var(--nav-submenu-prev-height);
-        animation: submenu-height-change var(--nav-transition-item-rate) var(--nav-transition-func);
-        animation-fill-mode: both;
+        height: var(--nav-submenu-next-height);
         .nav-submenu--item {
           opacity: 1;
           transform: translateY(0px);
